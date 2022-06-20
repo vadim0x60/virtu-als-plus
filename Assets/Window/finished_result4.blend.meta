@@ -1,0 +1,225 @@
+fileFormatVersion: 2
+guid: a6476173ed3e1c446b5c75015ab1c4a0
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Cube
+    100002: Cube_001
+    100004: Cylinder
+    100006: Cylinder_003
+    100008: //RootNode
+    100010: Plane
+    100012: Plane_001
+    100014: Plane_002
+    100016: Plane_003
+    100018: Sphere
+    100020: Sphere_001
+    100022: Cube.001
+    100024: Cylinder.003
+    100026: Lamp
+    100028: Lamp.001
+    100030: Plane.001
+    100032: Plane.002
+    100034: Plane.003
+    100036: Sphere.001
+    400000: Cube
+    400002: Cube_001
+    400004: Cylinder
+    400006: Cylinder_003
+    400008: //RootNode
+    400010: Plane
+    400012: Plane_001
+    400014: Plane_002
+    400016: Plane_003
+    400018: Sphere
+    400020: Sphere_001
+    400022: Cube.001
+    400024: Cylinder.003
+    400026: Lamp
+    400028: Lamp.001
+    400030: Plane.001
+    400032: Plane.002
+    400034: Plane.003
+    400036: Sphere.001
+    2300000: Cube
+    2300002: Cube_001
+    2300004: Cylinder
+    2300006: Cylinder_003
+    2300008: Plane
+    2300010: Plane_001
+    2300012: Plane_002
+    2300014: Plane_003
+    2300016: Sphere
+    2300018: Sphere_001
+    2300020: Cube.001
+    2300022: Cylinder.003
+    2300024: Plane.001
+    2300026: Plane.002
+    2300028: Plane.003
+    2300030: Sphere.001
+    3300000: Cube
+    3300002: Cube_001
+    3300004: Cylinder
+    3300006: Cylinder_003
+    3300008: Plane
+    3300010: Plane_001
+    3300012: Plane_002
+    3300014: Plane_003
+    3300016: Sphere
+    3300018: Sphere_001
+    3300020: Cube.001
+    3300022: Cylinder.003
+    3300024: Plane.001
+    3300026: Plane.002
+    3300028: Plane.003
+    3300030: Sphere.001
+    4300000: Cylinder_003
+    4300002: Cylinder
+    4300004: Sphere_001
+    4300006: Sphere
+    4300008: Plane_003
+    4300010: Cube_001
+    4300012: Cube
+    4300014: Plane_002
+    4300016: Plane_001
+    4300018: Plane
+    4300020: Cylinder.003
+    4300022: Plane.001
+    4300024: Plane.002
+    4300026: Plane.003
+    4300028: Cube.001
+    4300030: Sphere.001
+    7400000: Default Take
+    9500000: //RootNode
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: fdd20f37e6c903c469b8dc31766e98e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: dabaefed243c7226bbac012f1ea807ff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: ff29bceb0dc11cd4fa1685b84c69fe80, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: b584f9080716c8adcb508e3fb1246d0c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 3002e204fc395bb3e95f35eab58d8576, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.005
+    second: {fileID: 2100000, guid: 5121bff4d3cd715d1a4e5ab0976ea07e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 89d9852869e8c463f92c862dfbdf6719, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bra
+    second: {fileID: 2100000, guid: 52a170965414a75459f5778a3c312ad7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bra_trans
+    second: {fileID: 2100000, guid: da02fb86e9e9246489f782fe6e25e756, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

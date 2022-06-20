@@ -1,0 +1,284 @@
+fileFormatVersion: 2
+guid: c2c3c98904b683344b84ef8aaff11aff
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Cube
+    100004: Plane_011
+    100006: Vert
+    100008: Vert_001
+    100010: Cube_001
+    100012: Cube_002
+    100014: Cube_004
+    100016: Observation_Room
+    100018: Cube_003
+    100020: Cube_005
+    100022: Cube.001
+    100024: Cube.002
+    100026: Cube.003
+    100028: Cube.004
+    100030: Cube.005
+    100032: Observation Room
+    100034: Vert.001
+    400000: //RootNode
+    400002: Cube
+    400004: Plane_011
+    400006: Vert
+    400008: Vert_001
+    400010: Cube_001
+    400012: Cube_002
+    400014: Cube_004
+    400016: Observation_Room
+    400018: Cube_003
+    400020: Cube_005
+    400022: Cube.001
+    400024: Cube.002
+    400026: Cube.003
+    400028: Cube.004
+    400030: Cube.005
+    400032: Observation Room
+    400034: Vert.001
+    2300000: Cube
+    2300002: Plane_011
+    2300004: Vert
+    2300006: Vert_001
+    2300008: Cube_001
+    2300010: Cube_002
+    2300012: Cube_004
+    2300014: Observation_Room
+    2300016: Cube_003
+    2300018: Cube_005
+    2300020: Cube.001
+    2300022: Cube.002
+    2300024: Cube.003
+    2300026: Cube.004
+    2300028: Cube.005
+    2300030: Observation Room
+    2300032: Vert.001
+    3300000: Cube
+    3300002: Plane_011
+    3300004: Vert
+    3300006: Vert_001
+    3300008: Cube_001
+    3300010: Cube_002
+    3300012: Cube_004
+    3300014: Observation_Room
+    3300016: Cube_003
+    3300018: Cube_005
+    3300020: Cube.001
+    3300022: Cube.002
+    3300024: Cube.003
+    3300026: Cube.004
+    3300028: Cube.005
+    3300030: Observation Room
+    3300032: Vert.001
+    4300000: Cube
+    4300002: Vert
+    4300004: Plane_011
+    4300006: Vert_001
+    4300008: Cube_004
+    4300010: Observation_Room
+    4300012: Cube_002
+    4300014: Cube_001
+    4300016: Cube_003
+    4300018: Cube_005
+    4300020: Cube.003
+    4300022: Cube.005
+    4300024: Cube.004
+    4300026: Observation Room
+    4300028: Vert.001
+    4300030: Cube.002
+    4300032: Cube.001
+    6400000: Cube
+    6400002: Cube_001
+    6400004: Cube_002
+    6400006: Cube_004
+    6400008: Cube_005
+    6400010: Observation_Room
+    6400012: Vert
+    6400014: Vert_001
+    6400016: Cube_003
+    7400000: Default Take
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Backlit
+    second: {fileID: 2100000, guid: e93c81996df8e594c8a241c51c383bca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ceiling
+    second: {fileID: 2100000, guid: df0643402fa2294419dac539f5721134, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Desk
+    second: {fileID: 2100000, guid: 5c3f8fbe03a06224780ce4449708337f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Door
+    second: {fileID: 2100000, guid: 70d9bc66b6e6f1e4f9d1bbaadd19b09f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Doorhandle
+    second: {fileID: 2100000, guid: e763775b8e6948045a81153c11b57c98, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Emitting
+    second: {fileID: 2100000, guid: 10455bd8b885d0e4583e22d9116d3f24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor
+    second: {fileID: 2100000, guid: 0e53d6048bb195f4ab609204cedcdc98, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GlossyBlack
+    second: {fileID: 2100000, guid: 68036c0d7efe6ec469563771c40f850c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GlossyBlack.001
+    second: {fileID: 2100000, guid: 66c5eb89a3fcdeef288b853ae3286520, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GlossyBlack_001
+    second: {fileID: 2100000, guid: f6dc82f5c684e6c4b9d599d110490e4d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lining
+    second: {fileID: 2100000, guid: 5879930a5f4b76f439167daef581cf36, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 6b95fd675962a4c4d893a78159c55ef8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 83888dbdda86e8e40ac9240099932b9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Monitor
+    second: {fileID: 2100000, guid: 8f57765d626b3e54897fb5cd1283c342, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plaster
+    second: {fileID: 2100000, guid: 77c6493ce2a13bd4ebbc82c2d3792707, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Virtu_ALS_logo
+    second: {fileID: 2100000, guid: 13cc3a17f535ad7479e6bd440d5209a3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Walls
+    second: {fileID: 2100000, guid: e4bcc83159fd7294e9a3523252d59863, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White Door
+    second: {fileID: 2100000, guid: 7f2ebccb244e92f86928889c78e8f495, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White_Door
+    second: {fileID: 2100000, guid: f1c290529ba391f4caf1a50fa07bfb93, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

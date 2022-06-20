@@ -1,0 +1,44 @@
+fileFormatVersion: 2
+guid: 35eec4cddfb9c8845add6f0421f194e5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mainHub: {instanceID: 0}
+  - spriteRen: {instanceID: 0}
+  - monitorSpriteRen: {instanceID: 0}
+  - defibScreen: {instanceID: 0}
+  - monitor: {instanceID: 0}
+  - spike: {instanceID: 0}
+  - syncMark: {instanceID: 0}
+  - defibCanvas: {instanceID: 0}
+  - testScripts: {instanceID: 0}
+  - defibOnButton: {instanceID: 0}
+  - shockButton: {instanceID: 0}
+  - chargeButton: {instanceID: 0}
+  - syncButton: {instanceID: 0}
+  - paceButton: {instanceID: 0}
+  - pacePauseButton: {instanceID: 0}
+  - heartRateLabel: {instanceID: 0}
+  - chargedLight: {instanceID: 0}
+  - chargingText: {instanceID: 0}
+  - pacingText: {instanceID: 0}
+  - energyText: {instanceID: 0}
+  - paceLight: {instanceID: 0}
+  - syncLight: {instanceID: 0}
+  - monitorSats: {instanceID: 0}
+  - monitorALine: {instanceID: 0}
+  - monitorResp: {instanceID: 0}
+  - monitorHeartRateText: {instanceID: 0}
+  - shader: {fileID: 4800000, guid: 7a0d3b33229f05b4a925505524f09095, type: 3}
+  - hub: {instanceID: 0}
+  - satsScript: {instanceID: 0}
+  - aLineScript: {instanceID: 0}
+  - respScript: {instanceID: 0}
+  - networker: {instanceID: 0}
+  - greenMat: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

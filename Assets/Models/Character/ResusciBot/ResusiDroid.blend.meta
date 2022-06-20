@@ -1,0 +1,243 @@
+fileFormatVersion: 2
+guid: 4c988748b4b21c048ab9e6d14238968a
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Arm_l
+    100002: Arm_r
+    100004: Body
+    100006: Hand_l
+    100008: Hand_r
+    100010: HeadNeck
+    100012: //RootNode
+    100014: Wheel_front_l
+    100016: Wheel_front_r
+    100018: Wheel_rear_l
+    100020: Wheel_rear_r
+    100022: Head
+    100024: Neck
+    100026: Neck_001
+    100028: Neck_002
+    100030: Neck_003
+    100032: Neck_004
+    100034: Wheelarch_front_left
+    100036: Wheelarch_front_right
+    100038: Wheelarch_rear_left
+    100040: Wheelarch_rear_right
+    100042: Camera
+    100044: Lamp
+    400000: Arm_l
+    400002: Arm_r
+    400004: Body
+    400006: Hand_l
+    400008: Hand_r
+    400010: HeadNeck
+    400012: //RootNode
+    400014: Wheel_front_l
+    400016: Wheel_front_r
+    400018: Wheel_rear_l
+    400020: Wheel_rear_r
+    400022: Head
+    400024: Neck
+    400026: Neck_001
+    400028: Neck_002
+    400030: Neck_003
+    400032: Neck_004
+    400034: Wheelarch_front_left
+    400036: Wheelarch_front_right
+    400038: Wheelarch_rear_left
+    400040: Wheelarch_rear_right
+    400042: Camera
+    400044: Lamp
+    2000000: Camera
+    2100000: Matt_Black
+    2100002: Chrome
+    2100004: Metal
+    2100006: Eye__Left_eye
+    2100008: ResusciBot
+    2100010: Matt Black
+    2100012: Eye
+    2300000: Arm_l
+    2300002: Arm_r
+    2300004: Body
+    2300006: Hand_l
+    2300008: Hand_r
+    2300010: HeadNeck
+    2300012: Wheel_front_l
+    2300014: Wheel_front_r
+    2300016: Wheel_rear_l
+    2300018: Wheel_rear_r
+    2300020: Head
+    2300022: Neck
+    2300024: Neck_001
+    2300026: Neck_002
+    2300028: Neck_003
+    2300030: Neck_004
+    2300032: Wheelarch_front_left
+    2300034: Wheelarch_front_right
+    2300036: Wheelarch_rear_left
+    2300038: Wheelarch_rear_right
+    3300000: Arm_l
+    3300002: Arm_r
+    3300004: Body
+    3300006: Hand_l
+    3300008: Hand_r
+    3300010: HeadNeck
+    3300012: Wheel_front_l
+    3300014: Wheel_front_r
+    3300016: Wheel_rear_l
+    3300018: Wheel_rear_r
+    3300020: Head
+    3300022: Neck
+    3300024: Neck_001
+    3300026: Neck_002
+    3300028: Neck_003
+    3300030: Neck_004
+    3300032: Wheelarch_front_left
+    3300034: Wheelarch_front_right
+    3300036: Wheelarch_rear_left
+    3300038: Wheelarch_rear_right
+    4300000: Wheel_rear_l
+    4300002: Wheel_front_l
+    4300004: Wheel_front_r
+    4300006: Wheel_rear_r
+    4300008: Hand_l
+    4300010: Hand_r
+    4300012: Arm_l
+    4300014: Arm_r
+    4300016: HeadNeck
+    4300018: Body
+    4300020: Neck
+    4300022: Head
+    4300024: Neck_004
+    4300026: Neck_003
+    4300028: Neck_002
+    4300030: Neck_001
+    4300032: Wheelarch_front_left
+    4300034: Wheelarch_rear_left
+    4300036: Wheelarch_front_right
+    4300038: Wheelarch_rear_right
+    6400000: Arm_l
+    6400002: Arm_r
+    6400004: Body
+    6400006: Hand_l
+    6400008: Hand_r
+    6400010: HeadNeck
+    6400012: Wheel_front_l
+    6400014: Wheel_front_r
+    6400016: Wheel_rear_l
+    6400018: Wheel_rear_r
+    7400000: Default Take
+    9500000: //RootNode
+    10800000: Lamp
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chrome
+    second: {fileID: 2100000, guid: 5b2d8d64e2af2fc44915935e640323e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eye__Left_eye
+    second: {fileID: 2100000, guid: 25dbc385ab61b9f4bbcba0d7aa1ba2bc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Matt_Black
+    second: {fileID: 2100000, guid: ddc2483efd8289640bd503fd7fe19627, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: f361703ea25f9f4498db42e0951931b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ResusciBot
+    second: {fileID: 2100000, guid: ea52fcadf3b848344b6db7c92297e8be, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
