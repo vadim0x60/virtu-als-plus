@@ -51,7 +51,9 @@ class Stenographer : IObserver<Insights>, IObserver<Measurement>
     private void ageInsights()
     {
         for (int idx = 0; idx < insightsCount; idx++) {
-            insightAges[idx] += 1;
+            if (insightAges[idx] > 0) {
+                insightAges[idx]++;
+            }
         }
     }
 
@@ -61,7 +63,7 @@ class Stenographer : IObserver<Insights>, IObserver<Measurement>
         float insightRelevance;
 
         for (idx = 0; idx < insightsCount; idx++) {
-            insightAge = insightAges[0];
+            insightAge = insightAges[idx];
             insightRelevance = insightAge > 0 ? 1 / (float)insightAge : 0;
             reportObservation(insightRelevance);
         }
