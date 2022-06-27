@@ -1,0 +1,80 @@
+name: Build Virtu-ALS
+on: [push]
+env:
+  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+  UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+jobs:
+  full-linux:
+    steps:
+    - uses: game-ci/unity-builder@v2
+      with:
+        targetPlatform: StandaloneLinux64
+    - uses: actions/upload-artifact@v2
+      with:
+        name: full-linux-build
+        path: build
+        retention-days: 1
+  full-windows:
+    steps:
+    - uses: game-ci/unity-builder@v2
+      with:
+        targetPlatform: StandaloneWindows
+    - uses: actions/upload-artifact@v2
+      with:
+        name: full-windows-build
+        path: build
+        retention-days: 1
+  headless-linux:
+    steps:
+    - uses: game-ci/unity-builder@v2
+      with:
+        targetPlatform: StandaloneLinux64
+        customParameters: -EnableHeadlessMode
+    - uses: actions/upload-artifact@v2
+      with:
+        name: headless-linux-build
+        path: build
+        retention-days: 1
+  headless-windows:
+    steps:
+    - uses: game-ci/unity-builder@v2
+      with:
+        targetPlatform: StandaloneWindows
+        customParameters: -EnableHeadlessMode
+    - uses: actions/upload-artifact@v2
+      with:
+        name: headless-windows-build
+        path: build
+        retention-days: 1
+  release:
+    name: "Create tagged release"
+    needs: [full-linux, full-windows, headless-linux, headless-windows]
+    runs-on: "ubuntu-latest"
+    steps:
+    - uses: actions/download-artifact@v2
+      with:
+        name: full-linux-build
+        path: full-linux
+    - uses: actions/download-artifact@v2
+      with:
+        name: full-windows-build
+        path: full-windows
+    - uses: actions/download-artifact@v2
+      with:
+        name: headless-linux-build
+        path: headless-linux
+    - uses: actions/download-artifact@v2
+      with:
+        name: headless-windows-build
+        path: headless-windows
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: true
+        files: |
+          LICENSE.txt
+          full-linux
+          full-windows
+          headless-linux
+          headless-windows
