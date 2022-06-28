@@ -8,6 +8,10 @@ jobs:
   full-linux:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        lfs: true
     - uses: game-ci/unity-builder@v2
       with:
         targetPlatform: StandaloneLinux64
@@ -19,6 +23,10 @@ jobs:
   full-windows:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        lfs: true
     - uses: game-ci/unity-builder@v2
       with:
         targetPlatform: StandaloneWindows
@@ -30,6 +38,10 @@ jobs:
   headless-linux:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        lfs: true
     - uses: game-ci/unity-builder@v2
       with:
         targetPlatform: StandaloneLinux64
@@ -42,6 +54,10 @@ jobs:
   headless-windows:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        lfs: true
     - uses: game-ci/unity-builder@v2
       with:
         targetPlatform: StandaloneWindows
