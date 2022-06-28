@@ -1,102 +1,59 @@
 name: Build Virtu-ALS
-on: [push]
+on: 
+  push:
+    branches:
+      - master
 env:
   UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
   UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
 jobs:
-  full-linux:
+  buildForAllSupportedPlatforms:
+    name: Build for ${{ matrix.targetPlatform }} ${{ matrix.customParameters }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          - StandaloneWindows # Build a Windows standalone.
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
+          - StandaloneLinux64 # Build a Linux 64-bit standalone.
+          - iOS # Build an iOS player.
+          - Android # Build an Android .apk standalone app.
+          - WebGL # WebGL.
+        customParameters: 
+          - ""
+          - "-EnableHeadlessMode"
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      with:
-        lfs: true
-    - uses: game-ci/unity-builder@v2
-      with:
-        targetPlatform: StandaloneLinux64
-    - uses: actions/upload-artifact@v2
-      with:
-        name: full-linux-build
-        path: build
-        retention-days: 1
-  full-windows:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      with:
-        lfs: true
-    - uses: game-ci/unity-builder@v2
-      with:
-        targetPlatform: StandaloneWindows
-    - uses: actions/upload-artifact@v2
-      with:
-        name: full-windows-build
-        path: build
-        retention-days: 1
-  headless-linux:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      with:
-        lfs: true
-    - uses: game-ci/unity-builder@v2
-      with:
-        targetPlatform: StandaloneLinux64
-        customParameters: -EnableHeadlessMode
-    - uses: actions/upload-artifact@v2
-      with:
-        name: headless-linux-build
-        path: build
-        retention-days: 1
-  headless-windows:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      with:
-        lfs: true
-    - uses: game-ci/unity-builder@v2
-      with:
-        targetPlatform: StandaloneWindows
-        customParameters: -EnableHeadlessMode
-    - uses: actions/upload-artifact@v2
-      with:
-        name: headless-windows-build
-        path: build
-        retention-days: 1
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          lfs: true
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: Library-
+      - uses: game-ci/unity-builder@v2
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          customParameters: ${{ matrix.customParameters }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build-${{ matrix.targetPlatform }}${{ matrix.customParameters }}
+          path: build/${{ matrix.targetPlatform }}
+          retention-days: 1
   release:
     name: "Create tagged release"
-    needs: [full-linux, full-windows, headless-linux, headless-windows]
+    needs: buildForAllSupportedPlatforms
     runs-on: ubuntu-latest
     steps:
     - uses: actions/download-artifact@v2
-      with:
-        name: full-linux-build
-        path: full-linux
-    - uses: actions/download-artifact@v2
-      with:
-        name: full-windows-build
-        path: full-windows
-    - uses: actions/download-artifact@v2
-      with:
-        name: headless-linux-build
-        path: headless-linux
-    - uses: actions/download-artifact@v2
-      with:
-        name: headless-windows-build
-        path: headless-windows
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         prerelease: true
         automatic_release_tag: "latest"
         title: "Development Build"
-        files: |
-          LICENSE.txt
-          full-linux
-          full-windows
-          headless-linux
-          headless-windows
+        files: ["*"]
