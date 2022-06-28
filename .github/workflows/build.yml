@@ -6,6 +6,7 @@ env:
   UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
 jobs:
   full-linux:
+    runs-on: ubuntu-latest
     steps:
     - uses: game-ci/unity-builder@v2
       with:
@@ -16,6 +17,7 @@ jobs:
         path: build
         retention-days: 1
   full-windows:
+    runs-on: ubuntu-latest
     steps:
     - uses: game-ci/unity-builder@v2
       with:
@@ -26,6 +28,7 @@ jobs:
         path: build
         retention-days: 1
   headless-linux:
+    runs-on: ubuntu-latest
     steps:
     - uses: game-ci/unity-builder@v2
       with:
@@ -37,6 +40,7 @@ jobs:
         path: build
         retention-days: 1
   headless-windows:
+    runs-on: ubuntu-latest
     steps:
     - uses: game-ci/unity-builder@v2
       with:
@@ -50,7 +54,7 @@ jobs:
   release:
     name: "Create tagged release"
     needs: [full-linux, full-windows, headless-linux, headless-windows]
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/download-artifact@v2
       with:
