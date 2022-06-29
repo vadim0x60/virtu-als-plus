@@ -46,11 +46,33 @@ jobs:
     needs: buildForAllSupportedPlatforms
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/download-artifact@v2
+    - name: Download artifacts as zip files
+      uses: actions/github-script@v6
+      with:
+        # https://github.com/actions/download-artifact/issues/143
+        script: |
+          let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: context.payload.workflow_run.id,
+          });
+          for (const artifact of allArtifacts.data.artifacts)
+          {
+            let download = await github.rest.actions.downloadArtifact({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              artifact_id: artifact.id,
+              archive_format: 'zip',
+            });
+            
+            let fs = require('fs');
+            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/${artifact.name}.zip`, Buffer.from(download.data));
+          }
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         prerelease: true
         automatic_release_tag: "latest"
         title: "Development Build"
-        files: "*"
+        files: |
+          *.zip
