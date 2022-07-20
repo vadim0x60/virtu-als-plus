@@ -1,31 +1,12 @@
-name: Build Virtu-ALS
-on: 
-  push:
-    branches:
-      - master
-env:
-  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-  UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-  GITHUB_TOKEN: ${{ github.token }}
+on:
+  release:
+    types:
+      - created
+
 jobs:
-  prepare_release:
-    name: Create a release draft for artifacts to be attached to
-    runs-on: ubuntu-latest
-    outputs:
-      releaseUrl: ${steps.release.outputs.upload_url}
-    steps:
-      - name: release
-        uses: actions/create-release@v1
-        id: create_release
-        with:
-          allowUpdates: true
-          draft: true
-          generateReleaseNotes: true
-  buildForAllSupportedPlatforms:
+  build:
     name: Build for ${{ matrix.targetPlatform }} ${{ matrix.customParameters }}
     runs-on: ubuntu-latest
-    needs: prepare_release
     strategy:
       fail-fast: false
       matrix:
@@ -51,9 +32,8 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: ${{ matrix.customParameters }}
-      - name: upload linux artifact
-        uses: actions/upload-release-asset@v1
+      - uses: shogo82148/actions-upload-release-asset@v1
         with:
-          upload_url: ${{ needs.prepare_release.outputs.releaseUrl }}
+          upload_url: ${{ github.event.release.upload_url }}
           asset_name: Build-${{ matrix.targetPlatform }}${{ matrix.customParameters }}
           asset_path: build/${{ matrix.targetPlatform }}
