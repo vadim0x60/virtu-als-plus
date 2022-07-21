@@ -5,9 +5,6 @@ using System.Collections.ObjectModel;
 
 public enum Insights
 {
-    Blunder,
-    Success,
-    Failure,
     ResponseVerbal,
     ResponseGroan,
     ResponseNone,

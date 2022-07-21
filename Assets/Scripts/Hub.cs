@@ -325,6 +325,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 
 	private List<IObserver<Insights>> insightObservers = new List<IObserver<Insights>>();
 	private List<IObserver<Measurement>> measurementObservers = new List<IObserver<Measurement>>();
+	private List<IObserver<Feedback>> feedbackObservers = new List<IObserver<Feedback>>();
 
 	public IDisposable Subscribe(IObserver<Insights> insightObserver) 
 	{
@@ -346,6 +347,23 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	public void Unsubscribe(IObserver<Measurement> measurementObserver)
 	{
 		measurementObservers.Remove(measurementObserver);
+	}
+
+	public IDisposable Subscribe(IObserver<Feedback> measurementObserver) 
+	{
+		feedbackObservers.Add(measurementObserver);
+		return new Unsubscriber<Measurement>(measurementObserver, this);
+	}
+
+	public void Unsubscribe(IObserver<Feedback> measurementObserver)
+	{
+		feedbackObservers.Remove(measurementObserver);
+	}
+
+	public void DispatchFeedback(Feedback feedback) {
+		foreach (IObserver<Feedback> feedback in feedbackObservers) {
+			observer.OnNext(feedback);
+		}
 	}
 
 	public void DispatchInsight(Insights insight) {

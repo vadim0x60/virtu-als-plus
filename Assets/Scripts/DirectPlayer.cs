@@ -79,7 +79,7 @@ public class DirectPlayer : Agent
 
     public DirectPlayer() {
         rewardProfile.AddReward = AddReward;
-        stenographer = new Stenographer(rewardProfile);
+        stenographer = new Stenographer();
         MaxStep = 0;
     }
 
@@ -88,13 +88,14 @@ public class DirectPlayer : Agent
     {
         hub.Subscribe((IObserver<Insights>)stenographer);
         hub.Subscribe((IObserver<Measurement>)stenographer);
+        hub.Subscribe((IObserver<Feedback>)rewardProfile);
         defibController = hub.controller.GetComponent<Control>();
         defibOn = hub.defibOnDefibButton.GetComponent<DefibOn>();
     }
 
     public override void CollectObservations(VectorSensor vs)
     {
-        if (stenographer.Done) { 
+        if (rewardProfile.Done) { 
             EndEpisode();
         }
         else {

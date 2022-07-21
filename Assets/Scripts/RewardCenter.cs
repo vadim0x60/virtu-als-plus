@@ -1,14 +1,14 @@
 using System;
 
-public interface RewardRecorder {
-    void Blunder();
-    void Success();
-    void Failure();
-    void Tick();
+public enum Feedback {
+    Blunder,
+    Success,
+    Failure,
+    Tick
 }
 
 [Serializable]
-public class RewardCenter : RewardRecorder {
+public class RewardCenter : IObserver<Feedback> {
     public float FailureReward;
     public float SuccessReward;
     public float BlunderReward;
@@ -16,8 +16,26 @@ public class RewardCenter : RewardRecorder {
 
     public Action<float> AddReward;
 
-    public void Blunder() {AddReward(BlunderReward);}
-    public void Success() {AddReward(SuccessReward);}
-    public void Failure() {AddReward(FailureReward);}
-    public void Tick() {AddReward(TimestepReward);}
+    public bool Done = false;
+
+    public void OnNext(Feedback feedback) {
+        switch(feedback) {
+            case Feedback.Success:
+                AddReward(SuccessReward);
+                Debug.Log("Success is a terminal insight indicating episode end");
+                Done = true;
+                break;
+            case Feedback.Failure:
+                AddReward(FailureReward);
+                Debug.Log("Failure is a terminal insight indicating episode end");
+                Done = true;
+                break;
+            case Feedback.Blunder:
+                AddReward(BlunderReward);
+                break;
+            case Feedback.Tick:
+                AddReward(TimestepReward);
+                break;
+        }
+    }
 }

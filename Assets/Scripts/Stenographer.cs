@@ -11,25 +11,8 @@ class Stenographer : IObserver<Insights>, IObserver<Measurement>
     private Dictionary<Insights, float> measurements = new Dictionary<Insights, float>();
     public float DefaultMeasurement = 0f;
 
-    public RewardRecorder RewardRecorder;
-    public bool Done = false;
-
     public void OnNext(Insights insight) 
     { 
-        if (insight == Insights.Blunder) {
-            RewardRecorder.Blunder();
-        }
-        else if (insight == Insights.Success) {
-            RewardRecorder.Success();
-            Debug.Log("Success is a terminal insight indicating episode end");
-            Done = true;
-        }
-        else if (insight == Insights.Failure) {
-            RewardRecorder.Failure();
-            Debug.Log("Failure is a terminal insight indicating episode end");
-            Done = true;
-        }
-
         insightAges[(int)insight] = 1;
     }
 
@@ -76,9 +59,7 @@ class Stenographer : IObserver<Insights>, IObserver<Measurement>
         ageInsights();
     }
 
-    public Stenographer(RewardRecorder rr) {
-        RewardRecorder = rr;
-
+    public Stenographer() {
         insightsCount = Enum.GetNames(typeof(Insights)).Length;
         insightAges = new int[insightsCount];
 
