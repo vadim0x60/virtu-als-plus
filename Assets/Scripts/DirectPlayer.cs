@@ -276,11 +276,11 @@ public class DirectPlayer : Agent
                     hub.BVM();
                     break;
                 case 13:
-                    break;
                     hub.Guedel();
-                case 14:
                     break;
+                case 14:
                     hub.NRBMask();
+                    break;
                 // Defibrillator:
                 case 15:
                     defibOn.OnMouseDown();

@@ -1583,7 +1583,7 @@ public class Control : MonoBehaviour {
 
 	void WrongShock()
 	{
-		hub.DispatchInsight(Insights.Blunder);
+		hub.DispatchFeedback(Feedback.Blunder);
 		if (hub.patient.conscious) {
 			string message = "Just as you are about to hit the shock button, your conscious patient asks you what you're " +
 			                 "doing. You hurriedly dump the charge and wonder if you should use some sedation before proceeding...";
