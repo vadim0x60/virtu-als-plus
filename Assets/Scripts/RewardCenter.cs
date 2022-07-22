@@ -38,4 +38,13 @@ public class RewardCenter : IObserver<Feedback> {
                 break;
         }
     }
+
+    public void OnError(Exception e) 
+    {
+        throw e;
+    }
+
+    public void OnCompleted()
+    {
+    }
 }
