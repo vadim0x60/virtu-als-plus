@@ -698,7 +698,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 		}
 		if (trueFalse)
 		{
-			DispatchInsight(Insights.Failure);
+			DispatchFeedback(Feedback.Failure);
 			Pause();
 		}
 		else
@@ -920,21 +920,21 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 				message = "Adenosine isn't a drug you need during cardiac arrest. ";
 				SendMessage (message, 0, 2, true);
 				drugFails++;
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			} else if (patient.diagnosis == "Asthma") {
 				message = "One of your colleagues points out that you should never give adenosine to asthmatics. ";
 				SendMessage (message, 0, 2, true);
 				drugFailsNCPR++;
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			} else if (drawerDefibPads.activeSelf || !control.defibReady) {
 				message = "If you're going to give adenosine, better attach some pads and switch the defib on "
 				+ "so you can see what happens! ";
 				SendMessage (message, 0, 2, true);
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			} else if (drawerVenflon.activeSelf) {
 				message = "The patient has no line for giving IV drugs! ";
 				SendMessage (message, 0, 2, true);
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			} else {
 				useDefibButton.GetComponent<Button> ().onClick.Invoke ();
 				StartCoroutine (AdenosineTimer ());
@@ -1005,15 +1005,15 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 				messageText = "Giving boluses of IV adrenaline to a patient who's not in cardiac arrest might be okay for anaesthetists, " +
 				"but mere mortals like us should avoid it as a rule. ";
 				drugFailsNCPR++;
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			} else {
 				if (adrenalineThisCycle) {
 					messageText = "You've already given adrenaline this cycle! ";
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				} else if (numberOfCorrectCycles == 0) {
 					messageText = "Oops! Let's wait until after the first successful rhythm check before giving adrenaline! ";
 					drugFails++;
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				} else if (adrenalineDueCycle == 0) {
 					messageText = "Oops! Adrenaline should be given after the third cycle " +
 					"while you're on the shockable side of the algorithm. " +
@@ -1023,7 +1023,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 					adrenalineDueCycle = numberOfCorrectCycles + 2;
 					drugFails++;
 					adrenalineThisCycle = true;
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				} else if (numberOfCorrectCycles == adrenalineDueCycle) {
 					messageText = "Excellent! Adrenaline administered appropriately. ";
 					adrenalineDueCycle = numberOfCorrectCycles + 2;
@@ -1037,7 +1037,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 					adrenalineDueCycle = numberOfCorrectCycles + 2;
 					drugFails++;
 					adrenalineThisCycle = true;
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				} else if (numberOfCorrectCycles == (adrenalineDueCycle - 1)) {
 					messageText = "Oops! You were supposed to give adrenaline at the next cycle. " +
 					"We'll give it now, but remember to give it every other cycle from now on, even if you switch between " +
@@ -1046,7 +1046,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 					adrenalineDueCycle = numberOfCorrectCycles + 2;
 					drugFails++;
 					adrenalineThisCycle = true;
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				} else {
 					messageText = "Oops! You were supposed to give adrenaline at cycle " + adrenalineDueCycle +
 					". This is cycle " + numberOfCorrectCycles + ". " +
@@ -1055,7 +1055,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 					adrenalineDueCycle = numberOfCorrectCycles + 2;
 					drugFails++;
 					adrenalineThisCycle = true;
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				}
 			}
 
@@ -1068,7 +1068,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 			string message = "You think about trying some airway manoeuvres, but decide your conscious patient " +
 			                 "probably wouldn't appreciate it. ";
 			SendMessage (message, 0, 2, true);
-			DispatchInsight(Insights.Blunder);
+			DispatchFeedback(Feedback.Blunder);
 			airwayManoeuvresButton.SetActive (false);
 			ArrangeButtons ();
 		} else {
@@ -1112,7 +1112,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 			if (!cardiacArrest) {
 				if (drawerVenflon.activeSelf) {
 					messageText = "The patient has no line for giving IV drugs! ";
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				} else if (patient.diagnosis == "Arrhythmia" && !patient.bradyCardia && rhythmNumber == 1) {
 					messageText = "You give 300mg IV amiodarone (in 5% dextrose over 30 minutes)." +
 					"\n\n(Check the monitor to see if it worked.)";
@@ -1124,17 +1124,17 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 					messageText = "Oops! At the last minute, one of your colleagues points out that you probably " +
 					"shouldn't give amiodarone to your bradycardic patient... ";
 					drugFailsNCPR++;
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				} else if (rhythm == "nsr") {
 					messageText = "You give amiodarone to John, who is normal sinus rhythm."
 					+ " Surprisingly enough, nothing happens. ";
 					drugFailsNCPR++;
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				}
 			} else if (amiodaroneThisCycle) {
 					messageText = "You've already given amiodarone this cycle! ";
 					amiodaroneDueCycle = 0;
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 			} else if (amiodaroneDueCycle == numberOfCorrectCycles && amiodaroneDueCycle != 0) {
 				messageText = "Excellent! Amiodarone appropriately administered. ";
 				amiodaroneThisCycle = true;
@@ -1146,7 +1146,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 					messageText += " You're a bit early! ";
 				}
 				drugFails++;
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			}
 			SendMessage (messageText, 0, 8, true);
 		}
@@ -1487,16 +1487,16 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 			if (cardiacArrest) {
 				message = "Atropine isn't a drug you need during cardiac arrest. ";
 				drugFails++;
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			} else {
 				if (patient.diagnosis == "Arrhythmia" && !patient.bradyCardia && rhythmNumber == 1) {
 					message = "John has an unstable tachycardia. Giving atropine is probably not the smartest thing "
 					+ "you'll ever do. ";
 					drugFailsNCPR++;
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				} else if (atropineRunning) {
 					message = "Atropine should be given every 3-5 minutes. Give your last dose a chance to work. ";
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				} else if (!drawerVenflon.activeSelf) {
 					message = "You give a 500mcg bolus of atropine. ";
 					/*if (patient.diagnosis == "Arrhythmia" && rhythmNumber == 1) {
@@ -1507,7 +1507,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 					StartCoroutine (AtropineTimer ());
 				} else {
 					message = "The patient has no line for giving IV drugs! ";
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				}
 			}
 			SendMessage (message, 0, 2, true);
@@ -1567,12 +1567,12 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 					message = "John is breathing for himself and doesn't tolerate the bag-valve mask. ";
 				} 
 				SendMessage (message, 0, 2, true);
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			} else {
 				if (patient.airwayObstructed && patient.airwayObstruction != "Tongue") {
 					string message = "You ask someone to start bagging, but they tell you the airway seems to be full of gunk. ";
 					SendMessage (message, 0, 2, true);
-					DispatchInsight(Insights.Blunder);
+					DispatchFeedback(Feedback.Blunder);
 				} else {
 					patient.airwayObstructed = false;
 					DeactivateCameras ();
@@ -2472,12 +2472,12 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
             if (didWell)
             {
                 demoEndText.text += " Excellent work! ";
-				DispatchInsight(Insights.Success);
+				DispatchFeedback(Feedback.Success);
             }
             else
             {
                 demoEndText.text += "\n\nDon't worry if you're not perfect yet, though. That's exactly what we're here for! ";
-				DispatchInsight(Insights.Failure);
+				DispatchFeedback(Feedback.Failure);
             }
             demoEndScreen.SetActive(true);
         }
@@ -2612,7 +2612,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 				GiveFluids ();
 			} else {
 				SendMessage ("The patient doesn't have a cannula for fluids!", 0, 2, true);
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			}
 		}
 	}
@@ -2673,7 +2673,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 				string message = "Funnily enough, your fully conscious patient is not terribly impressed " +
 				                "when you try to shove an oropharyngeal airway in his mouth. ";
 				SendMessage (message, 0, 2, true);
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			} else {
 				string message = "You site an oropharyngeal airway successfully. ";
 				SendMessage (message, 0, 2, true);
@@ -2774,19 +2774,19 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 			if (cardiacArrest) {
 				message += "Midazolam isn't a drug you need during cardiac arrest. (At least, not for the patient...)";
 				drugFails++;
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 				SendMessage (message, 0, 2, true);
 				return false;
 			} else if (!patient.conscious) {
 				message += "John is already unconscious - maybe giving midazolam isn't such a hot idea... ";
 				drugFailsNCPR++;
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 				SendMessage (message, 0, 2, true);
 				return false;
 			} else if (drawerVenflon.activeSelf) {
 				message += "The patient has no line for giving IV drugs! ";
 				SendMessage (message, 0, 2, true);
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 				return false;
 			} else {
 				message += "You give midazolam. ";
@@ -3732,7 +3732,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 				string message = "You try to use the Yankeur suction catheter on your conscious patient.\n\n" +
 				                 "He has some suggestions about where else you could stick it. ";
 				SendMessage (message, 0, 2, true);
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			} else if (patient.airwayObstructed && patient.airwayObstruction != "Tongue") {
 				string message = "The "; 
 				if (patient.airwayObstruction == "Vomit") {
@@ -3752,7 +3752,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 			} else if (!patient.airwayObstructed || patient.airwayObstruction == "Tongue") {
 				string message = "There's not really anything to suction out of the airway. ";
 				SendMessage (message, 0, 2, true);
-				DispatchInsight(Insights.Blunder);
+				DispatchFeedback(Feedback.Blunder);
 			}
 		}
 	}
@@ -4001,7 +4001,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 
 	IEnumerator HypoventilationTimer () {
 		if (!cardiacArrest && !stable_patient) {
-			DispatchInsight(Insights.Blunder);
+			DispatchFeedback(Feedback.Blunder);
 			yield return new WaitForSeconds (patient.respRate + 2);
 			if (patient.respRate < 8 && drawerBVM.activeSelf && !cardiacArrest && !patient.airwayObstructed) {
                 sats -= 1;
