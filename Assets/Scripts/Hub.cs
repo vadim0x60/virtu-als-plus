@@ -19,7 +19,7 @@ same with other equipment, in fact?
 */
 
 
-public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulObservable<Measurement> {
+public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulObservable<Measurement>, IRespectfulObservable<Feedback> {
 	public bool debugging = true;
     public bool stable_patient = false;
 
