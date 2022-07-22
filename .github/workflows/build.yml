@@ -41,8 +41,11 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: ${{ matrix.customParameters }}
+      - uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r build/${{ matrix.targetPlatform }}${{ matrix.customParameters }}.zip build/Build-${{ matrix.targetPlatform }}${{ matrix.customParameters }}
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_name: Build-${{ matrix.targetPlatform }}${{ matrix.customParameters }}
+          asset_name: ${{ matrix.targetPlatform }}${{ matrix.customParameters }}.zip
           asset_path: build/${{ matrix.targetPlatform }}
