@@ -47,5 +47,4 @@ jobs:
       - uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_name: ${{ matrix.targetPlatform }}${{ matrix.customParameters }}.zip
-          asset_path: build
+          asset_path: build/${{ matrix.targetPlatform }}${{ matrix.customParameters }}.zip
