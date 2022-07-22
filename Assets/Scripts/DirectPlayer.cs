@@ -102,7 +102,7 @@ public class DirectPlayer : Agent
             AssertClickability();
 
             stenographer.Recollect(vs.AddObservation);
-            rewardProfile.Tick();
+            rewardProfile.OnNext(Feedback.Tick);
         }
     }
 
