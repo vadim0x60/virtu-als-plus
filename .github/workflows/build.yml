@@ -19,10 +19,10 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - StandaloneWindows # Build a Windows standalone.
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
-          - StandaloneLinux64 # Build a Linux 64-bit standalone.
-          - iOS # Build an iOS player.
+          - StandaloneWindows
+          - StandaloneWindows64
+          - StandaloneLinux64
+          - StandaloneOSX 
         customParameters: 
           - ""
           - "-EnableHeadlessMode"
