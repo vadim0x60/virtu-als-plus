@@ -25,7 +25,7 @@ jobs:
           - StandaloneOSX 
         customParameters: 
           - ""
-          - "-nographics"
+          - "-batchmode -nographics"
     steps:
       - uses: actions/checkout@v2
         with:
