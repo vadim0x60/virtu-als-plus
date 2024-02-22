@@ -25,7 +25,7 @@ jobs:
           - StandaloneOSX 
         customParameters: 
           - ""
-          - "-EnableHeadlessMode"
+          - "-nographics"
     steps:
       - uses: actions/checkout@v2
         with:
