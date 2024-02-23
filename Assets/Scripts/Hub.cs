@@ -363,13 +363,13 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 
 	public IDisposable Subscribe(IObserver<string> memoObserver) 
 	{
-		insightObservers.Add(memoObserver);
+		memoObservers.Add(memoObserver);
 		return new Unsubscriber<string>(memoObserver, this);
 	}
 
 	public void Unsubscribe(IObserver<string> memoObserver)
 	{
-		insightObservers.Remove(memoObserver);
+		memoObservers.Remove(memoObserver);
 	}
 
 	public void DispatchFeedback(Feedback feedback) {

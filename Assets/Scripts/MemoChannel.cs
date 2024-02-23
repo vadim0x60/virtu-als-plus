@@ -6,14 +6,14 @@ using System;
 
 public class MemoChannel : SideChannel, IObserver<string> {
 	public MemoChannel(Guid channelId) {
-        this.channelId = channelId;
+        ChannelId = channelId;
     }
 
     public void OnNext(string memo) {
         using (var msgOut = new OutgoingMessage())
         {
-            msgOut.WriteString(stringToSend);
-            QueueMessageToSend(memo);
+            msgOut.WriteString(memo);
+            QueueMessageToSend(msgOut);
         }
     }
 

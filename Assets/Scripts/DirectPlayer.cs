@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Unity.MLAgents;
+using Unity.MLAgents.SideChannels;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
@@ -34,7 +35,9 @@ public class DirectPlayer : Agent
 
     private DefibOn defibOn;
     private Control defibController;
+
     private Stenographer stenographer;
+    private MemoChannel memoChannel = new MemoChannel(new Guid ("bdb17919-c516-44da-b045-a2191e972dec"));
 
     private Focus currentFocus = Focus.General;
 
@@ -86,7 +89,7 @@ public class DirectPlayer : Agent
     // Start is called before the first frame update
     void Start()
     {
-        var memoChannel = new MemoChannel(new Guid ("bdb17919-c516-44da-b045-a2191e972dec"));
+        var 
         SideChannelManager.RegisterSideChannel(memoChannel);
 
         hub.Subscribe((IObserver<Insights>)stenographer);
@@ -332,7 +335,7 @@ public class DirectPlayer : Agent
     public void OnDestroy()
     {
         if (Academy.IsInitialized){
-            SideChannelManager.UnregisterSideChannel(stringChannel);
+            SideChannelManager.UnregisterSideChannel(memoChannel);
         }
     }
 }
