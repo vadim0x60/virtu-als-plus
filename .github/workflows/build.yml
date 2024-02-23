@@ -25,7 +25,7 @@ jobs:
           - StandaloneOSX 
         customParameters: 
           - ""
-          - "/headless"
+          - "-standaloneBuildSubtarget Server"
     steps:
       - uses: actions/checkout@v2
         with:
