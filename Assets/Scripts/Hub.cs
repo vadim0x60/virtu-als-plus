@@ -326,6 +326,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	private List<IObserver<Insights>> insightObservers = new List<IObserver<Insights>>();
 	private List<IObserver<Measurement>> measurementObservers = new List<IObserver<Measurement>>();
 	private List<IObserver<Feedback>> feedbackObservers = new List<IObserver<Feedback>>();
+	private List<IObserver<string>> memoObservers = new List<IObserver<string>>();
 
 	public IDisposable Subscribe(IObserver<Insights> insightObserver) 
 	{
@@ -360,6 +361,17 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 		feedbackObservers.Remove(measurementObserver);
 	}
 
+	public IDisposable Subscribe(IObserver<string> memoObserver) 
+	{
+		insightObservers.Add(memoObserver);
+		return new Unsubscriber<string>(memoObserver, this);
+	}
+
+	public void Unsubscribe(IObserver<string> memoObserver)
+	{
+		insightObservers.Remove(memoObserver);
+	}
+
 	public void DispatchFeedback(Feedback feedback) {
 		foreach (IObserver<Feedback> observer in feedbackObservers) {
 			observer.OnNext(feedback);
@@ -377,6 +389,12 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 
 		foreach (IObserver<Measurement> observer in measurementObservers) {
 			observer.OnNext(new Measurement (measurable, value));
+		}
+	}
+
+	public void DispatchMemo(string memo) {
+		foreach (IObserver<string> observer in memoObservers) {
+			observer.OnNext(memo);
 		}
 	}
 
@@ -2481,6 +2499,8 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
             }
             demoEndScreen.SetActive(true);
         }
+
+		DispatchMemo(demoEndText.text);
 
 		if (nonBlockingMode) Reload();
 	}

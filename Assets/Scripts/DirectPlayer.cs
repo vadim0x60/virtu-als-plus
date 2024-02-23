@@ -86,9 +86,13 @@ public class DirectPlayer : Agent
     // Start is called before the first frame update
     void Start()
     {
+        memoChannel = new MemoChannel(new Guid ("bdb17919-c516-44da-b045-a2191e972dec"));
+        SideChannelManager.RegisterSideChannel(memoChannel);
+
         hub.Subscribe((IObserver<Insights>)stenographer);
         hub.Subscribe((IObserver<Measurement>)stenographer);
         hub.Subscribe((IObserver<Feedback>)rewardProfile);
+        hub.Subscribe((IObserver<string>)memoChannel);
         defibController = hub.controller.GetComponent<Control>();
         defibOn = hub.defibOnDefibButton.GetComponent<DefibOn>();
     }
@@ -322,6 +326,13 @@ public class DirectPlayer : Agent
                     hub.Done();
                     break;
             }
+        }
+    }
+
+    public void OnDestroy()
+    {
+        if (Academy.IsInitialized){
+            SideChannelManager.UnregisterSideChannel(stringChannel);
         }
     }
 }
