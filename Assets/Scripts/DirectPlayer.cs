@@ -89,7 +89,6 @@ public class DirectPlayer : Agent
     // Start is called before the first frame update
     void Start()
     {
-        var 
         SideChannelManager.RegisterSideChannel(memoChannel);
 
         hub.Subscribe((IObserver<Insights>)stenographer);
