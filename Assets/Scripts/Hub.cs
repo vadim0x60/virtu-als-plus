@@ -19,7 +19,7 @@ same with other equipment, in fact?
 */
 
 
-public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulObservable<Measurement>, IRespectfulObservable<Feedback>, IRespectfulObservable<string> {
+public class Hub : MonoBehaviour {
 	public bool debugging = true;
     public bool stable_patient = false;
 
@@ -228,7 +228,6 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	private bool doubleClickBlocker=false;
 	public bool remoteConnected = false;
 	public bool shockFail = false;
-	public bool clickable = true;
 	private bool airwayCleared = false;
 	private bool baggingStarted = false;
 	private bool playStarted = false;
@@ -323,79 +322,39 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 
 	public float masterTimeScale = 1f;
 
-	private List<IObserver<Insights>> insightObservers = new List<IObserver<Insights>>();
-	private List<IObserver<Measurement>> measurementObservers = new List<IObserver<Measurement>>();
-	private List<IObserver<Feedback>> feedbackObservers = new List<IObserver<Feedback>>();
-	private List<IObserver<string>> memoObservers = new List<IObserver<string>>();
-
-	public IDisposable Subscribe(IObserver<Insights> insightObserver) 
-	{
-		insightObservers.Add(insightObserver);
-		return new Unsubscriber<Insights>(insightObserver, this);
+	private bool clickable;
+	public bool Clickable {
+		get {
+			return clickable;
+		}
+		set {
+			clickable = value;
+			ClickabilityChanged?.Invoke(clickable);
+		}
 	}
 
-	public void Unsubscribe(IObserver<Insights> insightObserver)
-	{
-		insightObservers.Remove(insightObserver);
-	}
-
-	public IDisposable Subscribe(IObserver<Measurement> measurementObserver) 
-	{
-		measurementObservers.Add(measurementObserver);
-		return new Unsubscriber<Measurement>(measurementObserver, this);
-	}
-
-	public void Unsubscribe(IObserver<Measurement> measurementObserver)
-	{
-		measurementObservers.Remove(measurementObserver);
-	}
-
-	public IDisposable Subscribe(IObserver<Feedback> feedbackObserver) 
-	{
-		feedbackObservers.Add(feedbackObserver);
-		return new Unsubscriber<Feedback>(feedbackObserver, this);
-	}
-
-	public void Unsubscribe(IObserver<Feedback> measurementObserver)
-	{
-		feedbackObservers.Remove(measurementObserver);
-	}
-
-	public IDisposable Subscribe(IObserver<string> memoObserver) 
-	{
-		memoObservers.Add(memoObserver);
-		return new Unsubscriber<string>(memoObserver, this);
-	}
-
-	public void Unsubscribe(IObserver<string> memoObserver)
-	{
-		memoObservers.Remove(memoObserver);
-	}
+	public event EventHadler<Feedback> FeedbackDispatched;
+	public event EventHadler<Insights> InsightDispatched;
+	public event EventHadler<Measurement> MeasurementDispatched;
+	public event EventHadler<string> MemoDispatched;
+	public event EventHadler<bool> ClickabilityChanged;
 
 	public void DispatchFeedback(Feedback feedback) {
-		foreach (IObserver<Feedback> observer in feedbackObservers) {
-			observer.OnNext(feedback);
-		}
+		FeedbackDispatched?.Invoke(feedback);
 	}
 
 	public void DispatchInsight(Insights insight) {
-		foreach (IObserver<Insights> observer in insightObservers) {
-			observer.OnNext(insight);
-		}
+		InsightDispatched?.Invoke(insight);
 	}
 
 	public void DispatchMeasurement(Insights measurable, float value) {
 		DispatchInsight(measurable);
 
-		foreach (IObserver<Measurement> observer in measurementObservers) {
-			observer.OnNext(new Measurement (measurable, value));
-		}
+		MeasurementDispatched?.Invoke(new Measurement(measurable, value));
 	}
 
 	public void DispatchMemo(string memo) {
-		foreach (IObserver<string> observer in memoObservers) {
-			observer.OnNext(memo);
-		}
+		MemoDispatched?.Invoke(memo);
 	}
 
 	private void DispatchECG() {
@@ -659,7 +618,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
     }
 
 	public void ABG() {
-		if (clickable) {
+		if (Clickable) {
 			string message = "You take blood for an ABG. ";
 			drawerABG.SetActive (false);
 			SendMessage (message, 0, 2, true);
@@ -1533,7 +1492,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void AttachPads () {
-		if (clickable) {
+		if (Clickable) {
 			drawerDefibPads.SetActive (false);
 			animationTesting.AttachPads (true);
 		}
@@ -1555,7 +1514,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void Bloods () {
-		if (clickable) {
+		if (Clickable) {
 			string message = "You send routine bloods to the lab. ";
             AddClinicalInformation("Bloods");
 			SendMessage (message, 0, 2, true);
@@ -1564,7 +1523,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void BPCuffOn () {
-		if (clickable) {
+		if (Clickable) {
 			if (drawerAline.activeSelf) {
 				nibpButton.SetActive (true);
 			}
@@ -1576,7 +1535,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void BVM () {
-		if (clickable) {
+		if (Clickable) {
 			if (patient.conscious || respRate > 7) {
 				string message = "";
 				if (patient.airwayObstructed) {
@@ -2173,10 +2132,10 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	IEnumerator DeactiveClicksHalfASecond () {
-		clickable = false;
+		Clickable = false;
 		//Is actually 0.7s to allow for drawers to open/close and examination menu to slide:
 		yield return new WaitForSeconds (0.7f); 
-		clickable = true;
+		Clickable = true;
 	}
 
 	void DeactivateDefibButtons () {
@@ -2622,7 +2581,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void Fluids () {
-		if (clickable) {
+		if (Clickable) {
 			if (!drawerVenflon.activeSelf) {
 				drawerFluids.SetActive (false);
 				animationTesting.drip.SetActive (true);
@@ -2638,7 +2597,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void FocusOnDefibFromButton () {
-		if (clickable) {
+		if (Clickable) {
 			FocusOnDefib ();
 		}
 	}
@@ -2688,7 +2647,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void Guedel () {
-		if (clickable) {
+		if (Clickable) {
 			if (patient.conscious) {
 				string message = "Funnily enough, your fully conscious patient is not terribly impressed " +
 				                "when you try to shove an oropharyngeal airway in his mouth. ";
@@ -2789,7 +2748,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 		if (debugging) {
 			Debug.Log ("Midaz");
 		}
-		if (clickable) {
+		if (Clickable) {
 			string message = "";
 			if (cardiacArrest) {
 				message += "Midazolam isn't a drug you need during cardiac arrest. (At least, not for the patient...)";
@@ -2833,7 +2792,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void MonitorPadsOn () {
-		if (clickable) {
+		if (Clickable) {
 			animationTesting.CardiacMonitorPadsOn ();
 			drawerCmPads.SetActive (false);
 			control.monitorPadsToComeOn = true;
@@ -2979,7 +2938,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void NRBMask () {
-		if (clickable) {
+		if (Clickable) {
 			if (drawerBVM.activeSelf) {
 				if (respRate == 0) {
 					string message = "You could put oxygen on the patient, but it might be more helpful if he was actually breathing... ";
@@ -3006,8 +2965,8 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 		if (debugging) {
 			Debug.Log ("OpenClose");
 		}
-		if (clickable) {
-			clickable = false;
+		if (Clickable) {
+			Clickable = false;
 			StartCoroutine (DeactiveClicksHalfASecond ());
 			if (button == "Airway") {
 				OpenCloseAirwayDrawer ();
@@ -3178,7 +3137,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 		}
 		else
 		{
-			clickable = false;
+			Clickable = false;
 			if (!dontSuspendCanvas) {
 				SuspendCanvas ();
 			} else {
@@ -3406,7 +3365,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void SatsProbeOn () {
-		if (clickable) {
+		if (Clickable) {
 			drawerSatsProbe.SetActive (false);
 			animationTesting.satsProbe.SetActive (true);
 			control.satsScriptToComeOn = true;
@@ -3712,14 +3671,14 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 	}
 
 	public void Venflon () {
-		if (clickable) {
+		if (Clickable) {
 			drawerVenflon.SetActive (false);
 			animationTesting.cannula.SetActive (true);
 		}
 	}
 
 	public void ViewMonitor() {
-		if (clickable) {
+		if (Clickable) {
 			if (scene == "CPR") {
 				monitorTexts = monitorButton.GetComponentsInChildren<Text> ();
 			} else {
@@ -3747,7 +3706,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
   	}
 
 	public void Yankeur () {
-		if (clickable) {
+		if (Clickable) {
 			if (patient.conscious) {
 				string message = "You try to use the Yankeur suction catheter on your conscious patient.\n\n" +
 				                 "He has some suggestions about where else you could stick it. ";
@@ -4061,7 +4020,7 @@ public class Hub : MonoBehaviour, IRespectfulObservable<Insights>, IRespectfulOb
 
     IEnumerator SignsOfLifeCheck ()
     {
-        clickable = false;
+        Clickable = false;
         if (!dontSuspendCanvas)
         {
             SuspendCanvas();

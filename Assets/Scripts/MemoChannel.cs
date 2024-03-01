@@ -4,12 +4,12 @@ using Unity.MLAgents.SideChannels;
 using System.Text;
 using System;
 
-public class MemoChannel : SideChannel, IObserver<string> {
+public class MemoChannel : SideChannel {
 	public MemoChannel(Guid channelId) {
         ChannelId = channelId;
     }
 
-    public void OnNext(string memo) {
+    public void OnMemo(object sender, string memo) {
         using (var msgOut = new OutgoingMessage())
         {
             msgOut.WriteString(memo);

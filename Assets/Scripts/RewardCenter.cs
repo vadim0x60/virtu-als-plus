@@ -9,7 +9,7 @@ public enum Feedback {
 }
 
 [Serializable]
-public class RewardCenter : IObserver<Feedback> {
+public class RewardCenter {
     public float FailureReward;
     public float SuccessReward;
     public float BlunderReward;
@@ -19,7 +19,7 @@ public class RewardCenter : IObserver<Feedback> {
 
     public bool Done = false;
 
-    public void OnNext(Feedback feedback) {
+    public void OnFeedback(object sender, Feedback feedback) {
         switch(feedback) {
             case Feedback.Success:
                 AddReward(SuccessReward);

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-class Stenographer : IObserver<Insights>, IObserver<Measurement>
+class Stenographer
 {
     private int[] insightAges;
     private readonly int insightsCount;
@@ -11,24 +11,15 @@ class Stenographer : IObserver<Insights>, IObserver<Measurement>
     private Dictionary<Insights, float> measurements = new Dictionary<Insights, float>();
     public float DefaultMeasurement = 0f;
 
-    public void OnNext(Insights insight) 
+    public void OnInsight(object sender, Insights insight) 
     { 
         insightAges[(int)insight] = 1;
     }
 
-    public void OnNext(Measurement measurement) 
+    public void OnMeasurement(object sender, Measurement measurement) 
     { 
         // Newer measures will overwite older ones, it's intended behavior
         measurements[measurement.Measurable] = measurement.Value;
-    }
-
-    public void OnError(Exception e) 
-    {
-        throw e;
-    }
-
-    public void OnCompleted()
-    {
     }
 
     private void ageInsights()

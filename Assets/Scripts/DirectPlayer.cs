@@ -74,11 +74,7 @@ public class DirectPlayer : Agent
             }
         }
     }
-    void AssertClickability() {
-        if (!hub.clickable) {
-            throw new GameNotClickableException();
-        }
-    }
+
 
     public DirectPlayer() {
         rewardProfile.AddReward = AddReward;
@@ -91,12 +87,32 @@ public class DirectPlayer : Agent
     {
         SideChannelManager.RegisterSideChannel(memoChannel);
 
-        hub.Subscribe((IObserver<Insights>)stenographer);
-        hub.Subscribe((IObserver<Measurement>)stenographer);
-        hub.Subscribe((IObserver<Feedback>)rewardProfile);
-        hub.Subscribe((IObserver<string>)memoChannel);
+        hub.InsightDispatched += stenographer.OnInsight;
+        hub.MeasurementDispatched += stenographer.OnMeasurement;
+        hub.FeedbackDispatched += rewardProfile.OnFeedback;
+        hub.MemoDispatched += memoChannel.OnMemo;
+        hub.ClickabilityChanged += OnClickabilityChange;
+
         defibController = hub.controller.GetComponent<Control>();
         defibOn = hub.defibOnDefibButton.GetComponent<DefibOn>();
+    }
+
+    public void OnClickabilityChange(object sender, bool clickable) {
+        if (!clickable) {
+            throw new GameNotClickableException();
+        }
+    }
+
+    public void RequestDecision(object sender, object args) {
+        RequestDecision();
+    }
+
+    public void Play() {
+        hub.InsightDispatched += RequestDecision;
+    }
+
+    public void Pause() {
+        hub.InsightDispatched -= RequestDecision;
     }
 
     public override void CollectObservations(VectorSensor vs)
@@ -105,8 +121,6 @@ public class DirectPlayer : Agent
             EndEpisode();
         }
         else {
-            AssertClickability();
-
             stenographer.Recollect(vs.AddObservation);
             rewardProfile.OnNext(Feedback.Tick);
         }
@@ -115,8 +129,6 @@ public class DirectPlayer : Agent
     // Update is called once per frame
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        AssertClickability();
-
         int action = actionBuffers.DiscreteActions[0];
         if (action > 0) {
             actionCount++;
@@ -337,8 +349,4 @@ public class DirectPlayer : Agent
             SideChannelManager.UnregisterSideChannel(memoChannel);
         }
     }
-}
-
-public class GameNotClickableException : InvalidOperationException {
-
 }
