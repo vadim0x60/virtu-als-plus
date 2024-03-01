@@ -98,8 +98,8 @@ public class DirectPlayer : Agent
     }
 
     public void OnClickabilityChange(object sender, bool clickable) {
-        if (!clickable) {
-            throw new GameNotClickableException();
+        if (clickable) {
+            act(actionQueue.Dequeue());
         }
     }
 
@@ -126,10 +126,16 @@ public class DirectPlayer : Agent
         }
     }
 
+    private Queue<int> actionQueue = new Queue<int>();
+
     // Update is called once per frame
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         int action = actionBuffers.DiscreteActions[0];
+        act(action);
+    }
+
+    private void act(int action) {
         if (action > 0) {
             actionCount++;
         }
@@ -253,92 +259,97 @@ public class DirectPlayer : Agent
         }
 
         if (!AdviceMode) {
-            switch (action) {
-                case 0:
-                    // Do nothing
-                    break;
-                case 1:
-                    hub.ABG();
-                    break;
-                case 2:
-                    hub.AirwayManoeuvresButton();
-                    break;
-                case 3:
-                    hub.AtropineGiven();
-                    break;
-                case 4:
-                    hub.AdenosineGiven();
-                    break;
-                case 5:
-                    hub.AdrenalineGiven();
-                    break;
-                case 6:
-                    hub.AmiodaroneGiven();
-                    break;
-                case 7:
-                    hub.MidazolamGiven();
-                    break;
-                case 8:
-                    hub.Venflon();
-                    break;
-                case 9:
-                    hub.Yankeur();
-                    break;
-                case 10:
-                    hub.Bloods();
-                    break;
-                case 11:
-                    hub.BPCuffOn();
-                    break;
-                case 12:
-                    hub.BVM();
-                    break;
-                case 13:
-                    hub.Guedel();
-                    break;
-                case 14:
-                    hub.NRBMask();
-                    break;
-                // Defibrillator:
-                case 15:
-                    defibOn.OnMouseDown();
-                    break;
-                case 16:
-                    defibOn.AttachPads ();
-                    hub.AttachPads ();
-                    break;
-                case 17:
-                    hub.Shock();
-                    break;
-                case 18:
-                    hub.ToggleOffChest ();
-                    defibController.Charge ();
-                    break;
-                case 19:
-                    defibController.ChangePaceCurrent("down");
-                    break;
-                case 20:
-                    defibController.ChangePaceCurrent("up");
-                    break;
-                case 21:
-                    defibController.EnergyDown();
-                    break;
-                case 22:
-                    defibController.EnergyUp();
-                    break;
-                case 23:
-                    defibController.ChangePaceRate("down");
-                    break;
-                case 24:
-                    defibController.ChangePaceRate("up");
-                    break;
-                case 25:
-                    defibController.Pace();
-                    break;
-                // FINISH:
-                case 34:
-                    hub.Done();
-                    break;
+            if (hub.clickable) {
+                switch (action) {
+                    case 0:
+                        // Do nothing
+                        break;
+                    case 1:
+                        hub.ABG();
+                        break;
+                    case 2:
+                        hub.AirwayManoeuvresButton();
+                        break;
+                    case 3:
+                        hub.AtropineGiven();
+                        break;
+                    case 4:
+                        hub.AdenosineGiven();
+                        break;
+                    case 5:
+                        hub.AdrenalineGiven();
+                        break;
+                    case 6:
+                        hub.AmiodaroneGiven();
+                        break;
+                    case 7:
+                        hub.MidazolamGiven();
+                        break;
+                    case 8:
+                        hub.Venflon();
+                        break;
+                    case 9:
+                        hub.Yankeur();
+                        break;
+                    case 10:
+                        hub.Bloods();
+                        break;
+                    case 11:
+                        hub.BPCuffOn();
+                        break;
+                    case 12:
+                        hub.BVM();
+                        break;
+                    case 13:
+                        hub.Guedel();
+                        break;
+                    case 14:
+                        hub.NRBMask();
+                        break;
+                    // Defibrillator:
+                    case 15:
+                        defibOn.OnMouseDown();
+                        break;
+                    case 16:
+                        defibOn.AttachPads ();
+                        hub.AttachPads ();
+                        break;
+                    case 17:
+                        hub.Shock();
+                        break;
+                    case 18:
+                        hub.ToggleOffChest ();
+                        defibController.Charge ();
+                        break;
+                    case 19:
+                        defibController.ChangePaceCurrent("down");
+                        break;
+                    case 20:
+                        defibController.ChangePaceCurrent("up");
+                        break;
+                    case 21:
+                        defibController.EnergyDown();
+                        break;
+                    case 22:
+                        defibController.EnergyUp();
+                        break;
+                    case 23:
+                        defibController.ChangePaceRate("down");
+                        break;
+                    case 24:
+                        defibController.ChangePaceRate("up");
+                        break;
+                    case 25:
+                        defibController.Pace();
+                        break;
+                    // FINISH:
+                    case 34:
+                        hub.Done();
+                        break;
+                }
+                else {
+                    actionQueue.Enqueue(action);
+                }
             }
         }
     }
