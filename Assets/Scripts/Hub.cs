@@ -2222,6 +2222,8 @@ public class Hub : MonoBehaviour {
 	}
 
 	public void Done () {
+		bool didWell = true;
+
         if (scene == "Training")
         {
             Vector3 endPos = new Vector3(0f, nonCPRButtons.transform.position.y, nonCPRButtons.transform.position.z);
@@ -2240,8 +2242,10 @@ public class Hub : MonoBehaviour {
                     demoEndText.text += "Well done! You performed an examination of the cardiovascular system, checked the blood pressure, verified the cardiac rhythm and sent blood tests.\n\n" +
                         "Those are the key components of the \"C\" stage of the ABCDE assessment. ";
                     //Code to alter user's profile to reflect that scenario has been completed here.
+					didWell = false;
                 } else
                 {
+					didWell = true;
                     demoEndText.text += "Oops! You forgot to:\n\n";
                     if (!clinical_information_obtained.ContainsValue("Circulation_examination"))
                     {
@@ -2284,7 +2288,6 @@ public class Hub : MonoBehaviour {
             nonCPRButtons.transform.position = endPos;
             examinationButtons.transform.position = examinationButtonsOffScreen;
             Pause();
-            bool didWell = true;
             demoEndText.text += "Thanks for playing! Here's how you did:\n\n";
             if (MAP >= 60f && sats >= 88 && !patient.airwayObstructed && respRate > 7)
             {
@@ -2449,17 +2452,21 @@ public class Hub : MonoBehaviour {
             if (didWell)
             {
                 demoEndText.text += " Excellent work! ";
-				DispatchFeedback(Feedback.Success);
+				feedback = Feedback.Success;
             }
             else
             {
                 demoEndText.text += "\n\nDon't worry if you're not perfect yet, though. That's exactly what we're here for! ";
-				DispatchFeedback(Feedback.Failure);
             }
             demoEndScreen.SetActive(true);
         }
 
 		DispatchMemo(demoEndText.text);
+		if (didWell) {
+			DispatchFeedback(Feedback.Success);
+		} else {
+			DispatchFeedback(Feedback.Blunder);
+		}
 
 		if (nonBlockingMode) Reload();
 	}
