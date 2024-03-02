@@ -333,11 +333,11 @@ public class Hub : MonoBehaviour {
 		}
 	}
 
-	public event EventHadler<Feedback> FeedbackDispatched;
-	public event EventHadler<Insights> InsightDispatched;
-	public event EventHadler<Measurement> MeasurementDispatched;
-	public event EventHadler<string> MemoDispatched;
-	public event EventHadler<bool> ClickabilityChanged;
+	public event EventHandler<Feedback> FeedbackDispatched;
+	public event EventHandler<Insights> InsightDispatched;
+	public event EventHandler<Measurement> MeasurementDispatched;
+	public event EventHandler<string> MemoDispatched;
+	public event EventHandler<bool> ClickabilityChanged;
 
 	public void DispatchFeedback(Feedback feedback) {
 		FeedbackDispatched?.Invoke(feedback);
