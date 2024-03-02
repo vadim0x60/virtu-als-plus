@@ -346,6 +346,7 @@ public class DirectPlayer : Agent
                     case 34:
                         hub.Done();
                         break;
+                    }
                 }
                 else {
                     actionQueue.Enqueue(action);
