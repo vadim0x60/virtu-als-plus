@@ -260,7 +260,7 @@ public class DirectPlayer : Agent
         }
 
         if (!AdviceMode) {
-            if (hub.clickable) {
+            if (hub.Clickable) {
                 switch (action) {
                     case 0:
                         // Do nothing

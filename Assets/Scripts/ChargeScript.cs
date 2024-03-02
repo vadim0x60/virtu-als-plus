@@ -17,7 +17,7 @@ public class ChargeScript : MonoBehaviour {
 
     void OnMouseDown()
     {
-		if (control.defibReady && mainHub.clickable) {
+		if (control.defibReady && mainHub.Clickable) {
 			mainHub.ToggleOffChest ();
 			if (!control.charging && !control.charged && mainHub.MAP == 0f) {
 				mainHub.SendMessage ("\"Charging defib, resume chest compressions!\"", 0, 2, false);

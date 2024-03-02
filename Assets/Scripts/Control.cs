@@ -558,7 +558,7 @@ public class Control : MonoBehaviour {
     //PROVIDES A FUNCTION FOR THE SYNC BUTTON TO FEED INTO
     public void Sync()
     {
-		if (defibReady && hub.clickable) {
+		if (defibReady && hub.Clickable) {
 			if (!pacing) {
 				sync = !sync;
 				syncLight.active = !syncLight.active;
@@ -1647,7 +1647,7 @@ public class Control : MonoBehaviour {
 	//CODES THE PACER
 	public void Pace()
 	{
-		if (defibReady && hub.clickable && !capture) {
+		if (defibReady && hub.Clickable && !capture) {
 			if (energyText.active) {
 				energyText.active = false;
 			} else {
@@ -1669,7 +1669,7 @@ public class Control : MonoBehaviour {
 
 	public void ChangePaceRate(string upDown)
 	{
-		if (hub.clickable) {
+		if (hub.Clickable) {
 			if (defibReady) {
 				if (upDown == "up" && paceRate < 100f) {
 					paceRate += 5f;
@@ -1683,7 +1683,7 @@ public class Control : MonoBehaviour {
 
 	public void ChangePaceCurrent (string upDown)
 	{
-		if (hub.clickable) {
+		if (hub.Clickable) {
 			if (defibReady) {
 				if (upDown == "up" && paceCurrent < 125f) {
 					if (hub.patient.conscious) {
@@ -1757,7 +1757,7 @@ public class Control : MonoBehaviour {
 
 	public void EnergyUp ()
 	{
-		if (defibReady && hub.clickable) {
+		if (defibReady && hub.Clickable) {
 			if (energyListPosition < energyList.Length - 1) {
 				energyListPosition++;
 				energyText.GetComponent<TextMesh> ().text = "Energy: " + energyList [energyListPosition] + "J";
@@ -1767,7 +1767,7 @@ public class Control : MonoBehaviour {
 
 	public void EnergyDown()
 	{
-		if (defibReady && hub.clickable) {
+		if (defibReady && hub.Clickable) {
 			if (energyListPosition > 0) {
 				energyListPosition--;
 				energyText.GetComponent<TextMesh> ().text = "Energy: " + energyList [energyListPosition] + "J";
