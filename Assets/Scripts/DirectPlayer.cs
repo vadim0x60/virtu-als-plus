@@ -135,7 +135,8 @@ public class DirectPlayer : Agent
         act(action);
     }
 
-    private void act(int action) {
+    private void act(int action) 
+    {
         if (action > 0) {
             actionCount++;
         }
@@ -346,18 +347,17 @@ public class DirectPlayer : Agent
                     case 34:
                         hub.Done();
                         break;
-                    }
                 }
-                else {
-                    actionQueue.Enqueue(action);
-                }
+            }
+            else {
+                actionQueue.Enqueue(action);
             }
         }
     }
 
     public void OnDestroy()
     {
-        if (Academy.IsInitialized){
+        if (Academy.IsInitialized) {
             SideChannelManager.UnregisterSideChannel(memoChannel);
         }
     }
