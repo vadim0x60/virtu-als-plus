@@ -103,16 +103,16 @@ public class DirectPlayer : Agent
         }
     }
 
-    public void RequestDecision(object sender, object args) {
+    public void RequestDecisionOnInsight(object sender, Insights args) {
         RequestDecision();
     }
 
     public void Play() {
-        hub.InsightDispatched += RequestDecision;
+        hub.InsightDispatched += RequestDecisionOnInsight;
     }
 
     public void Pause() {
-        hub.InsightDispatched -= RequestDecision;
+        hub.InsightDispatched -= RequestDecisionOnInsight;
     }
 
     public override void CollectObservations(VectorSensor vs)
