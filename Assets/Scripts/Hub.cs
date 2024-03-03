@@ -2452,7 +2452,6 @@ public class Hub : MonoBehaviour {
             if (didWell)
             {
                 demoEndText.text += " Excellent work! ";
-				feedback = Feedback.Success;
             }
             else
             {
