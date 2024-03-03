@@ -109,6 +109,7 @@ public class DirectPlayer : Agent
 
     public void Play() {
         hub.InsightDispatched += RequestDecisionOnInsight;
+        StartCoroutine(EnsureAction());
     }
 
     public void Pause() {
@@ -352,6 +353,15 @@ public class DirectPlayer : Agent
             else {
                 actionQueue.Enqueue(action);
             }
+        }
+    }
+
+    public IEnumerator EnsureAction() {
+        int actionCountSnapshot = ActionCount;
+
+        while (ActionCount == actionCountSnapshot) {
+            RequestDecision();
+            yield return new WaitForSeconds(5);
         }
     }
 

@@ -26,7 +26,6 @@ public class AIMenu : MonoBehaviour {
         Hub.nonBlockingMode = true;
 
         DirectPlayer.Play();
-        Decision();
 
         playButton.SetActive(false);
         pauseButton.SetActive(true);
@@ -41,23 +40,15 @@ public class AIMenu : MonoBehaviour {
         pauseButton.SetActive(false);
     }
 
-    private IEnumerator ensureAction() {
-        int actionCount = DirectPlayer.ActionCount;
-
-        while (DirectPlayer.ActionCount == actionCount) {
-            DirectPlayer.RequestDecision();
-            yield return new WaitForSeconds(1);
-        }
-    }
 
     public void Decision() {
         DirectPlayer.AdviceMode = false;
-        StartCoroutine(ensureAction());
+        StartCoroutine(DirectPlayer.EnsureAction());
     }
 
     public void Advice() {
         DirectPlayer.AdviceMode = true;
-        StartCoroutine(ensureAction());
+        StartCoroutine(DirectPlayer.EnsureAction());
     }
 
     // Use this for initialization
