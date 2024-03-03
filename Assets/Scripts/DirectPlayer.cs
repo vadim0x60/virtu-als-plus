@@ -122,7 +122,7 @@ public class DirectPlayer : Agent
         }
         else {
             stenographer.Recollect(vs.AddObservation);
-            rewardProfile.OnNext(Feedback.Tick);
+            rewardProfile.OnFeedback(this, Feedback.Tick);
         }
     }
 

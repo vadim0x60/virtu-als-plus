@@ -329,7 +329,7 @@ public class Hub : MonoBehaviour {
 		}
 		set {
 			clickable = value;
-			ClickabilityChanged?.Invoke(clickable);
+			ClickabilityChanged?.Invoke(this, clickable);
 		}
 	}
 
@@ -340,21 +340,21 @@ public class Hub : MonoBehaviour {
 	public event EventHandler<bool> ClickabilityChanged;
 
 	public void DispatchFeedback(Feedback feedback) {
-		FeedbackDispatched?.Invoke(feedback);
+		FeedbackDispatched?.Invoke(this, feedback);
 	}
 
 	public void DispatchInsight(Insights insight) {
-		InsightDispatched?.Invoke(insight);
+		InsightDispatched?.Invoke(this, insight);
 	}
 
 	public void DispatchMeasurement(Insights measurable, float value) {
 		DispatchInsight(measurable);
 
-		MeasurementDispatched?.Invoke(new Measurement(measurable, value));
+		MeasurementDispatched?.Invoke(this, new Measurement(measurable, value));
 	}
 
 	public void DispatchMemo(string memo) {
-		MemoDispatched?.Invoke(memo);
+		MemoDispatched?.Invoke(this, memo);
 	}
 
 	private void DispatchECG() {
