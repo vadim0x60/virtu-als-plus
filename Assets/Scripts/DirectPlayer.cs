@@ -137,10 +137,6 @@ public class DirectPlayer : Agent
 
     private void act(int action) 
     {
-        if (action > 0) {
-            actionCount++;
-        }
-
         switch (action) {
             case 0:
                 // Do nothing
@@ -347,6 +343,10 @@ public class DirectPlayer : Agent
                     case 34:
                         hub.Done();
                         break;
+                }
+
+                if (action > 0) {
+                    actionCount++;
                 }
             }
             else {

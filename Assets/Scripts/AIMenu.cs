@@ -26,7 +26,7 @@ public class AIMenu : MonoBehaviour {
         Hub.nonBlockingMode = true;
 
         DirectPlayer.Play();
-        DirectPlayer.RequestDecision();
+        Decision();
 
         playButton.SetActive(false);
         pauseButton.SetActive(true);
