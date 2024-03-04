@@ -489,6 +489,7 @@ public class Hub : MonoBehaviour {
 			string message = "You are the first ALS provider on scene at a cardiac arrest call on a medical ward. " +
 			                 "You have confirmed cardiac arrest, CPR is ongoing. The rest of the team are en route.\n\n" +
 			                 "Manage the arrest as best you can until they get here. ";
+			DispatchMemo(message);
 			messageText.text = message;
 			CPRButtons.transform.position = new Vector3 (posX, CPRButtons.transform.position.y, CPRButtons.transform.position.z);
 		} else if (scene == "DemoCPR") {
@@ -520,6 +521,7 @@ public class Hub : MonoBehaviour {
 				message += "push the spacebar on your keyboard. ";
 			}
 			message += "Select the bag/valve mask icon to deliver a breath. Good luck! ";
+			DispatchMemo(message);
 			messageText.text = message;
 			CPRButtons.transform.position = new Vector3 (posX, CPRButtons.transform.position.y, CPRButtons.transform.position.z);
 			//If randomRhythm is true, MAP will automatically be zero for first three cycles
@@ -572,6 +574,7 @@ public class Hub : MonoBehaviour {
 				750f, menuIcon.transform.position.z);
 			menuIcon.transform.position = newby;*/
             checkRhythmText.text = "Pulse check";
+			DispatchMemo(checkRhythmText.text);
             CPRButtons.SetActive(false);
             //nonCPRButtons.SetActive (true);
             //examinationButtons.SetActive (true);
@@ -1973,6 +1976,7 @@ public class Hub : MonoBehaviour {
 				cprTimeMins += 1;
 			}
 			cprTimerText.text = "CPR timer:\n" + cprTimeMins + ":" + cprTimeSecs.ToString ("00.00");
+			DispatchMemo(cprTimerText.text);
 		}
 	}
 
@@ -3384,6 +3388,7 @@ public class Hub : MonoBehaviour {
         //Do not use "StopAllCoroutines()" here - will mess with the SwitchCPRButtons() function
 		if (nonBlockingMode) button = false;
 
+		DispatchMemo(message);
         StartCoroutine(PulseMessageEnumerator(message, delay, timer, button));
     }
 
