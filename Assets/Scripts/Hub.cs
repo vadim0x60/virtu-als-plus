@@ -3384,7 +3384,11 @@ public class Hub : MonoBehaviour {
     public void SendMessage(string message, int delay, int timer, bool button)
     {
         //Do not use "StopAllCoroutines()" here - will mess with the SwitchCPRButtons() function
-		if (nonBlockingMode) button = false;
+		if (nonBlockingMode) {
+			button = false;
+			delay = 0;
+			timer = 0;
+		}
 
 		DispatchMemo(message);
         StartCoroutine(PulseMessageEnumerator(message, delay, timer, button));
