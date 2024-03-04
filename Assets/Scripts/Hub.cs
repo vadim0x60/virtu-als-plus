@@ -2470,8 +2470,6 @@ public class Hub : MonoBehaviour {
 		} else {
 			DispatchFeedback(Feedback.Failure);
 		}
-
-		if (nonBlockingMode) Reload();
 	}
 
 	void DrawerUpdate()
