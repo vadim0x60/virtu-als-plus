@@ -2468,7 +2468,7 @@ public class Hub : MonoBehaviour {
 		if (didWell) {
 			DispatchFeedback(Feedback.Success);
 		} else {
-			DispatchFeedback(Feedback.Blunder);
+			DispatchFeedback(Feedback.Failure);
 		}
 
 		if (nonBlockingMode) Reload();
