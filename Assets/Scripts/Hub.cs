@@ -4159,10 +4159,7 @@ public class Hub : MonoBehaviour {
 
 	public void Pause() {
 		Debug.Log("Pausing");
-		if (!nonBlockingMode)
-		{
-			Time.timeScale = 0;
-		}
+		Time.timeScale = 0;
 	}
 
 	public void Unpause() {
