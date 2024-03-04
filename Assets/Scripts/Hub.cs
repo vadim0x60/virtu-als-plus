@@ -4090,8 +4090,6 @@ public class Hub : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-		Debug.Log(Time.timeScale);
-
 		deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
 		//Debug.Log ("Frame rate: " + 1f / deltaTime);
 
