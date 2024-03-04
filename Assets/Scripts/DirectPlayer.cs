@@ -92,6 +92,7 @@ public class DirectPlayer : Agent
         hub.FeedbackDispatched += rewardProfile.OnFeedback;
         hub.MemoDispatched += memoChannel.OnMemo;
         hub.ClickabilityChanged += OnClickabilityChange;
+        rewardProfile.Done += EndEpisode;
 
         defibController = hub.controller.GetComponent<Control>();
         defibOn = hub.defibOnDefibButton.GetComponent<DefibOn>();
@@ -118,13 +119,8 @@ public class DirectPlayer : Agent
 
     public override void CollectObservations(VectorSensor vs)
     {
-        if (rewardProfile.Done) { 
-            EndEpisode();
-        }
-        else {
-            stenographer.Recollect(vs.AddObservation);
-            rewardProfile.OnFeedback(this, Feedback.Tick);
-        }
+        stenographer.Recollect(vs.AddObservation);
+        rewardProfile.OnFeedback(this, Feedback.Tick);
     }
 
     private Queue<int> actionQueue = new Queue<int>();

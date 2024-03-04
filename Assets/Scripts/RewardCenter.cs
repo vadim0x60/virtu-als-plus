@@ -17,19 +17,19 @@ public class RewardCenter {
 
     public Action<float> AddReward;
 
-    public bool Done = false;
+    public event Action Done;
 
     public void OnFeedback(object sender, Feedback feedback) {
         switch(feedback) {
             case Feedback.Success:
                 AddReward(SuccessReward);
                 Debug.Log("Success is a terminal insight indicating episode end");
-                Done = true;
+                Done?.Invoke();
                 break;
             case Feedback.Failure:
                 AddReward(FailureReward);
                 Debug.Log("Failure is a terminal insight indicating episode end");
-                Done = true;
+                Done?.Invoke();
                 break;
             case Feedback.Blunder:
                 AddReward(BlunderReward);
