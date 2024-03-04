@@ -1017,17 +1017,17 @@ public class AnimationTesting : MonoBehaviour
     {
         if (hub.checkRhythmText.text == "Pulse check") {
             string message = "There's no pulse!";
-            hub.SendMessage(message, 0, 2, true);
+            hub.SendMessage(message, 0, 3, true);
             hub.checkRhythmText.text = "Rhythm check";
             if (goDoc1.activeSelf) {
                 PlaySequence("CPR");
             }
         } else if (hub.cardiacArrest && !goDoc1.activeSelf) {
             string message = "Oops! Your patient has arrested and you haven't started chest compressions!";
-            hub.SendMessage(message, 0, 2, true);
+            hub.SendMessage(message, 0, 3, true);
         } else if (hub.cardiacArrest && hub.rhythmChecks == 1 && !goDoc2.activeSelf) {
             string message = "Are you really going to perform a whole cycle of CPR without bagging your patient...?";
-            hub.SendMessage(message, 0, 2, true);
+            hub.SendMessage(message, 0, 3, true);
             PlaySequence("CPR");
         } else {
             hub.ToggleOffChest();

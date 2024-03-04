@@ -1250,7 +1250,7 @@ public class Hub : MonoBehaviour {
                 message = "John groans in response to painful stimulus. ";
 				DispatchInsight(Insights.ResponseGroan);
             }
-            SendMessage(message, 0, 2, true);
+            SendMessage(message, 0, 3, true);
         }
         else
         {
@@ -1667,14 +1667,14 @@ public class Hub : MonoBehaviour {
                 message = "Your colleague who is bagging the patient tells you they can no longer " +
                         "feel a pulse! ";
                 checkRhythmText.text = "Rhythm check";
-                SendMessage(message, 0, 2, true);
+                SendMessage(message, 0, 3, true);
             }
             else
             {
                 PlaySequence("Arrested");
                 message = "John has stopped breathing! ";
             }
-            SendMessage(message, 0, 2, true);
+            SendMessage(message, 0, 3, true);
         }
 	}
 
@@ -3126,8 +3126,7 @@ public class Hub : MonoBehaviour {
 		if (debugging) {
 			Debug.Log ("PulseMessageEnumerator starting, dsp =" + dontSuspendCanvas);
 		}
-		timer++; //I used 2 seconds for all the subtitles, but it was a bit short and I couldn't be bothered changing them individually
-
+		
 		if (headTiltChinLiftButton.activeSelf) {
 			headTiltChinLiftButton.SetActive (false);
 			jawThrustButton.SetActive (false);
