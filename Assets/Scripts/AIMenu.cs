@@ -33,7 +33,7 @@ public class AIMenu : MonoBehaviour {
 
     public void Pause() {
         Debug.Log ("AI mode off");
-        DirectPlayer.Pause();
+        DirectPlayer.AutoStep = false;
         Hub.nonBlockingMode = nonBlockingMode;
 
         playButton.SetActive(true);
