@@ -53,7 +53,6 @@ public class AIMenu : MonoBehaviour {
 
     // Use this for initialization
 	void Start () {
-        Academy.Instance.OnEnvironmentReset += Hub.Reload;
 	}
 
 	// Update is called once per frame
