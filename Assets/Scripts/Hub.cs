@@ -1675,6 +1675,7 @@ public class Hub : MonoBehaviour {
             {
                 PlaySequence("Arrested");
                 message = "John has stopped breathing! ";
+				DispatchInsight(Insights.BreathingNone);
             }
             SendMessage(message, 0, 3, true);
         }
