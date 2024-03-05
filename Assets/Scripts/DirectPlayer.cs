@@ -113,7 +113,7 @@ public class DirectPlayer : Agent
         defibOn = hub.defibOnDefibButton.GetComponent<DefibOn>();
     }
 
-    protected override void OnEpisodeBegin()
+    public override void OnEpisodeBegin()
     {
         actionCount = 0;
 
