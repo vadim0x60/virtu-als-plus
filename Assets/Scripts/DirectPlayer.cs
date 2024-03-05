@@ -26,6 +26,18 @@ public class DirectPlayer : Agent
     private int actionCount = 0;
     public int ActionCount {get{return actionCount;}}
 
+    private bool autoStep = false;
+    public bool AutoStep {
+        get {
+            return autoStep;
+        }
+        set {
+            autoStep = value;
+            if (autoStep) hub.InsightDispatched += RequestDecisionOnInsight;
+            else hub.InsightDispatched -= RequestDecisionOnInsight;
+        }
+    }
+
     public readonly RewardCenter rewardProfile = new RewardCenter {
         FailureReward = -100f,
         SuccessReward = 100f,
@@ -85,6 +97,9 @@ public class DirectPlayer : Agent
     // Start is called before the first frame update
     void Start()
     {
+    }
+
+    public override void Initialize() {
         SideChannelManager.RegisterSideChannel(memoChannel);
 
         hub.InsightDispatched += stenographer.OnInsight;
@@ -98,6 +113,15 @@ public class DirectPlayer : Agent
         defibOn = hub.defibOnDefibButton.GetComponent<DefibOn>();
     }
 
+    protected override void OnEpisodeBegin()
+    {
+        actionCount = 0;
+
+        if (autoStep) {
+            RequestDecision();
+        }
+    }
+
     public void OnClickabilityChange(object sender, bool clickable) {
         if (clickable && actionQueue.Count > 0) {
             act(actionQueue.Dequeue());
@@ -106,15 +130,6 @@ public class DirectPlayer : Agent
 
     public void RequestDecisionOnInsight(object sender, Insights args) {
         RequestDecision();
-    }
-
-    public void Play() {
-        hub.InsightDispatched += RequestDecisionOnInsight;
-        Academy.Instance.OnEnvironmentReset += RequestDecision;
-    }
-
-    public void Pause() {
-        hub.InsightDispatched -= RequestDecisionOnInsight;
     }
 
     public override void CollectObservations(VectorSensor vs)

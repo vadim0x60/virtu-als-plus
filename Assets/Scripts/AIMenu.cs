@@ -25,7 +25,7 @@ public class AIMenu : MonoBehaviour {
         nonBlockingMode = Hub.nonBlockingMode;
         Hub.nonBlockingMode = true;
 
-        DirectPlayer.Play();
+        DirectPlayer.AutoStep = true;
 
         playButton.SetActive(false);
         pauseButton.SetActive(true);
