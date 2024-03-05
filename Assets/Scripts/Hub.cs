@@ -3385,8 +3385,6 @@ public class Hub : MonoBehaviour {
         //Do not use "StopAllCoroutines()" here - will mess with the SwitchCPRButtons() function
 		if (nonBlockingMode) {
 			button = false;
-			delay = 0;
-			timer = 0;
 		}
 
 		DispatchMemo(message);
