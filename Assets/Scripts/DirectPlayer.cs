@@ -110,7 +110,7 @@ public class DirectPlayer : Agent
 
     public void Play() {
         hub.InsightDispatched += RequestDecisionOnInsight;
-        StartCoroutine(EnsureAction());
+        Academy.Instance.OnEnvironmentReset += RequestDecision;
     }
 
     public void Pause() {
