@@ -35,7 +35,7 @@ public class StartScript : MonoBehaviour {
 			Academy.Instance.OnEnvironmentReset += DHH_Demo;
 			aiMenu.Play();
 			
-			Debug.Log($"Academy initialized: {Academy.Instance.IsInitialized}");
+			Debug.Log($"Academy initialized: {Academy.IsInitialized}");
 			Debug.Log($"Academy auto stepping: {Academy.Instance.AutomaticSteppingEnabled}");
 			Debug.Log($"Academy step count: {Academy.Instance.StepCount}");
 		}
