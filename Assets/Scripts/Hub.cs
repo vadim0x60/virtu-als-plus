@@ -396,6 +396,8 @@ public class Hub : MonoBehaviour {
 
 		Pause();
 
+		Clickable = false;
+
 		SetPatientFactors ();
 
         originalCamPos = mainCamera.transform.position;
