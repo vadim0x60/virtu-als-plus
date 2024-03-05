@@ -99,7 +99,7 @@ public class DirectPlayer : Agent
     }
 
     public void OnClickabilityChange(object sender, bool clickable) {
-        if (clickable) {
+        if (clickable && actionQueue.Count > 0) {
             act(actionQueue.Dequeue());
         }
     }
