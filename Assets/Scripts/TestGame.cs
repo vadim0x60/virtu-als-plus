@@ -9,7 +9,7 @@ public class TestGame : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	public void OnMouseDown () {
+	public void OnClick () {
         Debug.Log("Pressed");
         Application.LoadLevel("DefibScene");
     }

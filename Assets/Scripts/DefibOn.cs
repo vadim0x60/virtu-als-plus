@@ -25,7 +25,7 @@ public class DefibOn : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	public void OnMouseDown () {
+	public void OnClick () {
 		if (padsAttached) {
             screenMask.SetActive (false);
 			controller.DefibReady ();

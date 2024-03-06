@@ -177,87 +177,69 @@ public class DirectPlayer : Agent
                 break;
             // Defibrillator:
             case 15:
-                PlayerFocus = Focus.Defibrillator;
-                break;
             case 16:
-                PlayerFocus = Focus.Defibrillator;
-                break;
             case 17:
-                PlayerFocus = Focus.Defibrillator;
-                break;
             case 18:
-                PlayerFocus = Focus.Defibrillator;
-                break;
             case 19:
-                PlayerFocus = Focus.Defibrillator;
-                break;
             case 20:
-                PlayerFocus = Focus.Defibrillator;
-                break;
             case 21:
-                PlayerFocus = Focus.Defibrillator;
-                break;
             case 22:
-                PlayerFocus = Focus.Defibrillator;
-                break;
             case 23:
-                PlayerFocus = Focus.Defibrillator;
-                break;
             case 24:
-                PlayerFocus = Focus.Defibrillator;
-                break;
             case 25:
                 PlayerFocus = Focus.Defibrillator;
                 break;
             // Assessment:
-            case 26:
+            case 28:
                 PlayerFocus = Focus.General;
                 hub.AssessResponse();
                 break;
-            case 27:
+            case 29:
                 PlayerFocus = Focus.General;
                 hub.AssessAirway();
                 break;
-            case 28:
+            case 30:
                 PlayerFocus = Focus.General;
                 hub.AssessBreathing();
                 break;
-            case 29:
+            case 31:
                 PlayerFocus = Focus.General;
                 hub.AssessCirculation();
                 break;
-            case 30:
+            case 32:
                 PlayerFocus = Focus.General;
                 hub.AssessDisability();
                 break;
-            case 31:
+            case 33:
                 PlayerFocus = Focus.General;
                 hub.AssessExposure();
                 break;
-            case 32:
+            case 34:
                 PlayerFocus = Focus.Defibrillator;
                 // Assess defibrillator
                 break;
-            case 33:
+            case 35:
                 PlayerFocus = Focus.Monitor;
                 // Assess monitor
                 break;
             // FINISH:
-            case 34:
+            case 36:
                 break;
         }
 
         if (!AdviceMode) {
             if (hub.Clickable) {
+                GameObject clickee = null;
+
                 switch (action) {
                     case 0:
                         // Do nothing
                         break;
                     case 1:
-                        hub.ABG();
+                        clickee = hub.drawerABG;
                         break;
                     case 2:
-                        hub.AirwayManoeuvresButton();
+                        clickee = hub.airwayManoeuvresButton;
                         break;
                     case 3:
                         hub.AtropineGiven();
@@ -275,40 +257,38 @@ public class DirectPlayer : Agent
                         hub.MidazolamGiven();
                         break;
                     case 8:
-                        hub.Venflon();
+                        clickee = hub.drawerVenflon;
                         break;
                     case 9:
-                        hub.Yankeur();
+                        clickee = hub.drawerYankeur;
                         break;
                     case 10:
-                        hub.Bloods();
+                        clickee = hub.drawerVacutainers;
                         break;
                     case 11:
-                        hub.BPCuffOn();
+                        clickee = hub.drawerBPCuff;
                         break;
                     case 12:
-                        hub.BVM();
+                        clickee = hub.drawerBVM;
                         break;
                     case 13:
-                        hub.Guedel();
+                        clickee = hub.drawerGuedel;
                         break;
                     case 14:
-                        hub.NRBMask();
+                        clickee = hub.drawerNRBMask;
                         break;
                     // Defibrillator:
                     case 15:
-                        defibOn.OnMouseDown();
+                        clickee = defibOnDefibButton;
                         break;
                     case 16:
-                        defibOn.AttachPads ();
-                        hub.AttachPads ();
+                        clickee = hub.attachPadsButton;
                         break;
                     case 17:
-                        hub.Shock();
+                        clickee = hub.contol.shockButton;
                         break;
                     case 18:
-                        hub.ToggleOffChest ();
-                        defibController.Charge ();
+                        clickee = hub.control.chargeButton;
                         break;
                     case 19:
                         defibController.ChangePaceCurrent("down");
@@ -329,12 +309,26 @@ public class DirectPlayer : Agent
                         defibController.ChangePaceRate("up");
                         break;
                     case 25:
-                        defibController.Pace();
+                        clickee = hub.control.paceButton;
+                        break;
+                    case 26:
+                        clickee = hub.control.pacePauseButton;
+                        break;
+                    case 27:
+                        clickee = hub.control.syncButton;
                         break;
                     // FINISH:
-                    case 34:
+                    case 36:
                         hub.Done();
                         break;
+
+                    if (clickee != null) {
+                        if (clickee.activeSelf) clickee.OnClick();
+                        else {
+                            rewardProfile.OnFeedback(this, Feedback.Blunder);
+                            memoChannel.OnMemo("... this button seems to be disabled ...");
+                        }
+                    }
                 }
 
                 if (action > 0) {

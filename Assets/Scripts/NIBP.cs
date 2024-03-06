@@ -14,7 +14,7 @@ public class NIBP : MonoBehaviour {
 	
 	}
 
-	void OnMouseDown() {
+	void OnClick() {
 		hub.NIBP ();
 	}
 }

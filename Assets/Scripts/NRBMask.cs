@@ -13,7 +13,7 @@ public class NRBMask : MonoBehaviour {
 	
 	}
 
-	void OnMouseDown() {
+	void OnClick() {
 		hub.NRBMask ();
 	}
 }

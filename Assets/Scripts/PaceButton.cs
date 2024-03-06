@@ -9,7 +9,7 @@ public class PaceButton : MonoBehaviour {
 	
 	}
 
-    void OnMouseDown ()
+    void OnClick ()
     {
         defibController.GetComponent<Control>().Pace();
     }

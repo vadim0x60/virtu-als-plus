@@ -13,7 +13,7 @@ public class BPCuff : MonoBehaviour {
 	
 	}
 
-	void OnMouseDown () {
+	void OnClick () {
 		hub.BPCuffOn ();
 	}
 }

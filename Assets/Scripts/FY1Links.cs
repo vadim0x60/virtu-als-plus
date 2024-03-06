@@ -17,7 +17,7 @@ public class FY1Links : MonoBehaviour {
 		
 	}
 
-	void OnMouseDown() {
+	void OnClick() {
 		Debug.Log (link);
 		if (link == "simulation") {
 			startScript.StartGame ("abgPractice");

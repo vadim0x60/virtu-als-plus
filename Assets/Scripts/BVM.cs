@@ -13,7 +13,7 @@ public class BVM : MonoBehaviour {
 	
 	}
 
-	void OnMouseDown() {
+	void OnClick() {
 		hub.BVM ();
 	}
 }

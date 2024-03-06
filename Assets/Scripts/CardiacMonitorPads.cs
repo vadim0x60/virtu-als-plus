@@ -15,7 +15,7 @@ public class CardiacMonitorPads : MonoBehaviour {
 	
 	}
 
-	void OnMouseDown() {
+	void OnClick() {
 		hub.MonitorPadsOn ();
 	}
 }

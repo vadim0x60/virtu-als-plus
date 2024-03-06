@@ -13,7 +13,7 @@ public class ALineCannula : MonoBehaviour {
 	
 	}
 
-	void OnMouseDown() {
+	void OnClick() {
 		hub.ALineOn ();
 	}
 }

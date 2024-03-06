@@ -10,7 +10,7 @@ public class RateUpButton : MonoBehaviour {
 
     }
 
-    void OnMouseDown()
+    void OnClick()
     {
         defibController.GetComponent<Control>().ChangePaceRate("up");
     }
