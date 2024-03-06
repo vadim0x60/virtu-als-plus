@@ -3518,6 +3518,7 @@ public class Hub : MonoBehaviour {
 				shockOrNotMessageText.text += "non-shockable (PEA).\n\n";
 			}
 			shockOrNotMessageText.text += "Keep studying, and better luck next time!\n\n(Press \"OK\" to return to the main menu.)";
+			DispatchFeedback(Feedback.Failure)
 		}
 	}
 
