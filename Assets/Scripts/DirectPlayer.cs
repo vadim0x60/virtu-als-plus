@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Unity.MLAgents;
 using Unity.MLAgents.SideChannels;
@@ -277,10 +278,10 @@ public class DirectPlayer : Agent
                         break;
                     // Defibrillator:
                     case 15:
-                        clickee = defibController.defibOnDefibButton;
+                        clickee = hub.defibOnDefibButton;
                         break;
                     case 16:
-                        clickee = defibController.attachPadsButton;
+                        clickee = hub.attachPadsButton;
                         break;
                     case 17:
                         clickee = defibController.shockButton;
@@ -321,7 +322,7 @@ public class DirectPlayer : Agent
                         break;
 
                     if (clickee != null) {
-                        if (clickee.activeSelf) clickee.GetComponent<Button>.onClick.Invoke();
+                        if (clickee.activeSelf) clickee.GetComponent<Button>().onClick.Invoke();
                         else {
                             rewardProfile.OnFeedback(this, Feedback.Blunder);
                             memoChannel.OnMemo(this, "... this button seems to be disabled ...");
