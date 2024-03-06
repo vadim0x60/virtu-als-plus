@@ -33,7 +33,6 @@ public class DirectPlayer : Agent
         TimestepReward = -0.1f
     };
 
-    private DefibOn defibOn;
     private Control defibController;
 
     private Stenographer stenographer;
@@ -56,7 +55,7 @@ public class DirectPlayer : Agent
                 hub.OpenCloseDrawerFromButton("Breathing");
                 break;
             case Focus.Defibrillator:
-                hub.FocusOnDefib();
+                hub.FocusOnDefibFromButton();
                 break;
             case Focus.Monitor:
                 hub.ViewMonitor();
@@ -98,7 +97,6 @@ public class DirectPlayer : Agent
         rewardProfile.Done += EndEpisode;
 
         defibController = hub.controller.GetComponent<Control>();
-        defibOn = hub.defibOnDefibButton.GetComponent<DefibOn>();
     }
 
     public override void OnEpisodeBegin()
@@ -279,16 +277,16 @@ public class DirectPlayer : Agent
                         break;
                     // Defibrillator:
                     case 15:
-                        clickee = defibOnDefibButton;
+                        clickee = defibController.defibOnDefibButton;
                         break;
                     case 16:
-                        clickee = hub.attachPadsButton;
+                        clickee = defibController.attachPadsButton;
                         break;
                     case 17:
-                        clickee = hub.contol.shockButton;
+                        clickee = defibController.shockButton;
                         break;
                     case 18:
-                        clickee = hub.control.chargeButton;
+                        clickee = defibController.chargeButton;
                         break;
                     case 19:
                         defibController.ChangePaceCurrent("down");
@@ -309,13 +307,13 @@ public class DirectPlayer : Agent
                         defibController.ChangePaceRate("up");
                         break;
                     case 25:
-                        clickee = hub.control.paceButton;
+                        clickee = defibController.paceButton;
                         break;
                     case 26:
-                        clickee = hub.control.pacePauseButton;
+                        clickee = defibController.pacePauseButton;
                         break;
                     case 27:
-                        clickee = hub.control.syncButton;
+                        clickee = defibController.syncButton;
                         break;
                     // FINISH:
                     case 36:
@@ -323,10 +321,10 @@ public class DirectPlayer : Agent
                         break;
 
                     if (clickee != null) {
-                        if (clickee.activeSelf) clickee.OnClick();
+                        if (clickee.activeSelf) clickee.GetComponent<Button>.onClick.Invoke();
                         else {
                             rewardProfile.OnFeedback(this, Feedback.Blunder);
-                            memoChannel.OnMemo("... this button seems to be disabled ...");
+                            memoChannel.OnMemo(this, "... this button seems to be disabled ...");
                         }
                     }
                 }
