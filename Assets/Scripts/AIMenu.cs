@@ -25,7 +25,9 @@ public class AIMenu : MonoBehaviour {
         nonBlockingMode = Hub.nonBlockingMode;
         Hub.nonBlockingMode = true;
 
-        DirectPlayer.AutoStep = true;
+        DecisionRequester dr = DirectPlayer.gameObject.AddComponent<DecisionRequester>();
+        dr.DecisionPeriod = DecisionPeriod;
+        dr.TakeActionsBetweenDecisions = false;
 
         playButton.SetActive(false);
         pauseButton.SetActive(true);
@@ -33,7 +35,11 @@ public class AIMenu : MonoBehaviour {
 
     public void Pause() {
         Debug.Log ("AI mode off");
-        DirectPlayer.AutoStep = false;
+        
+        foreach (DecisionRequester dr in DirectPlayer.gameObject.GetComponents<DecisionRequester>()) {
+            Destroy(dr);
+        }
+
         Hub.nonBlockingMode = nonBlockingMode;
 
         playButton.SetActive(true);

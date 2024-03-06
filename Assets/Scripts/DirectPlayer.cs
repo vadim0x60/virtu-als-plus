@@ -26,18 +26,6 @@ public class DirectPlayer : Agent
     private int actionCount = 0;
     public int ActionCount {get{return actionCount;}}
 
-    private bool autoStep = false;
-    public bool AutoStep {
-        get {
-            return autoStep;
-        }
-        set {
-            autoStep = value;
-            if (autoStep) hub.InsightDispatched += RequestDecisionOnInsight;
-            else hub.InsightDispatched -= RequestDecisionOnInsight;
-        }
-    }
-
     public readonly RewardCenter rewardProfile = new RewardCenter {
         FailureReward = -100f,
         SuccessReward = 100f,
@@ -116,10 +104,6 @@ public class DirectPlayer : Agent
     public override void OnEpisodeBegin()
     {
         actionCount = 0;
-
-        if (autoStep) {
-            RequestDecision();
-        }
     }
 
     public void OnClickabilityChange(object sender, bool clickable) {
