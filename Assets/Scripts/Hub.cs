@@ -681,7 +681,7 @@ public class Hub : MonoBehaviour {
 		if (trueFalse)
 		{
 			DispatchFeedback(Feedback.Failure);
-			Pause();
+			if (!nonBlockingMode) Pause();
 		}
 		else
 		{
@@ -2160,7 +2160,7 @@ public class Hub : MonoBehaviour {
 		resumeGameButton.SetActive (false);
 		CPRButtons.transform.position = new Vector3 (0f, CPRButtons.transform.position.y,
 			CPRButtons.transform.position.z);
-		Pause();
+		if (!nonBlockingMode) Pause();
 		bool didWell = true;
 		demoEndText.text += "Well done, John regained output!\n\n";
 		demoEndText.text += "You were off the chest for an average of ";
@@ -2217,13 +2217,17 @@ public class Hub : MonoBehaviour {
 		}
 		demoEndText.text += "(Use the menu icon at the top of the screen to return to the Main Menu.)";
 		demoEndScreen.SetActive(true);
+
+		DispatchMemo(demoEndText.text);
+		if (didWell) DispatchFeedback(Feedback.Success);
+		else DispatchFeedback(Feedback.Failure);
 	}
 
 	public void DemoEnd (string failer) {
 		resumeGameButton.SetActive (false);
 		CPRButtons.transform.position = new Vector3 (0f, CPRButtons.transform.position.y,
 			CPRButtons.transform.position.z);
-		Pause();
+		if (!nonBlockingMode) Pause();
 		demoEndText.text = failer;
 		demoEndScreen.SetActive(true);
 	}
@@ -2236,7 +2240,7 @@ public class Hub : MonoBehaviour {
             Vector3 endPos = new Vector3(0f, nonCPRButtons.transform.position.y, nonCPRButtons.transform.position.z);
             nonCPRButtons.transform.position = endPos;
             examinationButtons.transform.position = examinationButtonsOffScreen;
-            Pause();
+			if (!nonBlockingMode) Pause();
             demoEndText.text = "";
             
             if (patient.training_scenario == 1)
@@ -2294,7 +2298,7 @@ public class Hub : MonoBehaviour {
             Vector3 endPos = new Vector3(0f, nonCPRButtons.transform.position.y, nonCPRButtons.transform.position.z);
             nonCPRButtons.transform.position = endPos;
             examinationButtons.transform.position = examinationButtonsOffScreen;
-            Pause();
+			if (!nonBlockingMode) Pause();
             demoEndText.text += "Thanks for playing! Here's how you did:\n\n";
             if (MAP >= 60f && sats >= 88 && !patient.airwayObstructed && respRate > 7)
             {
