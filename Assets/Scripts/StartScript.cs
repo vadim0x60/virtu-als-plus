@@ -30,7 +30,7 @@ public class StartScript : MonoBehaviour {
 		}
 
 		if (autoplay) {
-			hub.masterTimeScale = 10.0f;
+			hub.masterTimeScale = 1000.0f;
 			hub.nonBlockingMode = true;
 			Academy.Instance.OnEnvironmentReset += DHH_Demo;
 			aiMenu.Play();

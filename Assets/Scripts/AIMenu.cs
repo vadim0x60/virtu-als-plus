@@ -8,7 +8,7 @@ public class AIMenu : MonoBehaviour {
     [Range(1, 500)]
     [Tooltip("The frequency with which the agent requests a decision. A DecisionPeriod " +
         "of 5 means that the Agent will request a decision every 5 Academy steps.")]
-    public int DecisionPeriod = 500;
+    public int DecisionPeriod = 100;
 
     public DirectPlayer DirectPlayer;
     public Hub Hub;
