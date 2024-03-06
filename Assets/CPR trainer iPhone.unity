@@ -12698,7 +12698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a1530237c9e1f3de92a3ef05e5cc4d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DecisionPeriod: 50
+  DecisionPeriod: 500
   DirectPlayer: {fileID: 1116339530}
   Hub: {fileID: 399853249}
   playButton: {fileID: 409515970}
