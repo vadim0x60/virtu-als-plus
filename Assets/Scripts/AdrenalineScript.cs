@@ -9,8 +9,6 @@ public class AdrenalineScript : MonoBehaviour {
 
 	void OnMouseDown ()
 	{
-		if (!EventSystem.current.IsPointerOverGameObject ()) { 
-			hub.AdrenalineGiven ();
-		}
+		hub.AdrenalineGiven ();
     }
 }
