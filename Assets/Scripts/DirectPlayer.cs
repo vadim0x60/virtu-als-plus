@@ -112,10 +112,6 @@ public class DirectPlayer : Agent
         }
     }
 
-    public void RequestDecisionOnInsight(object sender, Insights args) {
-        RequestDecision();
-    }
-
     public override void CollectObservations(VectorSensor vs)
     {
         stenographer.Recollect(vs.AddObservation);
