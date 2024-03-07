@@ -94,7 +94,6 @@ public class DirectPlayer : Agent
         hub.MemoDispatched += memoChannel.OnMemo;
         hub.ClickabilityChanged += OnClickabilityChange;
         rewardProfile.Done += EndEpisode;
-        Academy.Instance.OnEnvironmentReset += hub.Reload;
     }
 
     public override void OnEpisodeBegin()
