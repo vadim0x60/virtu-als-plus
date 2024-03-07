@@ -241,109 +241,109 @@ public class DirectPlayer : Agent
             GameObject clickee = null;
 
             switch (action) {
-                case 0:
-                    // Do nothing
-                    break;
-                case 1:
-                    clickee = hub.drawerABG;
-                    break;
-                case 2:
-                    clickee = hub.airwayManoeuvresButton;
-                    break;
-                case 3:
-                    hub.AtropineGiven();
-                    break;
-                case 4:
-                    hub.AdenosineGiven();
-                    break;
-                case 5:
-                    hub.AdrenalineGiven();
-                    break;
-                case 6:
-                    hub.AmiodaroneGiven();
-                    break;
-                case 7:
-                    if (hub.MidazolamGiven ()) {
-                        gameObject.SetActive (false);
-                    }
-                    break;
-                case 8:
-                    clickee = hub.drawerVenflon;
-                    break;
-                case 9:
-                    clickee = hub.drawerYankeur;
-                    break;
-                case 10:
-                    clickee = hub.drawerVacutainers;
-                    break;
-                case 11:
-                    clickee = hub.drawerBPCuff;
-                    break;
-                case 12:
-                    clickee = hub.drawerBVM;
-                    break;
-                case 13:
-                    clickee = hub.drawerGuedel;
-                    break;
-                case 14:
-                    clickee = hub.drawerNRBMask;
-                    break;
-                // Defibrillator:
-                case 15:
-                    clickee = hub.defibOnDefibButton;
-                    break;
-                case 16:
-                    clickee = hub.attachPadsButton;
-                    break;
-                case 17:
-                    clickee = defibController.shockButton;
-                    break;
-                case 18:
-                    clickee = defibController.chargeButton;
-                    break;
-                case 19:
-                    defibController.ChangePaceCurrent("down");
-                    break;
-                case 20:
-                    defibController.ChangePaceCurrent("up");
-                    break;
-                case 21:
-                    defibController.EnergyDown();
-                    break;
-                case 22:
-                    defibController.EnergyUp();
-                    break;
-                case 23:
-                    defibController.ChangePaceRate("down");
-                    break;
-                case 24:
-                    defibController.ChangePaceRate("up");
-                    break;
-                case 25:
-                    clickee = defibController.paceButton;
-                    break;
-                case 26:
-                    clickee = defibController.pacePauseButton;
-                    break;
-                case 27:
-                    clickee = defibController.syncButton;
-                    break;
-                // FINISH:
-                case 36:
-                    hub.Done();
-                    break;
-
-                if (clickee != null) {
-                    if (clickee.activeSelf) clickee.GetComponent<Button>().onClick.Invoke();
-                    else {
-                        rewardProfile.OnFeedback(this, Feedback.Blunder);
-                        memoChannel.OnMemo(this, "... this button seems to be disabled ...");
-                    }
+            case 0:
+                // Do nothing
+                break;
+            case 1:
+                clickee = hub.drawerABG;
+                break;
+            case 2:
+                clickee = hub.airwayManoeuvresButton;
+                break;
+            case 3:
+                hub.AtropineGiven();
+                break;
+            case 4:
+                hub.AdenosineGiven();
+                break;
+            case 5:
+                hub.AdrenalineGiven();
+                break;
+            case 6:
+                hub.AmiodaroneGiven();
+                break;
+            case 7:
+                if (hub.MidazolamGiven ()) {
+                    gameObject.SetActive (false);
                 }
-                
-                if (action > 0) actionCount++;
-                actionQueue.Dequeue();
+                break;
+            case 8:
+                clickee = hub.drawerVenflon;
+                break;
+            case 9:
+                clickee = hub.drawerYankeur;
+                break;
+            case 10:
+                clickee = hub.drawerVacutainers;
+                break;
+            case 11:
+                clickee = hub.drawerBPCuff;
+                break;
+            case 12:
+                clickee = hub.drawerBVM;
+                break;
+            case 13:
+                clickee = hub.drawerGuedel;
+                break;
+            case 14:
+                clickee = hub.drawerNRBMask;
+                break;
+            // Defibrillator:
+            case 15:
+                clickee = hub.defibOnDefibButton;
+                break;
+            case 16:
+                clickee = hub.attachPadsButton;
+                break;
+            case 17:
+                clickee = defibController.shockButton;
+                break;
+            case 18:
+                clickee = defibController.chargeButton;
+                break;
+            case 19:
+                defibController.ChangePaceCurrent("down");
+                break;
+            case 20:
+                defibController.ChangePaceCurrent("up");
+                break;
+            case 21:
+                defibController.EnergyDown();
+                break;
+            case 22:
+                defibController.EnergyUp();
+                break;
+            case 23:
+                defibController.ChangePaceRate("down");
+                break;
+            case 24:
+                defibController.ChangePaceRate("up");
+                break;
+            case 25:
+                clickee = defibController.paceButton;
+                break;
+            case 26:
+                clickee = defibController.pacePauseButton;
+                break;
+            case 27:
+                clickee = defibController.syncButton;
+                break;
+            // FINISH:
+            case 36:
+                hub.Done();
+                break;
             }
+
+            if (clickee != null) {
+                if (clickee.activeSelf) clickee.GetComponent<Button>().onClick.Invoke();
+                else {
+                    rewardProfile.OnFeedback(this, Feedback.Blunder);
+                    memoChannel.OnMemo(this, "... this button seems to be disabled ...");
+                }
+            }
+            
+            if (action > 0) actionCount++;
+            actionQueue.Dequeue();
         }
     }
 
