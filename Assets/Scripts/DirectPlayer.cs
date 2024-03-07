@@ -106,7 +106,7 @@ public class DirectPlayer : Agent
     }
 
     public void OnClickabilityChange(object sender, bool clickable) {
-        act();
+        if (clickable) act();
     }
 
     public override void CollectObservations(VectorSensor vs)
@@ -127,8 +127,9 @@ public class DirectPlayer : Agent
 
     private void act() 
     {
-        int action;
-        while (actionQueue.TryPeek(action)) {
+        while (actionQueue.Any())) {
+            int action = actionQueue.Peek();
+
             switch (action) {
                 case 0:
                     // Do nothing
