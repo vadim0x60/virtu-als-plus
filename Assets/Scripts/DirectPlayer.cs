@@ -35,8 +35,6 @@ public class DirectPlayer : Agent
         TimestepReward = -0.1f
     };
 
-    private Control defibController;
-
     private Stenographer stenographer;
     private MemoChannel memoChannel = new MemoChannel(new Guid ("bdb17919-c516-44da-b045-a2191e972dec"));
 
@@ -97,8 +95,6 @@ public class DirectPlayer : Agent
         hub.MemoDispatched += memoChannel.OnMemo;
         hub.ClickabilityChanged += OnClickabilityChange;
         rewardProfile.Done += EndEpisode;
-
-        defibController = hub.controller.GetComponent<Control>();
     }
 
     public override void OnEpisodeBegin()
@@ -131,6 +127,8 @@ public class DirectPlayer : Agent
 
     private void act() 
     {
+        Control defibController = hub.controller.GetComponent<Control>();
+
         while (actionQueue.Any()) {
             if (!hub.Clickable) return;
 
