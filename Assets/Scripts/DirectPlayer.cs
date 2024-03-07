@@ -127,7 +127,7 @@ public class DirectPlayer : Agent
 
     private void act() 
     {
-        while (actionQueue.Any())) {
+        while (actionQueue.Any()) {
             int action = actionQueue.Peek();
 
             switch (action) {
