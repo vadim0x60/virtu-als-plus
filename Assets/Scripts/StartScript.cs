@@ -16,10 +16,10 @@ public class StartScript : MonoBehaviour {
 	Quaternion originalCamRot;
 	int countdown = 0;
 
+	bool autoplay = false;
+
 	// Use this for initialization
 	void Start () {
-		bool autoplay = false;
-
 		originalCamRot = mainCam.transform.rotation;
 		patientScript = patientObject.GetComponent<Patient> ();
 
@@ -32,7 +32,6 @@ public class StartScript : MonoBehaviour {
 		if (autoplay) {
 			hub.masterTimeScale = 10.0f;
 			hub.nonBlockingMode = true;
-			aiMenu.Play();
 			RandomConsciousness();
 		}
 		else GoToMenu();
@@ -42,7 +41,8 @@ public class StartScript : MonoBehaviour {
 	void Update () {
 		if (countdown > 0) {
 			hub.gameObject.SetActive (true);
-			countdown--;
+			if (autoplay) aiMenu.Play();
+ 			countdown--;
 		}
 	}
 
