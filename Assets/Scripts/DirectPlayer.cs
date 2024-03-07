@@ -106,9 +106,7 @@ public class DirectPlayer : Agent
     }
 
     public void OnClickabilityChange(object sender, bool clickable) {
-        if (clickable && actionQueue.Count > 0) {
-            act(actionQueue.Dequeue());
-        }
+        act();
     }
 
     public override void CollectObservations(VectorSensor vs)
@@ -123,219 +121,227 @@ public class DirectPlayer : Agent
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         int action = actionBuffers.DiscreteActions[0];
-        act(action);
+        actionQueue.Enqueue(action);
+        act();
     }
 
-    private void act(int action) 
+    private void act() 
     {
-        switch (action) {
-            case 0:
-                // Do nothing
-                break;
-            case 1:
-                PlayerFocus = Focus.BreathingDrawer;
-                break;
-            case 2:
-                PlayerFocus = Focus.General;
-                break;
-            case 3:
-                PlayerFocus = Focus.DrugsDrawer;
-                break;
-            case 4:
-                PlayerFocus = Focus.DrugsDrawer;
-                break;
-            case 5:
-                PlayerFocus = Focus.DrugsDrawer;
-                break;
-            case 6:
-                PlayerFocus = Focus.DrugsDrawer;
-                break;
-            case 7:
-                PlayerFocus = Focus.DrugsDrawer;
-                break;
-            case 8:
-                PlayerFocus = Focus.CirculationDrawer;
-                break;
-            case 9:
-                PlayerFocus = Focus.AirwayDrawer;
-                break;
-            case 10:
-                PlayerFocus = Focus.CirculationDrawer;
-                break;
-            case 11:
-                PlayerFocus = Focus.CirculationDrawer;
-                break;
-            case 12:
-                PlayerFocus = Focus.AirwayDrawer;
-                break;
-            case 13:
-                PlayerFocus = Focus.AirwayDrawer;
-                break;
-            case 14:
-                PlayerFocus = Focus.BreathingDrawer;
-                break;
-            // Defibrillator:
-            case 15:
-            case 16:
-            case 17:
-            case 18:
-            case 19:
-            case 20:
-            case 21:
-            case 22:
-            case 23:
-            case 24:
-            case 25:
-                PlayerFocus = Focus.Defibrillator;
-                break;
-            // Assessment:
-            case 28:
-                PlayerFocus = Focus.General;
-                hub.AssessResponse();
-                break;
-            case 29:
-                PlayerFocus = Focus.General;
-                hub.AssessAirway();
-                break;
-            case 30:
-                PlayerFocus = Focus.General;
-                hub.AssessBreathing();
-                break;
-            case 31:
-                PlayerFocus = Focus.General;
-                hub.AssessCirculation();
-                break;
-            case 32:
-                PlayerFocus = Focus.General;
-                hub.AssessDisability();
-                break;
-            case 33:
-                PlayerFocus = Focus.General;
-                hub.AssessExposure();
-                break;
-            case 34:
-                PlayerFocus = Focus.Defibrillator;
-                // Assess defibrillator
-                break;
-            case 35:
-                PlayerFocus = Focus.Monitor;
-                // Assess monitor
-                break;
-            // FINISH:
-            case 36:
-                break;
-        }
+        int action;
+        while (actionQueue.TryPeek(action)) {
+            switch (action) {
+                case 0:
+                    // Do nothing
+                    break;
+                case 1:
+                    PlayerFocus = Focus.BreathingDrawer;
+                    break;
+                case 2:
+                    PlayerFocus = Focus.General;
+                    break;
+                case 3:
+                    PlayerFocus = Focus.DrugsDrawer;
+                    break;
+                case 4:
+                    PlayerFocus = Focus.DrugsDrawer;
+                    break;
+                case 5:
+                    PlayerFocus = Focus.DrugsDrawer;
+                    break;
+                case 6:
+                    PlayerFocus = Focus.DrugsDrawer;
+                    break;
+                case 7:
+                    PlayerFocus = Focus.DrugsDrawer;
+                    break;
+                case 8:
+                    PlayerFocus = Focus.CirculationDrawer;
+                    break;
+                case 9:
+                    PlayerFocus = Focus.AirwayDrawer;
+                    break;
+                case 10:
+                    PlayerFocus = Focus.CirculationDrawer;
+                    break;
+                case 11:
+                    PlayerFocus = Focus.CirculationDrawer;
+                    break;
+                case 12:
+                    PlayerFocus = Focus.AirwayDrawer;
+                    break;
+                case 13:
+                    PlayerFocus = Focus.AirwayDrawer;
+                    break;
+                case 14:
+                    PlayerFocus = Focus.BreathingDrawer;
+                    break;
+                // Defibrillator:
+                case 15:
+                case 16:
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                case 21:
+                case 22:
+                case 23:
+                case 24:
+                case 25:
+                    PlayerFocus = Focus.Defibrillator;
+                    break;
+                // Assessment:
+                case 28:
+                    PlayerFocus = Focus.General;
+                    hub.AssessResponse();
+                    break;
+                case 29:
+                    PlayerFocus = Focus.General;
+                    hub.AssessAirway();
+                    break;
+                case 30:
+                    PlayerFocus = Focus.General;
+                    hub.AssessBreathing();
+                    break;
+                case 31:
+                    PlayerFocus = Focus.General;
+                    hub.AssessCirculation();
+                    break;
+                case 32:
+                    PlayerFocus = Focus.General;
+                    hub.AssessDisability();
+                    break;
+                case 33:
+                    PlayerFocus = Focus.General;
+                    hub.AssessExposure();
+                    break;
+                case 34:
+                    PlayerFocus = Focus.Defibrillator;
+                    // Assess defibrillator
+                    break;
+                case 35:
+                    PlayerFocus = Focus.Monitor;
+                    // Assess monitor
+                    break;
+                // FINISH:
+                case 36:
+                    break;
+            }
 
-        if (!AdviceMode) {
-            if (hub.Clickable) {
-                GameObject clickee = null;
+            if (AdviceMode) {
+                // In advice mode we look at the correct place, but don't do anything
+                actionQueue.Dequeue();
+                return;
+            }
 
-                switch (action) {
-                    case 0:
-                        // Do nothing
-                        break;
-                    case 1:
-                        clickee = hub.drawerABG;
-                        break;
-                    case 2:
-                        clickee = hub.airwayManoeuvresButton;
-                        break;
-                    case 3:
-                        hub.AtropineGiven();
-                        break;
-                    case 4:
-                        hub.AdenosineGiven();
-                        break;
-                    case 5:
-                        hub.AdrenalineGiven();
-                        break;
-                    case 6:
-                        hub.AmiodaroneGiven();
-                        break;
-                    case 7:
-                        hub.MidazolamGiven();
-                        break;
-                    case 8:
-                        clickee = hub.drawerVenflon;
-                        break;
-                    case 9:
-                        clickee = hub.drawerYankeur;
-                        break;
-                    case 10:
-                        clickee = hub.drawerVacutainers;
-                        break;
-                    case 11:
-                        clickee = hub.drawerBPCuff;
-                        break;
-                    case 12:
-                        clickee = hub.drawerBVM;
-                        break;
-                    case 13:
-                        clickee = hub.drawerGuedel;
-                        break;
-                    case 14:
-                        clickee = hub.drawerNRBMask;
-                        break;
-                    // Defibrillator:
-                    case 15:
-                        clickee = hub.defibOnDefibButton;
-                        break;
-                    case 16:
-                        clickee = hub.attachPadsButton;
-                        break;
-                    case 17:
-                        clickee = defibController.shockButton;
-                        break;
-                    case 18:
-                        clickee = defibController.chargeButton;
-                        break;
-                    case 19:
-                        defibController.ChangePaceCurrent("down");
-                        break;
-                    case 20:
-                        defibController.ChangePaceCurrent("up");
-                        break;
-                    case 21:
-                        defibController.EnergyDown();
-                        break;
-                    case 22:
-                        defibController.EnergyUp();
-                        break;
-                    case 23:
-                        defibController.ChangePaceRate("down");
-                        break;
-                    case 24:
-                        defibController.ChangePaceRate("up");
-                        break;
-                    case 25:
-                        clickee = defibController.paceButton;
-                        break;
-                    case 26:
-                        clickee = defibController.pacePauseButton;
-                        break;
-                    case 27:
-                        clickee = defibController.syncButton;
-                        break;
-                    // FINISH:
-                    case 36:
-                        hub.Done();
-                        break;
+            if (!hub.Clickable) {
+                return;
+            }
 
-                    if (clickee != null) {
-                        if (clickee.activeSelf) clickee.GetComponent<Button>().onClick.Invoke();
-                        else {
-                            rewardProfile.OnFeedback(this, Feedback.Blunder);
-                            memoChannel.OnMemo(this, "... this button seems to be disabled ...");
-                        }
+            GameObject clickee = null;
+
+            switch (action) {
+                case 0:
+                    // Do nothing
+                    break;
+                case 1:
+                    clickee = hub.drawerABG;
+                    break;
+                case 2:
+                    clickee = hub.airwayManoeuvresButton;
+                    break;
+                case 3:
+                    hub.AtropineGiven();
+                    break;
+                case 4:
+                    hub.AdenosineGiven();
+                    break;
+                case 5:
+                    hub.AdrenalineGiven();
+                    break;
+                case 6:
+                    hub.AmiodaroneGiven();
+                    break;
+                case 7:
+                    if (hub.MidazolamGiven ()) {
+                        gameObject.SetActive (false);
+                    }
+                    break;
+                case 8:
+                    clickee = hub.drawerVenflon;
+                    break;
+                case 9:
+                    clickee = hub.drawerYankeur;
+                    break;
+                case 10:
+                    clickee = hub.drawerVacutainers;
+                    break;
+                case 11:
+                    clickee = hub.drawerBPCuff;
+                    break;
+                case 12:
+                    clickee = hub.drawerBVM;
+                    break;
+                case 13:
+                    clickee = hub.drawerGuedel;
+                    break;
+                case 14:
+                    clickee = hub.drawerNRBMask;
+                    break;
+                // Defibrillator:
+                case 15:
+                    clickee = hub.defibOnDefibButton;
+                    break;
+                case 16:
+                    clickee = hub.attachPadsButton;
+                    break;
+                case 17:
+                    clickee = defibController.shockButton;
+                    break;
+                case 18:
+                    clickee = defibController.chargeButton;
+                    break;
+                case 19:
+                    defibController.ChangePaceCurrent("down");
+                    break;
+                case 20:
+                    defibController.ChangePaceCurrent("up");
+                    break;
+                case 21:
+                    defibController.EnergyDown();
+                    break;
+                case 22:
+                    defibController.EnergyUp();
+                    break;
+                case 23:
+                    defibController.ChangePaceRate("down");
+                    break;
+                case 24:
+                    defibController.ChangePaceRate("up");
+                    break;
+                case 25:
+                    clickee = defibController.paceButton;
+                    break;
+                case 26:
+                    clickee = defibController.pacePauseButton;
+                    break;
+                case 27:
+                    clickee = defibController.syncButton;
+                    break;
+                // FINISH:
+                case 36:
+                    hub.Done();
+                    break;
+
+                if (clickee != null) {
+                    if (clickee.activeSelf) clickee.GetComponent<Button>().onClick.Invoke();
+                    else {
+                        rewardProfile.OnFeedback(this, Feedback.Blunder);
+                        memoChannel.OnMemo(this, "... this button seems to be disabled ...");
                     }
                 }
-
-                if (action > 0) {
-                    actionCount++;
-                }
-            }
-            else {
-                actionQueue.Enqueue(action);
+                
+                if (action > 0) actionCount++;
+                actionQueue.Dequeue();
             }
         }
     }
