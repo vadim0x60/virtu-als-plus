@@ -42274,7 +42274,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 0
   hub: {fileID: 399853249}
   AdviceMode: 0
 --- !u!114 &1116339531

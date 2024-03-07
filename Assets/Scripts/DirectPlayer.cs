@@ -78,7 +78,6 @@ public class DirectPlayer : Agent
     public DirectPlayer() {
         rewardProfile.AddReward = AddReward;
         stenographer = new Stenographer();
-        MaxStep = 0;
     }
 
     // Start is called before the first frame update
