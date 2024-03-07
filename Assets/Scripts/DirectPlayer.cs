@@ -131,6 +131,8 @@ public class DirectPlayer : Agent
         while (actionQueue.Any()) {
             int action = actionQueue.Peek();
 
+            if (!hub.Clickable) return;
+
             switch (action) {
                 case 0:
                     // Do nothing
@@ -232,12 +234,9 @@ public class DirectPlayer : Agent
             if (AdviceMode) {
                 // In advice mode we look at the correct place, but don't do anything
                 actionQueue.Dequeue();
-                return;
             }
 
-            if (!hub.Clickable) {
-                return;
-            }
+            if (!hub.Clickable) return;
 
             GameObject clickee = null;
 
