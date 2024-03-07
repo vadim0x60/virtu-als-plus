@@ -12,7 +12,7 @@ public class MenuIcon : MonoBehaviour {
 	void Update () {
 	}
 
-	void OnClick() {
+	void OnMouseDown() {
 		hub.GoToMenu ();
 	}
 }

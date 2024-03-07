@@ -9,7 +9,7 @@ public class ShockScript : MonoBehaviour {
 	void Start () {
     }
 
-    void OnClick()
+    void OnMouseDown()
     {
         mainHub.Shock();
     }

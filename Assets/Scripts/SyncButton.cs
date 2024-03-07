@@ -11,7 +11,7 @@ public class SyncButton : MonoBehaviour {
 
     }
 
-    void OnClick()
+    void OnMouseDown()
     {
         Control control = controller.GetComponent<Control>();
         control.Sync();

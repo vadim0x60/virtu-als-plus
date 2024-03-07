@@ -11,7 +11,7 @@ public class EnergyUp : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void OnClick()
+    void OnMouseDown()
     {
         control.EnergyUp();
     }

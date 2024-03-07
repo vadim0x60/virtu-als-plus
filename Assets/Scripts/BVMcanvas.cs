@@ -14,7 +14,7 @@ public class BVMcanvas : MonoBehaviour {
 		
 	}
 
-	public void OnClick () {
+	public void OnMouseDown () {
 		Debug.Log ("Canvas BVM clicked");
 		anim.CanvasBVM ();
 	}

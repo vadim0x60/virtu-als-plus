@@ -15,7 +15,7 @@ public class ChargeScript : MonoBehaviour {
 	void Start () {
     }
 
-    void OnClick()
+    void OnMouseDown()
     {
 		if (control.defibReady && mainHub.Clickable) {
 			mainHub.ToggleOffChest ();

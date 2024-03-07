@@ -9,7 +9,7 @@ public class TemporaryDrugs : MonoBehaviour {
 	
 	}
 
-    void OnClick()
+    void OnMouseDown()
     {
         hub.TemporaryDrugMessage();
     }

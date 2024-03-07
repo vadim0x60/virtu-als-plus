@@ -13,7 +13,7 @@ public class Adenosine : MonoBehaviour {
 	
 	}
 
-	void OnClick () {
+	void OnMouseDown () {
 		hub.AdenosineGiven ();
 	}
 }

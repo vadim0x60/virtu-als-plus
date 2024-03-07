@@ -13,7 +13,7 @@ public class SatsProbe : MonoBehaviour {
 	
 	}
 
-	void OnClick () {
+	void OnMouseDown () {
 		hub.SatsProbeOn ();
 	}
 }

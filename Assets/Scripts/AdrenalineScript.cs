@@ -7,7 +7,7 @@ public class AdrenalineScript : MonoBehaviour {
 
     public Hub hub;
 
-	void OnClick ()
+	void OnMouseDown ()
 	{
 		hub.AdrenalineGiven ();
     }

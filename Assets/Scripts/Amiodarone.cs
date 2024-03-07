@@ -10,7 +10,7 @@ public class Amiodarone : MonoBehaviour {
 	
 	}
 
-    void OnClick()
+    void OnMouseDown()
     {
         //Stops the amiodarone script triggering when player clicks "OK" button on message screen
         //(overlaps with amiodarone box)

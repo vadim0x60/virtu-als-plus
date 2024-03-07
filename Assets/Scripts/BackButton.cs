@@ -18,7 +18,7 @@ public class BackButton : MonoBehaviour
 
     }
 
-    public void OnClick()
+    public void OnMouseDown()
     {
         hub.CameraToDefaultView();
     }

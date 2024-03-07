@@ -13,7 +13,7 @@ public class Guedel : MonoBehaviour {
 	
 	}
 
-	void OnClick() {
+	void OnMouseDown() {
 		hub.Guedel ();
 	}
 }

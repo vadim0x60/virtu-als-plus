@@ -14,7 +14,7 @@ public class DefibPads : MonoBehaviour {
 	
 	}
 
-	void OnClick () {
+	void OnMouseDown () {
 		if (hub.Clickable) {
 			defibOn.AttachPads ();
 			hub.AttachPads ();

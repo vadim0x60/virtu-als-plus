@@ -13,7 +13,7 @@ public class Yankeur : MonoBehaviour {
 	
 	}
 
-	void OnClick() {
+	void OnMouseDown() {
 		hub.Yankeur ();
 	}
 }

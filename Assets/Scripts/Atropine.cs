@@ -14,7 +14,9 @@ public class Atropine : MonoBehaviour {
 	
 	}
 
-	void OnClick() {
-		hub.AtropineGiven ();
+	void OnMouseDown() {
+		if (!EventSystem.current.IsPointerOverGameObject ()) { 
+			hub.AtropineGiven ();
+		}
 	}
 }

@@ -10,7 +10,7 @@ public class CurrentDownButton : MonoBehaviour {
 
     }
 
-    void OnClick()
+    void OnMouseDown()
     {
         defibController.GetComponent<Control>().ChangePaceCurrent("down");
     }

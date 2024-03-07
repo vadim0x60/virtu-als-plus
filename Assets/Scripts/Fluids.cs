@@ -13,7 +13,7 @@ public class Fluids : MonoBehaviour {
 	
 	}
 
-	void OnClick() {
+	void OnMouseDown() {
 		hub.Fluids ();
 	}
 }

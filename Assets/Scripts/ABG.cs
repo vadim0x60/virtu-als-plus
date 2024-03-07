@@ -13,7 +13,7 @@ public class ABG : MonoBehaviour {
 	
 	}
 
-	void OnClick() {
+	void OnMouseDown() {
 		hub.ABG ();
 	}
 }

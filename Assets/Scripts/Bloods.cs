@@ -13,7 +13,7 @@ public class Bloods : MonoBehaviour {
 	
 	}
 
-	void OnClick() {
+	void OnMouseDown() {
 		hub.Bloods ();
 	}
 }

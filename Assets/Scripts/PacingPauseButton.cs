@@ -8,7 +8,7 @@ public class PacingPauseButton : MonoBehaviour {
 	void Start () {
 	
 	}
-    void OnClick()
+    void OnMouseDown()
     {
         defibController.GetComponent<Control>().Pace();
     }

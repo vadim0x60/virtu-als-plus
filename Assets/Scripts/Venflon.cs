@@ -13,7 +13,7 @@ public class Venflon : MonoBehaviour {
 	
 	}
 
-	void OnClick () {
+	void OnMouseDown () {
 		hub.Venflon ();
 	}
 }

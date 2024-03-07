@@ -15,9 +15,11 @@ public class Midazolam : MonoBehaviour {
 	void Update () {
 	}
 
-	void OnClick() {
-		if (hub.MidazolamGiven ()) {
-			gameObject.SetActive (false);
+	void OnMouseDown() {
+		if (!EventSystem.current.IsPointerOverGameObject ()) { 
+			if (hub.MidazolamGiven ()) {
+				gameObject.SetActive (false);
+			}
 		}
 	}
 }
