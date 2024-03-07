@@ -132,9 +132,9 @@ public class DirectPlayer : Agent
     private void act() 
     {
         while (actionQueue.Any()) {
-            int action = actionQueue.Peek();
-
             if (!hub.Clickable) return;
+            
+            int action = actionQueue.Peek();
 
             switch (action) {
                 case 0:
