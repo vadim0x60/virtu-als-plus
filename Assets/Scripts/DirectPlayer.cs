@@ -337,7 +337,10 @@ public class DirectPlayer : Agent
             }
 
             if (clickee != null) {
-                if (clickee.activeSelf) clickee.GetComponent<Button>().onClick.Invoke();
+                if (clickee.activeSelf) {
+                    clickee.SendMessage("OnMouseDown");
+                    clickee.SendMessage("OnMouseUp");
+                }
                 else {
                     rewardProfile.OnFeedback(this, Feedback.Blunder);
                     memoChannel.OnMemo(this, "... this button seems to be disabled ...");
