@@ -104,6 +104,7 @@ public class DirectPlayer : Agent
     public override void OnEpisodeBegin()
     {
         actionCount = 0;
+        actionQueue.Clear();
     }
 
     public void OnClickabilityChange(object sender, bool clickable) {
@@ -236,6 +237,7 @@ public class DirectPlayer : Agent
             if (AdviceMode) {
                 // In advice mode we look at the correct place, but don't do anything
                 actionQueue.Dequeue();
+                return;
             }
 
             if (!hub.Clickable) return;
