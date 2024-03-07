@@ -32,12 +32,8 @@ public class StartScript : MonoBehaviour {
 		if (autoplay) {
 			hub.masterTimeScale = 10.0f;
 			hub.nonBlockingMode = true;
-			Academy.Instance.OnEnvironmentReset += DHH_Demo;
 			aiMenu.Play();
-			
-			Debug.Log($"Academy initialized: {Academy.IsInitialized}");
-			Debug.Log($"Academy auto stepping: {Academy.Instance.AutomaticSteppingEnabled}");
-			Debug.Log($"Academy step count: {Academy.Instance.StepCount}");
+			RandomConsciousness();
 		}
 		else GoToMenu();
 	}
