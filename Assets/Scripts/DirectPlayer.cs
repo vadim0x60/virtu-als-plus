@@ -126,6 +126,8 @@ public class DirectPlayer : Agent
         act();
     }
 
+    private bool midazolamGiven = false;
+
     private void act() 
     {
         while (actionQueue.Any()) {
@@ -263,9 +265,7 @@ public class DirectPlayer : Agent
                 hub.AmiodaroneGiven();
                 break;
             case 7:
-                if (hub.MidazolamGiven ()) {
-                    gameObject.SetActive (false);
-                }
+                if (midazolamGiven || hub.MidazolamGiven()) midazolamGiven = true;
                 break;
             case 8:
                 clickee = hub.drawerVenflon;
