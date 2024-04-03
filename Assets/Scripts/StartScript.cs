@@ -29,8 +29,6 @@ public class StartScript : MonoBehaviour {
 			}
 		}
 
-		Academy.Instance.OnEnvironmentReset += Reset;
-
 		if (autoplay) {
 			hub.masterTimeScale = 10.0f;
 			hub.nonBlockingMode = true;
@@ -45,12 +43,6 @@ public class StartScript : MonoBehaviour {
 			hub.gameObject.SetActive (true);
 			if (autoplay) aiMenu.Play();
  			countdown--;
-		}
-	}
-
-	void Reset() {
-		if (countdown < 0) {
-			hub.Reload();
 		}
 	}
 
