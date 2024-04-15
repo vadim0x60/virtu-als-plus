@@ -3494,7 +3494,8 @@ public class Hub : MonoBehaviour {
 					control.RemoteChangeHeartRate (UnityEngine.Random.Range (130f, 200f));
 				}
 			} else {
-				Pause();
+				if (!nonBlockingMode) Pause();
+				DispatchFeedback(Feedback.Success);
 				shockOrNotMessageScreen.SetActive(true);
 				string thisRhyth = RhythmToMeaningful (rhythm);
 				shockOrNotMessageText.text = "Nicely done!\n\n";
@@ -3510,7 +3511,9 @@ public class Hub : MonoBehaviour {
 			}
 		} else {
 			//Code for failure here
-			Pause();
+			if (!nonBlockingMode) Pause();
+			DispatchFeedback(Feedback.Failure);
+
 			shockOrNotMessageScreen.SetActive(true);
 			menuIcon.SetActive (false);
 			aiMenu.SetActive (false);
@@ -3522,7 +3525,6 @@ public class Hub : MonoBehaviour {
 				shockOrNotMessageText.text += "non-shockable (PEA).\n\n";
 			}
 			shockOrNotMessageText.text += "Keep studying, and better luck next time!\n\n(Press \"OK\" to return to the main menu.)";
-			DispatchFeedback(Feedback.Failure);
 		}
 	}
 
