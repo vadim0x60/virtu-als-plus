@@ -205,9 +205,12 @@ public class DirectPlayer : Agent
                     }
                 }
 
-                if (!actionTaken) {
+                if (actionTaken) {
+                    memoChannel.OnMemo(this, ActionLabels[action - 1]});
+                }
+                else {
                     rewardProfile.OnFeedback(this, Feedback.Blunder);
-                    memoChannel.OnMemo(this, "... this action is not available in current state ...");
+                    memoChannel.OnMemo(this, $"... {ActionLabels[action - 1]} is not available in current state ...");
                 }
                 
                 actionCount++;
