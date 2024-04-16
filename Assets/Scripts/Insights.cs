@@ -65,4 +65,8 @@ public struct Measurement {
         this.Measurable = measurable;
         this.Value = value;
     }
+
+    public override string ToString() {
+        return string.Format("{0}: {1}", Measurable, Value);
+    }
 }

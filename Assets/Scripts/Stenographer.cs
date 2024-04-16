@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Text;
 
-class Stenographer
+using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.SideChannels;
+
+class Stenographer: SideChannel
 {
     private int[] insightAges;
     private readonly int insightsCount;
@@ -14,12 +18,32 @@ class Stenographer
     public void OnInsight(object sender, Insights insight) 
     { 
         insightAges[(int)insight] = 1;
+        OnMemo(sender, insight.ToString());
     }
 
     public void OnMeasurement(object sender, Measurement measurement) 
     { 
         // Newer measures will overwite older ones, it's intended behavior
         measurements[measurement.Measurable] = measurement.Value;
+        OnMemo(sender, measurement.ToString());
+    }
+
+    public void OnMemo(object sender, string memo) {
+        using (var msgOut = new OutgoingMessage())
+        {
+            msgOut.WriteString(memo);
+            QueueMessageToSend(msgOut);
+        }
+    }
+
+    protected override void OnMessageReceived(IncomingMessage msg) {
+        var receivedString = msg.ReadString();
+        Debug.Log("Memo received: " + receivedString);
+    }
+
+    public void OnError(Exception e) 
+    {
+        throw e;
     }
 
     private void ageInsights()
@@ -50,7 +74,9 @@ class Stenographer
         ageInsights();
     }
 
-    public Stenographer() {
+    public Stenographer(Guid channelId) {
+        ChannelId = channelId;
+
         insightsCount = Enum.GetNames(typeof(Insights)).Length;
         insightAges = new int[insightsCount];
 

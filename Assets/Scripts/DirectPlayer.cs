@@ -35,12 +35,10 @@ public class DirectPlayer : Agent
         TimestepReward = -0.1f
     };
 
-    private Stenographer stenographer;
-    private MemoChannel memoChannel = new MemoChannel(new Guid ("bdb17919-c516-44da-b045-a2191e972dec"));
+    private Stenographer stenographer = new Stenographer(new Guid ("bdb17919-c516-44da-b045-a2191e972dec"));
 
     public DirectPlayer() {
         rewardProfile.AddReward = AddReward;
-        stenographer = new Stenographer();
     }
 
     // Start is called before the first frame update
