@@ -88,6 +88,7 @@ public class DirectPlayer : Agent
     private bool midazolamGiven = false;
 
     public string[] ActionLabels {
+        "DoNothing"
         "CheckSignsOfLife",
         "CheckRhythm",
         "ExamineAirway",
@@ -137,6 +138,7 @@ public class DirectPlayer : Agent
     public GameObject[][] ActionButtons {
         get {
             return new GameObject[][] {
+                new GameObject[] {},
                 new GameObject[] {hub.signsOfLifeButton},
                 new GameObject[] {hub.checkRhythmButton},
                 new GameObject[] {hub.examineAirwayButton},
@@ -179,7 +181,7 @@ public class DirectPlayer : Agent
                 new GameObject[] {FindObjectsOfType(typeof(RateUpButton), true).FirstOrDefault()},
                 new GameObject[] {FindObjectsOfType(typeof(RateDownButton), true).FirstOrDefault()},
                 new GameObject[] {defibController.syncButton},
-                new GameObject[] {hub.doneButton},
+                new GameObject[] {hub.doneButton}
             }
         }
     }
@@ -192,29 +194,28 @@ public class DirectPlayer : Agent
             if (!hub.Clickable) return;
 
             int action = actionQueue.Peek();
-            bool actionTaken = false;
+            bool actionFailed = false;
 
-            if (action > 0) {
-                foreach (GameObject clickee in ActionButtons[action - 1]) {
-                    if (clickee != null && clickee.activeSelf) {
-                        clickee.SendMessage("OnMouseDown");
-                        clickee.SendMessage("OnMouseUp");
+            foreach (GameObject clickee in ActionButtons[action]) {
+                if (clickee != null && clickee.activeSelf) {
+                    clickee.SendMessage("OnMouseDown");
+                    clickee.SendMessage("OnMouseUp");
 
-                        actionTaken = true;
-                        break;
-                    }
+                    actionFailed = false;
+                    break;
                 }
-
-                if (actionTaken) {
-                    memoChannel.OnMemo(this, ActionLabels[action - 1]});
-                }
-                else {
-                    rewardProfile.OnFeedback(this, Feedback.Blunder);
-                    memoChannel.OnMemo(this, $"... {ActionLabels[action - 1]} is not available in current state ...");
-                }
-                
-                actionCount++;
+                else actionFailed = true;
             }
+
+            if (actionFailed) {
+                rewardProfile.OnFeedback(this, Feedback.Blunder);
+                memoChannel.OnMemo(this, $"... {ActionLabels[action]} is not available in current state ...");
+            }
+            else {
+                memoChannel.OnMemo(this, ActionLabels[action]});
+                if (action != 0) actionCount++;
+            }
+
             actionQueue.Dequeue();
         }
     }
