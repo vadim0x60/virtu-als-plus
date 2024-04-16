@@ -86,7 +86,7 @@ public class DirectPlayer : Agent
     private bool midazolamGiven = false;
 
     public string[] ActionLabels {
-        "DoNothing"
+        "DoNothing",
         "CheckSignsOfLife",
         "CheckRhythm",
         "ExamineAirway",
