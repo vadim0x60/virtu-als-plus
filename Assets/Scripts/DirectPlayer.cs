@@ -63,7 +63,7 @@ public enum PlayerAction {
     Finish
 }
 
-public class DirectPlayer : Aget
+public class DirectPlayer : Agent
 {
     public Hub hub;
     public bool AdviceMode = false;
