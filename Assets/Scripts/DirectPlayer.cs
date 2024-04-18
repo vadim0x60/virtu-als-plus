@@ -90,12 +90,12 @@ public class DirectPlayer : Agent
     }
 
     public override void Initialize() {
-        SideChannelManager.RegisterSideChannel(memoChannel);
+        SideChannelManager.RegisterSideChannel(stenographer);
 
         hub.InsightDispatched += stenographer.OnInsight;
         hub.MeasurementDispatched += stenographer.OnMeasurement;
         hub.FeedbackDispatched += rewardProfile.OnFeedback;
-        hub.MemoDispatched += memoChannel.OnMemo;
+        hub.MemoDispatched += stenographer.OnMemo;
         hub.ClickabilityChanged += OnClickabilityChange;
         rewardProfile.Done += EndEpisode;
     }
@@ -207,10 +207,10 @@ public class DirectPlayer : Agent
 
             if (actionFailed) {
                 rewardProfile.OnFeedback(this, Feedback.Blunder);
-                memoChannel.OnMemo(this, $"... {action} is not available in current state ...");
+                stenographer.OnMemo(this, $"... {action} is not available in current state ...");
             }
             else {
-                memoChannel.OnMemo(this, action.ToString());
+                stenographer.OnMemo(this, action.ToString());
                 if (action != 0) actionCount++;
             }
 
@@ -230,7 +230,7 @@ public class DirectPlayer : Agent
     public void OnDestroy()
     {
         if (Academy.IsInitialized) {
-            SideChannelManager.UnregisterSideChannel(memoChannel);
+            SideChannelManager.UnregisterSideChannel(stenographer);
         }
     }
 }
