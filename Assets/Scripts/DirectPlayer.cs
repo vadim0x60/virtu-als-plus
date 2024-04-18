@@ -10,17 +10,55 @@ using Unity.MLAgents.SideChannels;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
-public enum Focus {
-    General,
-    AirwayDrawer,
-    CirculationDrawer,
-    DrugsDrawer,
-    BreathingDrawer,
-    Defibrillator,
-    Monitor
+public enum PlayerAction {
+    DoNothing,
+    CheckSignsOfLife,
+    CheckRhythm,
+    ExamineAirway,
+    ExamineBreathing,
+    ExamineCirculation,
+    ExamineDisability,
+    ExamineExposure,
+    ExamineResponse,
+    SetUpIVAccess,
+    GiveFluids,
+    ViewMonitor,
+    StartChestCompression,
+    OpenAirwayDrawer,
+    OpenBreathingDrawer,
+    OpenCirculationDrawer,
+    OpenDrugsDrawer,
+    BagDuringCPR,
+    ResumeCPR,
+    UseMonitorPads,
+    UseSatsProbe,
+    UseAline,
+    UseBloodPressureCuff,
+    AttachDefibPads,
+    UseVenflon,
+    UseBagValveMask,
+    UseNonRebreatherMask,
+    UseYankeurSucionCatheter,
+    UseGuedelAirway,
+    TakeBloodForArtherialBloodGas,
+    TakeRoutineBloods,
+    PerformAirwayManoeuvres,
+    PerformHeadTiltChinLift,
+    PerformJawThrust,
+    TakeBloodPressure,
+    TurnOnDefibrillator,
+    DefibrillatorCharge,
+    DefibrillatorCurrentUp,
+    DefibrillatorCurrentDown,
+    DefibrillatorPace,
+    DefibrillatorPacePause,
+    DefibrillatorRateUp,
+    DefibrillatorRateDown,
+    DefibrillatorSync,
+    Finish
 }
 
-public class DirectPlayer : Agent
+public class DirectPlayer : Aget
 {
     public Hub hub;
     public bool AdviceMode = false;
@@ -73,65 +111,17 @@ public class DirectPlayer : Agent
         rewardProfile.OnFeedback(this, Feedback.Tick);
     }
 
-    private Queue<int> actionQueue = new Queue<int>();
+    private Queue<PlayerAction> actionQueue = new Queue<PlayerAction>();
 
     // Update is called once per frame
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        int action = actionBuffers.DiscreteActions[0];
+        PlayerAction action = (PlayerAction)actionBuffers.DiscreteActions[0];
         actionQueue.Enqueue(action);
         act();
     }
 
     private bool midazolamGiven = false;
-
-    public string[] ActionLabels {
-        "DoNothing",
-        "CheckSignsOfLife",
-        "CheckRhythm",
-        "ExamineAirway",
-        "ExamineBreathing",
-        "ExamineCirculation",
-        "ExamineDisability",
-        "ExamineExposure",
-        "ExamineResponse",
-        "SetUpIVAccess",
-        "GiveFluids",
-        "ViewMonitor",
-        "StartChestCompression",
-        "OpenAirwayDrawer",
-        "OpenBreathingDrawer",
-        "OpenCirculationDrawer",
-        "OpenDrugsDrawer",
-        "BagDuringCPR",
-        "ResumeCPR",
-        "UseMonitorPads",
-        "UseSatsProbe",
-        "UseAline",
-        "UseBloodPressureCuff",
-        "AttachDefibPads",
-        "UseVenflon",
-        "UseBagValveMask",
-        "UseNonRebreatherMask",
-        "UseYankeurSucionCatheter",
-        "UseGuedelAirway",
-        "TakeBloodForArtherialBloodGas",
-        "TakeRoutineBloods",
-        "PerformAirwayManoeuvres",
-        "PerformHeadTiltChinLift",
-        "PerformJawThrust",
-        "TakeBloodPressure",
-        "TurnOnDefibrillator",
-        "DefibrillatorCharge",
-        "DefibrillatorCurrentUp",
-        "DefibrillatorCurrentDown",
-        "DefibrillatorPace",
-        "DefibrillatorPacePause",
-        "DefibrillatorRateUp",
-        "DefibrillatorRateDown",
-        "DefibrillatorSync",
-        "Finish"
-    }
 
     public GameObject[][] ActionButtons {
         get {
@@ -180,7 +170,7 @@ public class DirectPlayer : Agent
                 new GameObject[] {FindObjectsOfType(typeof(RateDownButton), true).FirstOrDefault()},
                 new GameObject[] {defibController.syncButton},
                 new GameObject[] {hub.doneButton}
-            }
+            };
         }
     }
 
@@ -191,10 +181,10 @@ public class DirectPlayer : Agent
         while (actionQueue.Any()) {
             if (!hub.Clickable) return;
 
-            int action = actionQueue.Peek();
+            PlayerAction action = actionQueue.Peek();
             bool actionFailed = false;
 
-            foreach (GameObject clickee in ActionButtons[action]) {
+            foreach (GameObject clickee in ActionButtons[(int)action]) {
                 if (clickee != null && clickee.activeSelf) {
                     clickee.SendMessage("OnMouseDown");
                     clickee.SendMessage("OnMouseUp");
@@ -207,10 +197,10 @@ public class DirectPlayer : Agent
 
             if (actionFailed) {
                 rewardProfile.OnFeedback(this, Feedback.Blunder);
-                memoChannel.OnMemo(this, $"... {ActionLabels[action]} is not available in current state ...");
+                memoChannel.OnMemo(this, $"... {action} is not available in current state ...");
             }
             else {
-                memoChannel.OnMemo(this, ActionLabels[action]});
+                memoChannel.OnMemo(this, action.ToString());
                 if (action != 0) actionCount++;
             }
 
