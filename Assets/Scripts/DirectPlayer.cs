@@ -100,10 +100,69 @@ public class DirectPlayer : Agent
         rewardProfile.Done += EndEpisode;
     }
 
+    private GameObject[][] actionButtons;
+
+    private GameObject[] FindGameObjectsOfType<T: MonoBehaviour>() {
+        return FindObjectsOfTypeAll<T>().Select(x => ((MonoBehaviour)x).gameObject).ToArray();
+    }
+
     public override void OnEpisodeBegin()
     {
         actionCount = 0;
         actionQueue.Clear();
+
+        Control defibController = hub.controller.GetComponent<Control>();
+        actionButtons = new GameObject[][] {
+            new GameObject[] {},
+            new GameObject[] {hub.signsOfLifeButton},
+            new GameObject[] {hub.checkRhythmButton},
+            new GameObject[] {hub.examineAirwayButton},
+            new GameObject[] {hub.examineBreathingButton},
+            new GameObject[] {hub.examineCirculationButton},
+            new GameObject[] {hub.examineDisabilityButton},
+            new GameObject[] {hub.examineExposureButton},
+            new GameObject[] {hub.examineResponseButton},
+            FindGameObjectsOfType<Adenosine>(),
+            FindGameObjectsOfType<AdrenalineScript>(),
+            FindGameObjectsOfType<Amiodarone>(),
+            FindGameObjectsOfType<Atropine>(),
+            FindGameObjectsOfType<Midazolam>(),
+            new GameObject[] {hub.iVaccessButton, hub.drawerVenflon},
+            new GameObject[] {hub.fluidsButton, hub.drawerFluids},
+            new GameObject[] {hub.monitorButton, hub.monitorButtonNCPR},
+            new GameObject[] {hub.chestCompressionButton},
+            new GameObject[] {hub.airwayButton},
+            new GameObject[] {hub.breathingButton},
+            new GameObject[] {hub.circulationButton},
+            new GameObject[] {hub.drugsButton, hub.drugsButtonNCPR},
+            new GameObject[] {hub.baggingDuringCPRButton},
+            new GameObject[] {hub.resumeButton},
+            new GameObject[] {hub.drawerCmPads},
+            new GameObject[] {hub.drawerSatsProbe},
+            new GameObject[] {hub.drawerAline},
+            new GameObject[] {hub.drawerBPCuff},
+            new GameObject[] {hub.attachPadsButton, hub.drawerDefibPads},
+            new GameObject[] {hub.drawerBVM},
+            new GameObject[] {hub.drawerNRBMask},
+            new GameObject[] {hub.drawerYankeur},
+            new GameObject[] {hub.drawerGuedel},
+            new GameObject[] {hub.drawerABG},
+            new GameObject[] {hub.drawerVacutainers},
+            new GameObject[] {hub.airwayManoeuvresButton},
+            new GameObject[] {hub.headTiltChinLiftButton},
+            new GameObject[] {hub.jawThrustButton},
+            new GameObject[] {hub.nibpButton},
+            new GameObject[] {hub.defibOnCanvasButton, hub.defibOnDefibButton, hub.useDefibButton},
+            new GameObject[] {defibController.chargeButton},
+            FindGameObjectsOfType<CurrentUpButton>(),
+            FindGameObjectsOfType<CurrentDownButton>(),
+            new GameObject[] {defibController.paceButton},
+            new GameObject[] {defibController.pacePauseButton},
+            FindGameObjectsOfType<RateUpButton>(),
+            FindGameObjectsOfType<RateDownButton>(),
+            new GameObject[] {defibController.syncButton},
+            new GameObject[] {hub.doneButton}
+        };
     }
 
     public void OnClickabilityChange(object sender, bool clickable) {
@@ -126,75 +185,15 @@ public class DirectPlayer : Agent
         act();
     }
 
-    private bool midazolamGiven = false;
-
-    public GameObject[][] ActionButtons {
-        get {
-            return new GameObject[][] {
-                new GameObject[] {},
-                new GameObject[] {hub.signsOfLifeButton},
-                new GameObject[] {hub.checkRhythmButton},
-                new GameObject[] {hub.examineAirwayButton},
-                new GameObject[] {hub.examineBreathingButton},
-                new GameObject[] {hub.examineCirculationButton},
-                new GameObject[] {hub.examineDisabilityButton},
-                new GameObject[] {hub.examineExposureButton},
-                new GameObject[] {hub.examineResponseButton},
-                FindObjectsOfType(typeof(Adenosine)),
-                FindObjectsOfType(typeof(AdrenalineScript)),
-                FindObjectsOfType(typeof(Amiodarone)),
-                FindObjectsOfType(typeof(Atropine)),
-                FindObjectsOfType(typeof(Midazolam)),
-                new GameObject[] {hub.iVaccessButton, hub.drawerVenflon},
-                new GameObject[] {hub.fluidsButton, hub.drawerFluids},
-                new GameObject[] {hub.monitorButton, hub.monitorButtonNCPR},
-                new GameObject[] {hub.chestCompressionButton},
-                new GameObject[] {hub.airwayButton},
-                new GameObject[] {hub.breathingButton},
-                new GameObject[] {hub.circulationButton},
-                new GameObject[] {hub.drugsButton, hub.drugsButtonNCPR},
-                new GameObject[] {hub.baggingDuringCPRButton},
-                new GameObject[] {hub.resumeButton},
-                new GameObject[] {hub.drawerCmPads},
-                new GameObject[] {hub.drawerSatsProbe},
-                new GameObject[] {hub.drawerAline},
-                new GameObject[] {hub.drawerBPCuff},
-                new GameObject[] {hub.attachPadsButton, hub.drawerDefibPads},
-                new GameObject[] {hub.drawerBVM},
-                new GameObject[] {hub.drawerNRBMask},
-                new GameObject[] {hub.drawerYankeur},
-                new GameObject[] {hub.drawerGuedel},
-                new GameObject[] {hub.drawerABG},
-                new GameObject[] {hub.drawerVacutainers},
-                new GameObject[] {hub.airwayManoeuvresButton},
-                new GameObject[] {hub.headTiltChinLiftButton},
-                new GameObject[] {hub.jawThrustButton},
-                new GameObject[] {hub.nibpButton},
-                new GameObject[] {hub.defibOnCanvasButton, hub.defibOnDefibButton, hub.useDefibButton},
-                new GameObject[] {defibController.chargeButton},
-                FindObjectsOfType(typeof(CurrentUpButton)),
-                FindObjectsOfType(typeof(CurrentDownButton)),
-                new GameObject[] {defibController.paceButton},
-                new GameObject[] {defibController.pacePauseButton},
-                FindObjectsOfType(typeof(RateUpButton)),
-                FindObjectsOfType(typeof(RateDownButton)),
-                new GameObject[] {defibController.syncButton},
-                new GameObject[] {hub.doneButton}
-            };
-        }
-    }
-
     private void act() 
     {
-        Control defibController = hub.controller.GetComponent<Control>();
-
         while (actionQueue.Any()) {
             if (!hub.Clickable) return;
 
             PlayerAction action = actionQueue.Peek();
             bool actionFailed = false;
 
-            foreach (GameObject clickee in ActionButtons[(int)action]) {
+            foreach (GameObject clickee in actionButtons[(int)action]) {
                 if (clickee != null && clickee.activeSelf) {
                     clickee.SendMessage("OnMouseDown");
                     clickee.SendMessage("OnMouseUp");
