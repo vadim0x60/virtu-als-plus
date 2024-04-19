@@ -102,7 +102,7 @@ public class DirectPlayer : Agent
 
     private GameObject[][] actionButtons;
 
-    private GameObject[] FindGameObjectsOfType<T: MonoBehaviour>() {
+    private GameObject[] FindGameObjectsOfType<T>() where T : MonoBehaviour {
         return FindObjectsOfTypeAll<T>().Select(x => ((MonoBehaviour)x).gameObject).ToArray();
     }
 
