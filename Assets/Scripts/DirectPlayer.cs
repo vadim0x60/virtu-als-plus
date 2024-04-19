@@ -192,6 +192,8 @@ public class DirectPlayer : Agent
             PlayerAction action = actionQueue.Peek();
             bool actionFailed = false;
 
+            stenographer.OnMemo(this, action.ToString());
+
             foreach (GameObject clickee in actionButtons[(int)action]) {
                 if (clickee != null && clickee.activeSelf) {
                     clickee.SendMessage("OnMouseDown");
@@ -205,12 +207,9 @@ public class DirectPlayer : Agent
 
             if (actionFailed) {
                 rewardProfile.OnFeedback(this, Feedback.Blunder);
-                stenographer.OnMemo(this, $"... {action} is not available in current state ...");
+                stenographer.OnMemo(this, $"... this action is not available in current state ...");
             }
-            else {
-                stenographer.OnMemo(this, action.ToString());
-                if (action != 0) actionCount++;
-            }
+            else if (action != 0) actionCount++;
 
             actionQueue.Dequeue();
         }
