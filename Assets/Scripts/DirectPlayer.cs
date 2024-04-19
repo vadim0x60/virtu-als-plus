@@ -102,8 +102,8 @@ public class DirectPlayer : Agent
 
     private GameObject[][] actionButtons;
 
-    private GameObject[] FindGameObjectsOfType<T>() where T : MonoBehaviour {
-        return FindObjectsOfTypeAll<T>().Select(x => ((MonoBehaviour)x).gameObject).ToArray();
+    private GameObject[] FindGameObjectsOfType(Type type) {
+        return FindObjectsOfTypeAll(type).Select(x => ((MonoBehaviour)x).gameObject).ToArray();
     }
 
     public override void OnEpisodeBegin()
@@ -122,11 +122,11 @@ public class DirectPlayer : Agent
             new GameObject[] {hub.examineDisabilityButton},
             new GameObject[] {hub.examineExposureButton},
             new GameObject[] {hub.examineResponseButton},
-            FindGameObjectsOfType<Adenosine>(),
-            FindGameObjectsOfType<AdrenalineScript>(),
-            FindGameObjectsOfType<Amiodarone>(),
-            FindGameObjectsOfType<Atropine>(),
-            FindGameObjectsOfType<Midazolam>(),
+            FindGameObjectsOfType(typeof(Adenosine)),
+            FindGameObjectsOfType(typeof(AdrenalineScript)),
+            FindGameObjectsOfType(typeof(Amiodarone)),
+            FindGameObjectsOfType(typeof(Atropine)),
+            FindGameObjectsOfType(typeof(Midazolam)),
             new GameObject[] {hub.iVaccessButton, hub.drawerVenflon},
             new GameObject[] {hub.fluidsButton, hub.drawerFluids},
             new GameObject[] {hub.monitorButton, hub.monitorButtonNCPR},
@@ -154,12 +154,12 @@ public class DirectPlayer : Agent
             new GameObject[] {hub.nibpButton},
             new GameObject[] {hub.defibOnCanvasButton, hub.defibOnDefibButton, hub.useDefibButton},
             new GameObject[] {defibController.chargeButton},
-            FindGameObjectsOfType<CurrentUpButton>(),
-            FindGameObjectsOfType<CurrentDownButton>(),
+            FindGameObjectsOfType(typeof(CurrentUpButton)),
+            FindGameObjectsOfType(typeof(CurrentDownButton)),
             new GameObject[] {defibController.paceButton},
             new GameObject[] {defibController.pacePauseButton},
-            FindGameObjectsOfType<RateUpButton>(),
-            FindGameObjectsOfType<RateDownButton>(),
+            FindGameObjectsOfType(typeof(RateUpButton)),
+            FindGameObjectsOfType(typeof(RateDownButton)),
             new GameObject[] {defibController.syncButton},
             new GameObject[] {hub.doneButton}
         };
