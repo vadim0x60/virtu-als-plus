@@ -19,18 +19,12 @@ public class StartScript : MonoBehaviour {
 	bool autoplay = false;
 
 	void ApplyCommandLineArgs() {
-		bool expectTimeScale = false;
-
 		foreach (string arg in System.Environment.GetCommandLineArgs()) {
-			if (expectTimeScale) {
-				hub.masterTimeScale = float.Parse(arg);
-			}
-
 			if (arg == "--autoplay") {
 				autoplay = true;
 			}
-			else if (arg == "--ts") {
-				expectTimeScale = true;
+			else if (arg.Substring(0,4).Equals("--ts")) {
+				hub.masterTimeScale = float.Parse(arg.Substring(5, arg.Length-5));
 			}
 		}
 	}
