@@ -18,19 +18,31 @@ public class StartScript : MonoBehaviour {
 
 	bool autoplay = false;
 
+	void ApplyCommandLineArgs() {
+		bool expectTimeScale = false;
+
+		foreach (string arg in System.Environment.GetCommandLineArgs()) {
+			if (expectTimeScale) {
+				hub.masterTimeScale = float.Parse(arg);
+			}
+
+			if (arg == "--autoplay") {
+				autoplay = true;
+			}
+			else if (arg == '--ts') {
+				expectTimeScale = true;
+			}
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		originalCamRot = mainCam.transform.rotation;
 		patientScript = patientObject.GetComponent<Patient> ();
 
-		foreach (string arg in System.Environment.GetCommandLineArgs()) {
-			if (arg == "--autoplay") {
-				autoplay = true;
-			}
-		}
+		ApplyCommandLineArgs();
 
 		if (autoplay) {
-			hub.masterTimeScale = 10.0f;
 			hub.nonBlockingMode = true;
 			RandomConsciousness();
 		}
