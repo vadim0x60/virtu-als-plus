@@ -192,7 +192,7 @@ public class DirectPlayer : Agent
             PlayerAction action = actionQueue.Peek();
             bool actionFailed = false;
 
-            stenographer.OnMemo(this, $"{action}. ");
+            stenographer.OnMemo(this, action.ToString());
 
             foreach (GameObject clickee in actionButtons[(int)action]) {
                 if (clickee != null && clickee.activeSelf) {
@@ -207,7 +207,7 @@ public class DirectPlayer : Agent
 
             if (actionFailed) {
                 rewardProfile.OnFeedback(this, Feedback.Blunder);
-                stenographer.OnMemo(this, "This action is not available in current state ...");
+                stenographer.OnMemo(this, "... this action is not available in current state ...");
             }
             else if (action != 0) actionCount++;
 
