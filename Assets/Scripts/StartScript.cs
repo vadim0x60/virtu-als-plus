@@ -29,7 +29,7 @@ public class StartScript : MonoBehaviour {
 			if (arg == "--autoplay") {
 				autoplay = true;
 			}
-			else if (arg == '--ts') {
+			else if (arg == "--ts") {
 				expectTimeScale = true;
 			}
 		}
