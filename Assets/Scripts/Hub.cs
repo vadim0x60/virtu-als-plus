@@ -197,7 +197,6 @@ public class Hub : MonoBehaviour {
 	private float shockOrNotRounds = 0f;
 	private float posX = 0f;
 	private float cprQualityTimer = 1f;
-	private float deltaTime = 0f;
 
     public bool offChest = false;
 	private bool airwayDrawerOpen = false;
@@ -1973,7 +1972,7 @@ public class Hub : MonoBehaviour {
 
 	void CPRTimerUpdate() {
 		if (cprTimer.activeSelf) {
-			cprTimeSecs += Time.deltaTime;
+			cprTimeSecs += Time.fixedDeltaTime;
 			if (cprTimeSecs >= 60f) {
 				cprTimeSecs -= 60f;
 				cprTimeMins += 1;
@@ -4097,18 +4096,15 @@ public class Hub : MonoBehaviour {
     }
 
 	// Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-		deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-		//Debug.Log ("Frame rate: " + 1f / deltaTime);
-
         DrawerUpdate();
         CanvasPosition();
 		AirwayManoeuvresButtonsMove ();
 		CPRTimerUpdate ();
         if (offChest)
         {
-            secondsOffChest += Time.deltaTime;
+            secondsOffChest += Time.fixedDeltaTime;
             TimeOffChest();
         }
 
@@ -4124,7 +4120,7 @@ public class Hub : MonoBehaviour {
 		}
 
 		if (shockOrNotCanvas.activeSelf && shockOrNotButtonPanel.activeSelf) {
-			shockOrNotTotal += Time.deltaTime;
+			shockOrNotTotal += Time.fixedDeltaTime;
 			shockOrNotTimer.text = "Time - " + shockOrNotTotal.ToString("00.00");
 		}
         
@@ -4164,9 +4160,12 @@ public class Hub : MonoBehaviour {
                 }
             }
         }
-
-        if (Input.GetKeyDown("q")) TogglePause();
     }
+
+	void Update() 
+	{
+		if (Input.GetKeyDown("q")) TogglePause();
+	}
 
 	public void Pause() {
 		Debug.Log("Pausing");
