@@ -189,10 +189,10 @@ public class DirectPlayer : Agent
         PointerEventData pointer = new PointerEventData(EventSystem.current);
 
         ExecuteEvents.Execute(clickee, pointer, ExecuteEvents.pointerDownHandler);
-        clickee.SendMessage('OnMouseDown');
+        clickee.SendMessage("OnMouseDown");
 
         ExecuteEvents.Execute(clickee, pointer, ExecuteEvents.pointerUpHandler);
-        clickee.SendMessage('OnMouseUp');
+        clickee.SendMessage("OnMouseUp");
 
         ExecuteEvents.Execute(clickee, pointer, ExecuteEvents.pointerClickHandler);
     }
