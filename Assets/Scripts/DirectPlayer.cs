@@ -198,7 +198,7 @@ public class DirectPlayer : Agent
                 if (clickee != null && clickee.activeSelf) {
                     clickee.SendMessage("OnMouseDown");
                     clickee.SendMessage("OnMouseUp");
-                    clickee.SendMessage("onClick");
+                    clickee.SendMessage("OnMouseUpAsButton");
 
                     actionFailed = false;
                     break;
