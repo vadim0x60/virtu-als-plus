@@ -185,7 +185,7 @@ public class DirectPlayer : Agent
         act();
     }
 
-    private bool clickGameObject(GameObject clickee) {
+    private void simulateClick(GameObject clickee) {
         PointerEventData pointer = new PointerEventData(EventSystem.current);
 
         ExecuteEvents.Execute(clickee, pointer, ExecuteEvents.pointerDownHandler);
@@ -205,7 +205,7 @@ public class DirectPlayer : Agent
 
             foreach (GameObject clickee in actionButtons[(int)action]) {
                 if (clickee != null && clickee.activeSelf) {
-                    clickGameObject(clickee);
+                    simulateClick(clickee);
 
                     actionFailed = false;
                     break;
