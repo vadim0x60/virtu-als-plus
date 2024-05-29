@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 using Unity.MLAgents;
 using Unity.MLAgents.SideChannels;
@@ -184,6 +185,14 @@ public class DirectPlayer : Agent
         act();
     }
 
+    private bool clickGameObject(GameObject clickee) {
+        PointerEventData pointer = new PointerEventData(EventSystem.current);
+
+        ExecuteEvents.Execute(clickee, pointer, ExecuteEvents.pointerDownHandler);
+        ExecuteEvents.Execute(clickee, pointer, ExecuteEvents.pointerUpHandler);
+        ExecuteEvents.Execute(clickee, pointer, ExecuteEvents.pointerClickHandler);
+    }
+
     private void act() 
     {
         while (actionQueue.Any()) {
@@ -196,9 +205,7 @@ public class DirectPlayer : Agent
 
             foreach (GameObject clickee in actionButtons[(int)action]) {
                 if (clickee != null && clickee.activeSelf) {
-                    clickee.SendMessage("OnMouseDown");
-                    clickee.SendMessage("OnMouseUp");
-                    clickee.SendMessage("OnMouseUpAsButton");
+                    clickGameObject(clickee);
 
                     actionFailed = false;
                     break;
