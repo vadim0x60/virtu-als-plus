@@ -43,7 +43,7 @@ public class Resp : MonoBehaviour {
 
 	public int respRate = 16;
 
-	public string rhythm = "nsr";
+	public string rhythm = Insights.HeartRhythmNSR;
     private string monitorClone = "Clone0";
 
     private bool changing = false;
@@ -131,7 +131,7 @@ public class Resp : MonoBehaviour {
 				respDot.transform.position.z);
 		}
 
-		if (rhythm != "vf" && MAP != 0f) {
+		if (rhythm != Insights.HeartRhythmVF && MAP != 0f) {
 			float x = ((Time.time - timeStamp) / breathDuration);
 			if (x <= 1f) {
 				x = x;
@@ -151,7 +151,7 @@ public class Resp : MonoBehaviour {
 		if (sliderY > 1f) {
 			sliderY = 1f;
 		}
-		if (rhythm != "vf") {
+		if (rhythm != Insights.HeartRhythmVF) {
 			float newRR = sliderY * 40f;
 			respRate = (int)newRR;
 			hub.respRate = respRate;

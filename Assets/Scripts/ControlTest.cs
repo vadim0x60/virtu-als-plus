@@ -32,7 +32,7 @@ public class ControlTest : MonoBehaviour
     public GameObject defibScreen;
     private string genClone = "GenericSprite(Clone)";
     private string desClone = "GenericSprite";
-    public string rhythm = "nsr";
+    public Insights rhythm = Insights.HeartRhythmNSR;
     public bool variableRhythm = true;
     public bool wideQRS = false;
     private float pWidth = 0.08f;
@@ -79,7 +79,7 @@ public class ControlTest : MonoBehaviour
 
     void SetRhythm()
     {
-        if (rhythm == "nsr")
+        if (rhythm == Insights.HeartRhythmNSR)
         {
             //COMMENTED OUT SECTIONS BELOW ARE FOR USER-SET FACTORS
             //CURRENT SCRIPT IS FOR RANDOMLY CHANGING RHYTHM
@@ -104,7 +104,7 @@ public class ControlTest : MonoBehaviour
             heartRateLower = Random.Range(heartRate - (heartRate / 10), heartRate - (heartRate / 3));
             wideQRS = false;
         }
-        else if (rhythm == "aflutter")
+        else if (rhythm == Insights.HeartRhythmAtrialFlutter)
         {
             heartRate = 75f;
             bool[] trueFalse = new bool[] { true, false };
@@ -116,7 +116,7 @@ public class ControlTest : MonoBehaviour
                 wideQRS = false;
             }
         }
-        else if (rhythm == "svt")
+        else if (rhythm == Insights.HeartRhythmSVT)
         {
             /*if (heartRate < 120f)
             {
@@ -126,7 +126,7 @@ public class ControlTest : MonoBehaviour
             variableRhythm = false;
             wideQRS = false;
         }
-        else if (rhythm == "vt" || rhythm == "vf")
+        else if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmVF)
         {
             wideQRS = true;
             variableRhythm = false;
@@ -149,7 +149,7 @@ public class ControlTest : MonoBehaviour
         {
             stwWidth = 0.12f;
         }
-        else if (rhythm == "svt")
+        else if (rhythm == Insights.HeartRhythmSVT)
         {
             stwWidth = 0.08f;
         }
@@ -168,11 +168,11 @@ public class ControlTest : MonoBehaviour
         }
 
         //NB: BELOW TECHNIQUE WON'T WORK FOR AF - RELIES ON FIXED LENGTH OF HEARTBEATS
-        if (rhythm == "vt" || rhythm == "vf")
+        if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmVF)
         {
             lengthy = (pWidth + pqWidth + qrWidth + rsWidth + stwWidth) + 0.015f;
         }
-        else if (rhythm == "nsr")
+        else if (rhythm == Insights.HeartRhythmNSR)
         {
             lengthy = (pWidth + pqWidth + qrWidth + rsWidth + stwWidth) + (QTc * 2);
         }
@@ -187,8 +187,8 @@ public class ControlTest : MonoBehaviour
     {
         int pos = Random.Range(0, 6);
         //Debug.Log("pos = " + pos);
-        string[] rhythms = new string[] { "af", "aflutter", "nsr", "svt", "vt", "vf" };
-        string newRhyth = rhythms[pos];
+        Insights[] rhythms = new string[] { "af", Insights.HeartRhythmAtrialFlutter, Insights.HeartRhythmNSR, Insights.HeartRhythmSVT, Insights.HeartRhythmVT, Insights.HeartRhythmVF };
+        Insights newRhyth = rhythms[pos];
         Debug.Log("rhythm = " + rhythms[pos]);
         rhythm = newRhyth;
         kill = true;
@@ -243,7 +243,7 @@ public class ControlTest : MonoBehaviour
                         currentPos.y += bending.y * Mathf.Sin(((Time.time - timeStamp) / ((0.01f / scale) * traceRate)) * Mathf.PI);
                     }
                 }
-                else if (rhythm == "aflutter")
+                else if (rhythm == Insights.HeartRhythmAtrialFlutter)
                 {
                     if (wave == "tp")
                     {
@@ -252,7 +252,7 @@ public class ControlTest : MonoBehaviour
                         //Debug.Log(currentPos.y);
                     }
                 }
-                else if (rhythm == "vf")
+                else if (rhythm == Insights.HeartRhythmVF)
                 {
                     if (wave == "tp")
                     {
@@ -265,7 +265,7 @@ public class ControlTest : MonoBehaviour
             }
             else {
                 endPosition.x += (Time.time - timeStamp - duration) * traceRate;
-                if (rhythm == "af" || rhythm == "aflutter")
+                if (rhythm == "af" || rhythm == Insights.HeartRhythmAtrialFlutter)
                 {
                     if (wave == "qr")
                     {
@@ -292,7 +292,7 @@ public class ControlTest : MonoBehaviour
                         QR();
                     }
                 }
-                else if (rhythm == "vt")
+                else if (rhythm == Insights.HeartRhythmVT)
                 {
                     if (wave == "qr")
                     {
@@ -315,11 +315,11 @@ public class ControlTest : MonoBehaviour
                         QR();
                     }
                 }
-                else if (rhythm == "vf")
+                else if (rhythm == Insights.HeartRhythmVF)
                 {
                     TP();
                 }
-                else if (rhythm == "nsr")
+                else if (rhythm == Insights.HeartRhythmNSR)
                 {
                     if (wave == "p")
                     {
@@ -354,7 +354,7 @@ public class ControlTest : MonoBehaviour
                         P();
                     }
                 }
-                else if (rhythm == "svt")
+                else if (rhythm == Insights.HeartRhythmSVT)
                 {
                     if (wave == "qr")
                     {
@@ -467,11 +467,11 @@ public class ControlTest : MonoBehaviour
 
     void STsegment()
     {
-        if (rhythm == "vt")
+        if (rhythm == Insights.HeartRhythmVT)
         {
             SetVariables("sts", 0.01f);
         }
-        else if (rhythm == "vf")
+        else if (rhythm == Insights.HeartRhythmVF)
         {
             //VF is just the TP segment on loop, but first call on instantiation is to STsegment(), so this is a redirect:
             TP();
@@ -483,7 +483,7 @@ public class ControlTest : MonoBehaviour
 
     void T()
     {
-        if (rhythm == "vt" || rhythm == "vf")
+        if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmVF)
         {
             bending = new Vector3(0f, (1.2f * scale), 0f);
             SetVariables("t", 0.15f);
@@ -495,7 +495,7 @@ public class ControlTest : MonoBehaviour
 
     void TP()
     {
-        if (rhythm == "aflutter")
+        if (rhythm == Insights.HeartRhythmAtrialFlutter)
         {
             if (variableRhythm)
             {
@@ -523,14 +523,14 @@ public class ControlTest : MonoBehaviour
             bending = new Vector3(0f, (0.03f * scale), 0f);
             SetVariables("tp", gap);
         }
-        else if (rhythm == "vf")
+        else if (rhythm == Insights.HeartRhythmVF)
         {
             float y = (Random.Range(0.01f, 1f)) * scale;
             pDur = Random.Range(0.005f, 0.01f);
             bending = new Vector3(0f, y, 0f);
             SetVariables("tp", 0.5f);
         }
-        else if (rhythm == "svt")
+        else if (rhythm == Insights.HeartRhythmSVT)
         {
             if (gap <= 0)
             {

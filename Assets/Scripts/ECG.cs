@@ -57,8 +57,8 @@ public class ECG : MonoBehaviour {
 	private float tWidth;
 
 	private string wave = "sts";
-	public string rhythm = "nsr";
-	public string nextRhyhtm = "nsr";
+	public string rhythm = Insights.HeartRhythmNSR;
+	public string nextRhyhtm = Insights.HeartRhythmNSR;
 
 	private bool pacing = false;
 	private bool pacingComplex = false;
@@ -170,21 +170,21 @@ public class ECG : MonoBehaviour {
 			torsades = false;
 			mobitzI = false;
 			mobitzII = false;
-			if (incomingRhythm == "torsades") {
+			if (incomingRhythm == Insights.HeartRhythmTorsades) {
 				torsades = true;
-				nextRhyhtm = "vt";
-			} else if (incomingRhythm == "bigeminy") {
+				nextRhyhtm = Insights.HeartRhythmVT;
+			} else if (incomingRhythm == Insights.HeartRhythmBigeminy) {
 				wideQRS = false;
 				bigeminy = true;
-				nextRhyhtm = "nsr";
-			} else if (incomingRhythm == "mobitzI") {
+				nextRhyhtm = Insights.HeartRhythmNSR;
+			} else if (incomingRhythm == Insights.HeartRhythmMobitzI) {
 				mobitzI = true;
 				mobitzII = false;
-				nextRhyhtm = "nsr";
-			} else if (incomingRhythm == "mobitzII") {
+				nextRhyhtm = Insights.HeartRhythmNSR;
+			} else if (incomingRhythm == Insights.HeartRhythmMobitzII) {
 				mobitzII = true;
 				mobitzI = false;
-				nextRhyhtm = "nsr";
+				nextRhyhtm = Insights.HeartRhythmNSR;
 			} else {
 				nextRhyhtm = incomingRhythm;
 			}
@@ -198,7 +198,7 @@ public class ECG : MonoBehaviour {
 
 	public void ClientChangeECG (float newHeartRate) {
 		nextHR = newHeartRate;
-		if (rhythm == "vf") {
+		if (rhythm == Insights.HeartRhythmVF) {
 			heartRateText.text = "-";
 		} else {
 			heartRateText.text = nextHR.ToString ("0");
@@ -209,7 +209,7 @@ public class ECG : MonoBehaviour {
 	public void ChangeECG (float incomingRate) {
 		if (nextHR != incomingRate) {
 			nextHR = (incomingRate * heartRateSliderUpperFloat) + heartRateSliderLowerFloat;
-			if (rhythm == "vf") {
+			if (rhythm == Insights.HeartRhythmVF) {
 				heartRateText.text = "-";
 			} else {
 				heartRateText.text = nextHR.ToString ("0");
@@ -221,7 +221,7 @@ public class ECG : MonoBehaviour {
 
 	private void ChangeSlider() {
 		if (server) {
-			if (rhythm == "nsr" || rhythm == "af") {
+			if (rhythm == Insights.HeartRhythmNSR || rhythm == "af") {
 				for (int i = 0; i < sliderList.Count; i++) {
 					sliderList [i].SetActive (true);
 				}
@@ -244,16 +244,16 @@ public class ECG : MonoBehaviour {
 				if (rhythm == "af") {
 					afSliderChanged = true;
 				}
-			} else if (rhythm == "aflutter") {
+			} else if (rhythm == Insights.HeartRhythmAtrialFlutter) {
 				for (int i = 0; i < sliderList.Count; i++) {
 					sliderList [i].SetActive (true);
 					heartRateSlider.SetActive (false);
 				}
-			} else if (rhythm == "vf") {
+			} else if (rhythm == Insights.HeartRhythmVF) {
 				for (int i = 0; i < sliderList.Count; i++) {
 					sliderList [i].SetActive (false);
 				}
-			} else if (rhythm == "svt") {
+			} else if (rhythm == Insights.HeartRhythmSVT) {
 				for (int i = 0; i < sliderList.Count; i++) {
 					sliderList [i].SetActive (true);
 				}
@@ -261,7 +261,7 @@ public class ECG : MonoBehaviour {
 				heartRateSliderUpper.text = "200";
 				heartRateSliderLowerFloat = 120f;
 				heartRateSliderUpperFloat = 80;
-			} else if (rhythm == "vt") {
+			} else if (rhythm == Insights.HeartRhythmVT) {
 				for (int i = 0; i < sliderList.Count; i++) {
 					sliderList [i].SetActive (true);
 				}
@@ -276,7 +276,7 @@ public class ECG : MonoBehaviour {
 					heartRateSliderLowerFloat = 150;
 					heartRateSliderUpperFloat = 100;
 				}
-			} else if (rhythm == "chb") {
+			} else if (rhythm == Insights.HeartRhythmCompleteHeartBlock) {
 				for (int i = 0; i < sliderList.Count; i++) {
 					sliderList [i].SetActive (true);
 				}
@@ -403,10 +403,10 @@ public class ECG : MonoBehaviour {
 	//SETS HEARTRATE TO PATIENT'S HEARTRATE AND ENSURES IS WITHIN ACCEPTED VALUES
 	void SetRhythm()
 	{
-		if (rhythm != "nsr" && rhythm != "af" && rhythm != "aflutter" &&
-			rhythm != "svt" && rhythm != "vt" && rhythm != "vf" && rhythm != "sats" && rhythm != "chb") {
+		if (rhythm != Insights.HeartRhythmNSR && rhythm != "af" && rhythm != Insights.HeartRhythmAtrialFlutter &&
+			rhythm != Insights.HeartRhythmSVT && rhythm != Insights.HeartRhythmVT && rhythm != Insights.HeartRhythmVF && rhythm != "sats" && rhythm != Insights.HeartRhythmCompleteHeartBlock) {
 			Debug.Log ("The defib does not recognise the rhythm: " + rhythm);
-		} else if (rhythm == "nsr") {
+		} else if (rhythm == Insights.HeartRhythmNSR) {
 			//COMMENTED OUT SECTIONS BELOW ARE FOR RANDOMLY CHANGING RHYTHM
 			if (heartRate < 20f) {
 				heartRate = 20f;
@@ -426,7 +426,7 @@ public class ECG : MonoBehaviour {
 				heartRate = 180f;
 			}
 			wideQRS = false;
-		} else if (rhythm == "aflutter") {
+		} else if (rhythm == Insights.HeartRhythmAtrialFlutter) {
 			heartRate = 75f;
 			//RANDOMLY SETS RHYTM TO FIXED OR VARIABLE BLOCK
 			bool[] trueFalse = new bool[] { true, false };
@@ -437,17 +437,17 @@ public class ECG : MonoBehaviour {
 			if (variableRhythm) {
 				wideQRS = false;
 			}
-		} else if (rhythm == "svt") {
+		} else if (rhythm == Insights.HeartRhythmSVT) {
 			if (heartRate < 120f || heartRate > 200f) {
 				heartRate = Random.Range (120f, 200f);
 			}
 			//heartRate = Random.Range(120f, 200f);
 			variableRhythm = false;
 			wideQRS = false;
-		} else if (rhythm == "vt" || rhythm == "vf") {
+		} else if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmVF) {
 			wideQRS = true;
 			variableRhythm = false;
-		} else if (rhythm == "chb") {
+		} else if (rhythm == Insights.HeartRhythmCompleteHeartBlock) {
 			wideQRS = true;
 			variableRhythm = false;
 			if (heartRate < 20f) {
@@ -470,7 +470,7 @@ public class ECG : MonoBehaviour {
 		{
 			stwWidth = 0.1f;
 			qrWidth = 0.04f;
-		} else if (rhythm=="svt")
+		} else if (rhythm==Insights.HeartRhythmSVT)
 		{
 			stwWidth = 0.08f;
 			qrWidth = 0.02f;
@@ -492,17 +492,17 @@ public class ECG : MonoBehaviour {
 		}
 
 		//NB: BELOW TECHNIQUE WON'T WORK FOR AF - RELIES ON FIXED LENGTH OF HEARTBEATS
-		if (rhythm == "vt" || rhythm == "vf") {
+		if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmVF) {
 			lengthy = qrWidth + rsWidth + stwWidth + 0.2f; //0.2 being length of T wave
-		} else if (rhythm == "nsr") {
+		} else if (rhythm == Insights.HeartRhythmNSR) {
 			if (bigeminy) {
 				lengthy = (pWidth + pqWidth + qrWidth + rsWidth + stwWidth) + 0.16f + (QTc * 3);
 			} else {
 				lengthy = (pWidth + pqWidth + qrWidth + rsWidth + stwWidth) + (QTc * 2);
 			}
-		} else if (rhythm == "chb" || rhythm == "svt" || rhythm == "aflutter") {
+		} else if (rhythm == Insights.HeartRhythmCompleteHeartBlock || rhythm == Insights.HeartRhythmSVT || rhythm == Insights.HeartRhythmAtrialFlutter) {
 			lengthy = qrWidth + rsWidth + stwWidth + (QTc*2f);
-		}else if (rhythm == "svt") {
+		}else if (rhythm == Insights.HeartRhythmSVT) {
 			lengthy = qrWidth + rsWidth + stwWidth + QTc;
 		}
 		else
@@ -562,7 +562,7 @@ public class ECG : MonoBehaviour {
 				}
 				newPosition.y += bending.y * Mathf.Sin (targetTime * Mathf.PI);
 			}
-		} else if (rhythm == "aflutter") {
+		} else if (rhythm == Insights.HeartRhythmAtrialFlutter) {
 			//For creating flutter waves only during TP segment:
 			if (wave == "tp") {
 				int hR = (int)heartRate;
@@ -577,11 +577,11 @@ public class ECG : MonoBehaviour {
 				x = Mathf.Pow ((1f - x), 3f);
 				newPosition.y += (bending.y * Mathf.Sin (x * Mathf.PI));
 			}
-		} else if (rhythm == "vf") {
+		} else if (rhythm == Insights.HeartRhythmVF) {
 			if (wave == "tp") {
 				newPosition.y += bending.y * Mathf.Sin (((Time.time - timeStamp) / duration) * 2f * Mathf.PI);
 			}
-		} else if (rhythm == "vt") {
+		} else if (rhythm == Insights.HeartRhythmVT) {
 			if (wave == "tp" && heartRate > 160f) {
 				float x = (((Time.time - timeStamp) / duration) * 2f);
 				newPosition.y += bending.y * Mathf.Sin (x * Mathf.PI);
@@ -638,7 +638,7 @@ public class ECG : MonoBehaviour {
 			} else if (wave == "tp" || wave == "pq") {
 				QR ();
 			}
-		} else if (rhythm == "aflutter") {
+		} else if (rhythm == Insights.HeartRhythmAtrialFlutter) {
 			if (wave == "qr") {
 				RS ();
 			} else if (wave == "rs") {
@@ -652,7 +652,7 @@ public class ECG : MonoBehaviour {
 			} else if (wave == "tp" || wave == "pq") {
 				QR ();
 			}
-		} else if (rhythm == "vt") {
+		} else if (rhythm == Insights.HeartRhythmVT) {
 			if (wave == "qr") {
 				RS ();
 			} else if (wave == "rs") {
@@ -670,13 +670,13 @@ public class ECG : MonoBehaviour {
 					QR ();
 				}
 			}
-		} else if (rhythm == "vf") {
+		} else if (rhythm == Insights.HeartRhythmVF) {
 			if (changing) {
 				STsegment ();
 			} else {
 				TP ();
 			}
-		} else if (rhythm == "nsr") {
+		} else if (rhythm == Insights.HeartRhythmNSR) {
 			if (wave == "p") {
 				PQ ();
 			} else if (wave == "pq") {
@@ -723,7 +723,7 @@ public class ECG : MonoBehaviour {
 			} else if (wave == "tp") {
 				P ();
 			}
-		} else if (rhythm == "svt" || rhythm == "chb") {
+		} else if (rhythm == Insights.HeartRhythmSVT || rhythm == Insights.HeartRhythmCompleteHeartBlock) {
 			if (wave == "qr") {
 				RS ();
 			} else if (wave == "rs") {
@@ -838,7 +838,7 @@ public class ECG : MonoBehaviour {
 			gap = (60f / heartRate) - lengthy;
 			satsScript.T (randomHeartRate);
 			aLineScript.T (randomHeartRate);
-		}else if (rhythm=="aflutter") {
+		}else if (rhythm==Insights.HeartRhythmAtrialFlutter) {
 			if (variableRhythm) {
 				int var1 = Random.Range (2, 5);
 				int hR = 300 / var1;
@@ -871,13 +871,13 @@ public class ECG : MonoBehaviour {
 		if (changing) {
 			string previousRhythm = rhythm;
 			bool wasVF = false;
-			if (rhythm == "vf" && nextRhyhtm != "vf") {
+			if (rhythm == Insights.HeartRhythmVF && nextRhyhtm != Insights.HeartRhythmVF) {
 				wasVF = true;
 			}
-			if (nextRhyhtm == "vt") {
+			if (nextRhyhtm == Insights.HeartRhythmVT) {
 				bending.y = 1.5f;
 			}
-			if (nextRhyhtm == "vf" && server) {
+			if (nextRhyhtm == Insights.HeartRhythmVF && server) {
 				previousRR = (float)respScript.respRate;
 				previousSats = (float)satsScript.sats;
 				previousMAP = aLineScript.MAP;
@@ -895,7 +895,7 @@ public class ECG : MonoBehaviour {
 				satsScript.ChangeSats ((previousSats - 70f) / 30f);
 			}
 			changing = false;
-			if (rhythm != "vt" && !bigeminy) {
+			if (rhythm != Insights.HeartRhythmVT && !bigeminy) {
 				wideQRS = false;
 			}
 			SetRhythm ();
@@ -907,7 +907,7 @@ public class ECG : MonoBehaviour {
 			SetRhythm ();
 			SetOtherFactors ();
 		} else {
-			if (rhythm == "vt") {
+			if (rhythm == Insights.HeartRhythmVT) {
 				if (firstPass) {
 					GameObject ecgDot = GameObject.Find ("Current dot");
 					endPosition = new Vector3 (ecgDot.transform.position.x - ((60f / heartRate) * speed * duration * 2f),
@@ -918,7 +918,7 @@ public class ECG : MonoBehaviour {
 				} else {
 					SetVariables ("sts", 0.01f);
 				}
-			} else if (rhythm == "vf") {
+			} else if (rhythm == Insights.HeartRhythmVF) {
 				//VF is just the TP segment on loop, but first call on instantiation is to STsegment(), so this is a redirect:
 				TP ();
 			} else if (rhythm == "sats") {
@@ -929,7 +929,7 @@ public class ECG : MonoBehaviour {
 					firstPass = false;
 				}
 				T ();
-			} else if (rhythm == "aflutter") {
+			} else if (rhythm == Insights.HeartRhythmAtrialFlutter) {
 				SetVariables ("sts", 0.5F * QTc);
 			} else if (wideQRS) {
 				T ();
@@ -952,7 +952,7 @@ public class ECG : MonoBehaviour {
 
 	void T()
 	{
-		if (rhythm == "vt" || rhythm == "vf" || wideQRS) {
+		if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmVF || wideQRS) {
 			if (heartRate > 160f) {
 				TP ();
 			} else {
@@ -973,7 +973,7 @@ public class ECG : MonoBehaviour {
 
 	void TP()
 	{
-		if (rhythm == "aflutter") {
+		if (rhythm == Insights.HeartRhythmAtrialFlutter) {
 			if (variableRhythm) {
 				int var1 = Random.Range (2, 5);
 				int hR = 300 / var1;
@@ -1000,11 +1000,11 @@ public class ECG : MonoBehaviour {
 			afTimeStamp = Time.time;
 			bending = new Vector3 (0f, (0.03f * scale), 0f);
 			SetVariables ("tp", gap - cumulativeDeltaTime);
-		} else if (rhythm == "vf") {
+		} else if (rhythm == Insights.HeartRhythmVF) {
 			float y = (Random.Range (0.01f, 2f)) * scale;
 			bending = new Vector3 (0f, y, 0f);
 			SetVariables ("tp", 0.2f);
-		} else if (rhythm == "svt") {
+		} else if (rhythm == Insights.HeartRhythmSVT) {
 			lengthy = qrWidth + rsWidth + stwWidth + (QTc * 2);
 			gap = (60f / heartRate) - lengthy;
 			if (gap <= 0) {
@@ -1012,7 +1012,7 @@ public class ECG : MonoBehaviour {
 			} else {
 				SetVariables ("tp", gap - cumulativeDeltaTime);
 			}
-		} else if (rhythm == "vt") {
+		} else if (rhythm == Insights.HeartRhythmVT) {
 			if (heartRate > 160f) {
 				float actualHeartRate = 60f / (Time.time - hrDebugger);
 				if (logHeartRate) {
@@ -1045,7 +1045,7 @@ public class ECG : MonoBehaviour {
 			satsScript.T (heartRate);
 			aLineScript.T (heartRate);
 
-		}else if (rhythm=="nsr"){
+		}else if (rhythm==Insights.HeartRhythmNSR){
 			if (heartRate > 130f) {
 				pqWidth = 0.06f * (80f / heartRate);
 			} else if (heartRate > 80f) {
@@ -1060,7 +1060,7 @@ public class ECG : MonoBehaviour {
 
 	IEnumerator CHBsetter() {
 		yield return new WaitForSeconds (0.75f);
-		if (rhythm == "chb") {
+		if (rhythm == Insights.HeartRhythmCompleteHeartBlock) {
 			chbPwaveTimeStamp = Time.time;
 			chbPwave = true;
 		}

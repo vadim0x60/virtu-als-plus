@@ -116,10 +116,10 @@ public class Control : MonoBehaviour {
 
     private Patient patient;
 
-    public string afterShockRhythm = "af";
-    public string rhythm = "nsr";
+    public Insights afterShockRhythm = "af";
+    public Insights rhythm = Insights.HeartRhythmNSR;
     private string wave;
-	private string nextRhyhtm = "nsr";
+	private Insights nextRhyhtm = Insights.HeartRhythmNSR;
     
 	public bool variableRhythm = true;
 	public bool wideQRS = false;
@@ -237,78 +237,46 @@ public class Control : MonoBehaviour {
 
 	}
 
-	public void RemoteChangeECG (string incomingRhythm) {
+	public void RemoteChangeECG (Insights incomingRhythm) {
 		if (debugging) {
 			Debug.Log ("Control receiving rhythm: " + incomingRhythm);
 		}
-		MakeSenseOfRhythmVoid (incomingRhythm);
+		MakeSenseOfRhythm (incomingRhythm);
 		remoteRhythmChange = true;
 		changing = true;
 	}
 
-	public string MakeSenseOfRhythm(string incomingRhythm) {
+	public string MakeSenseOfRhythm(Insights incomingRhythm) {
 		bigeminy = false;
 		torsades = false;
 		mobitzI = false;
 		mobitzII = false;
-		if (incomingRhythm == "torsades") {
+		if (incomingRhythm == Insights.HeartRhythmTorsades) {
 			torsades = true;
-			nextRhyhtm = "vt";
-		} else if (incomingRhythm == "bigeminy") {
+			nextRhyhtm = Insights.HeartRhythmVT;
+		} else if (incomingRhythm == Insights.HeartRhythmBigeminy) {
 			wideQRS = false;
 			bigeminy = true;
 			bigeminyWideSwitch = false;
-			nextRhyhtm = "nsr";
+			nextRhyhtm = Insights.HeartRhythmNSR;
 			if (heartRate < 20f) {
 				heartRate = 20f;
 			}
 			if (heartRate > 60f) {
 				heartRate = 60f;
 			}
-		} else if (incomingRhythm == "mobitzI") {
+		} else if (incomingRhythm == Insights.HeartRhythmMobitzI) {
 			mobitzI = true;
 			mobitzII = false;
-			nextRhyhtm = "nsr";
-		} else if (incomingRhythm == "mobitzII") {
+			nextRhyhtm = Insights.HeartRhythmNSR;
+		} else if (incomingRhythm == Insights.HeartRhythmMobitzII) {
 			mobitzII = true;
 			mobitzI = false;
-			nextRhyhtm = "nsr";
+			nextRhyhtm = Insights.HeartRhythmNSR;
 		} else {
 			nextRhyhtm = incomingRhythm;
 		}
 		return nextRhyhtm;
-	}
-
-	void MakeSenseOfRhythmVoid (string incomingRhythm) {
-		bigeminy = false;
-		torsades = false;
-		mobitzI = false;
-		mobitzII = false;
-		if (incomingRhythm == "torsades") {
-			torsades = true;
-			nextRhyhtm = "vt";
-		} else if (incomingRhythm == "bigeminy") {
-			wideQRS = false;
-			bigeminy = true;
-			bigeminyWideSwitch = false;
-			nextRhyhtm = "nsr";
-			if (heartRate < 20f) {
-				heartRate = 20f;
-			}
-			if (heartRate > 60f) {
-				heartRate = 60f;
-			}
-		} else if (incomingRhythm == "mobitzI") {
-			mobitzI = true;
-			mobitzII = false;
-			nextRhyhtm = "nsr";
-		} else if (incomingRhythm == "mobitzII") {
-			mobitzII = true;
-			mobitzI = false;
-			nextRhyhtm = "nsr";
-		} else {
-			nextRhyhtm = incomingRhythm;
-		}
 	}
 
 	public void RemoteChangeHeartRate (float newHeartRate) {
@@ -335,11 +303,11 @@ public class Control : MonoBehaviour {
 
 		actualHeartRate = 0f;
 		actualHeartRateAdder = 0f;
-		if (rhythm != "nsr" && rhythm != "af" && rhythm != "aflutter" &&
-		    rhythm != "svt" && rhythm != "vt" && rhythm != "vf" && rhythm != "chb"
+		if (rhythm != Insights.HeartRhythmNSR && rhythm != "af" && rhythm != Insights.HeartRhythmAtrialFlutter &&
+		    rhythm != Insights.HeartRhythmSVT && rhythm != Insights.HeartRhythmVT && rhythm != Insights.HeartRhythmVF && rhythm != Insights.HeartRhythmCompleteHeartBlock
 			&& debugging) {
 			Debug.Log ("The defib does not recognise the rhythm: " + rhythm);
-		} else if (rhythm == "nsr") {
+		} else if (rhythm == Insights.HeartRhythmNSR) {
 			if (mobitzI || mobitzII) {
 				if (heartRate < 20f) {
 					heartRate = 20f;
@@ -372,7 +340,7 @@ public class Control : MonoBehaviour {
             heartRateLower = Random.Range(heartRate - (heartRate / 10), heartRate - (heartRate / 3));
             wideQRS = false;
         }
-        else if (rhythm == "aflutter")
+        else if (rhythm == Insights.HeartRhythmAtrialFlutter)
         {
             heartRate = 75f;
             //RANDOMLY SETS RHYTM TO FIXED OR VARIABLE BLOCK
@@ -387,7 +355,7 @@ public class Control : MonoBehaviour {
                 wideQRS = false;
             }
         }
-        else if (rhythm == "svt")
+        else if (rhythm == Insights.HeartRhythmSVT)
         {
             if (heartRate < 120f || heartRate > 200f)
             {
@@ -397,7 +365,7 @@ public class Control : MonoBehaviour {
             variableRhythm = false;
             wideQRS = false;
         }
-        else if (rhythm == "vt" || rhythm == "vf")
+        else if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmVF)
         {
             wideQRS = true;
             variableRhythm = false;
@@ -406,7 +374,7 @@ public class Control : MonoBehaviour {
 			} else if (heartRate < 150f || heartRate > 250f) {
 				heartRate = Random.Range (150f, 250f);
 			}
-		} else if (rhythm == "chb") {
+		} else if (rhythm == Insights.HeartRhythmCompleteHeartBlock) {
 			wideQRS = true;
 			variableRhythm = false;
 			if (heartRate < 20f) {
@@ -417,7 +385,7 @@ public class Control : MonoBehaviour {
 			}
 		}
 
-        if (rhythm=="vf")
+        if (rhythm==Insights.HeartRhythmVF)
         {
             heartRate = 200f;
         }
@@ -434,7 +402,7 @@ public class Control : MonoBehaviour {
 		{
 			stwWidth = 0.1f;
 			qrWidth = 0.04f;
-		} else if (rhythm=="svt")
+		} else if (rhythm==Insights.HeartRhythmSVT)
 		{
 			stwWidth = 0.08f;
 			qrWidth = 0.02f;
@@ -456,17 +424,17 @@ public class Control : MonoBehaviour {
         }
 
 		//NB: BELOW TECHNIQUE WON'T WORK FOR AF - RELIES ON FIXED LENGTH OF HEARTBEATS
-		if (rhythm == "vt" || rhythm == "vf") {
+		if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmVF) {
 			lengthy = qrWidth + rsWidth + stwWidth;
-		} else if (rhythm == "nsr") {
+		} else if (rhythm == Insights.HeartRhythmNSR) {
 			if (bigeminy) {
 				lengthy = (pWidth + pqWidth + qrWidth + rsWidth + stwWidth) + 0.16f + (QTc * 3);
 			} else {
 				lengthy = (pWidth + pqWidth + qrWidth + rsWidth + stwWidth) + (QTc * 2);
 			}
-		} else if (rhythm == "chb" || rhythm == "svt" || rhythm == "aflutter") {
+		} else if (rhythm == Insights.HeartRhythmCompleteHeartBlock || rhythm == Insights.HeartRhythmSVT || rhythm == Insights.HeartRhythmAtrialFlutter) {
 			lengthy = qrWidth + rsWidth + stwWidth + (QTc*2f);
-		}else if (rhythm == "svt") {
+		}else if (rhythm == Insights.HeartRhythmSVT) {
 			lengthy = qrWidth + rsWidth + stwWidth + QTc;
 		}
 		else
@@ -490,7 +458,7 @@ public class Control : MonoBehaviour {
         string sys = "0";
         string map = "0";
 
-        if (rhythm == "vf")
+        if (rhythm == Insights.HeartRhythmVF)
         {
             MAP = 0f;
         }
@@ -640,7 +608,7 @@ public class Control : MonoBehaviour {
                         "Press \"CHARGE\" to dump";
                 }
             }
-			if (rhythm != "vf"  && (!adenosine || (pacing && capture)))
+			if (rhythm != Insights.HeartRhythmVF  && (!adenosine || (pacing && capture)))
             {
                 if (paceRate > heartRate && paceCurrent > patient.pacingThreshold && pacing)
                 {
@@ -748,7 +716,7 @@ public class Control : MonoBehaviour {
                 currentPos.y += bending.y * Mathf.Sin(((Time.time - timeStamp) / ((0.01f / scale) * traceRate)) * Mathf.PI);
             }
         }
-        else if (rhythm == "aflutter")
+        else if (rhythm == Insights.HeartRhythmAtrialFlutter)
         {
             if (wave == "tp")
             {
@@ -760,12 +728,12 @@ public class Control : MonoBehaviour {
 				currentPos.y += bending.y * Mathf.Sin(Mathf.Pow((1f-x),3f) * Mathf.PI);
             }
         }
-        else if (rhythm == "vf")
+        else if (rhythm == Insights.HeartRhythmVF)
         {
 			if (wave == "tp") {
 				currentPos.y += bending.y * Mathf.Sin (((Time.time - timeStamp) / duration) * 2f * Mathf.PI);
 			}
-		} else if (rhythm == "vt") {
+		} else if (rhythm == Insights.HeartRhythmVT) {
 			if (wave == "tp" && heartRate > 160f) {
 				float x = (((Time.time - timeStamp) / duration) * 2f);
 				currentPos.y += bending.y * Mathf.Sin (x * Mathf.PI);
@@ -823,7 +791,7 @@ public class Control : MonoBehaviour {
     void Updater02()
     {
         endPosition.x += (Time.time - timeStamp - duration) * traceRate;
-        if (rhythm == "af" || rhythm == "aflutter")
+        if (rhythm == "af" || rhythm == Insights.HeartRhythmAtrialFlutter)
         {
             if (wave == "qr")
             {
@@ -850,7 +818,7 @@ public class Control : MonoBehaviour {
                 QR();
             }
         }
-        else if (rhythm == "vt")
+        else if (rhythm == Insights.HeartRhythmVT)
         {
 			if (wave == "qr") {
 				RS ();
@@ -870,7 +838,7 @@ public class Control : MonoBehaviour {
 				}
 			}
         }
-        else if (rhythm == "vf")
+        else if (rhythm == Insights.HeartRhythmVF)
         {
 			if (changing) {
 				STsegment ();
@@ -878,7 +846,7 @@ public class Control : MonoBehaviour {
 				TP ();
 			}
         }
-		else if (rhythm == "nsr") {
+		else if (rhythm == Insights.HeartRhythmNSR) {
 			if (bigeminy && !bigeminyWideSwitch) {
 				if (wave == "p") {
 					PQ ();
@@ -957,7 +925,7 @@ public class Control : MonoBehaviour {
 				P ();
 			}
         }
-		else if (rhythm == "svt" || rhythm == "chb")
+		else if (rhythm == Insights.HeartRhythmSVT || rhythm == Insights.HeartRhythmCompleteHeartBlock)
         {
 			if (wave == "qr") {
 				RS ();
@@ -1184,19 +1152,19 @@ public class Control : MonoBehaviour {
 			if (debugging) {
 				Debug.Log ("Control changing");
 			}
-			string previousRhythm = rhythm;
+			Insights previousRhythm = rhythm;
 			bool wasVF = false;
-			if (rhythm == "vf" && nextRhyhtm != "vf") {
+			if (rhythm == Insights.HeartRhythmVF && nextRhyhtm != Insights.HeartRhythmVF) {
 				wasVF = true;
 			}
-			if (nextRhyhtm == "vt") {
+			if (nextRhyhtm == Insights.HeartRhythmVT) {
 				bending.y = 1.5f;
 			}
 			rhythm = nextRhyhtm;
 			respScript.rhythm = rhythm;
 			satsScript.ecgRhythm = rhythm;
 			changing = false;
-			if (rhythm != "vt" && !bigeminy) {
+			if (rhythm != Insights.HeartRhythmVT && !bigeminy) {
 				wideQRS = false;
 			}
 			SetRhythm ();
@@ -1213,10 +1181,10 @@ public class Control : MonoBehaviour {
 		} else {
 			if (wideQRS) {
 				T ();
-			} else if (rhythm == "vf") {
+			} else if (rhythm == Insights.HeartRhythmVF) {
 				//VF is just the TP segment on loop, but first call on instantiation is to STsegment(), so this is a redirect:
 				TP ();
-			} else if (rhythm == "svt") {
+			} else if (rhythm == Insights.HeartRhythmSVT) {
 				T ();
 			} else {
 				SetVariables ("sts", 0.5F * QTc);
@@ -1226,7 +1194,7 @@ public class Control : MonoBehaviour {
 
     void T()
     {
-		if (rhythm == "vt") {
+		if (rhythm == Insights.HeartRhythmVT) {
 			if (heartRate > 160f) {
 				TP ();
 			} else {
@@ -1236,7 +1204,7 @@ public class Control : MonoBehaviour {
 		} else if (wideQRS) {
 			bending = new Vector3 (0f, (1.5f * scale), 0f);
 			SetVariables ("t", QTc);
-		} else if (rhythm == "svt") {
+		} else if (rhythm == Insights.HeartRhythmSVT) {
 			bending.y = 0.35f*scale;
 			SetVariables("t", 2F * QTc);
 		} else {
@@ -1247,7 +1215,7 @@ public class Control : MonoBehaviour {
 
     void TP()
     {
-		if (rhythm == "aflutter") {
+		if (rhythm == Insights.HeartRhythmAtrialFlutter) {
 			aFlutterTimeStamp = Time.time;
 			if (variableRhythm) {
 				int var1 = Random.Range (0, 5);
@@ -1268,18 +1236,18 @@ public class Control : MonoBehaviour {
 			gap = (60f / heartRate) - lengthy;
 			bending = new Vector3 (0f, (0.03f * scale), 0f);
 			SetVariables ("tp", gap - cumulativeDeltaTime);
-		} else if (rhythm == "vf") {
+		} else if (rhythm == Insights.HeartRhythmVF) {
 			float x = Random.Range (0.1f, 0.3f);
 			float y = (Random.Range (0.1f, 2.5f)) * scale;
 			bending = new Vector3 (0f, y, 0f);
 			SetVariables ("tp", x);
-		} else if (rhythm == "svt") {
+		} else if (rhythm == Insights.HeartRhythmSVT) {
 			if (gap <= 0) {
 				QR ();
 			} else {
 				SetVariables ("tp", gap - cumulativeDeltaTime);
 			}
-		} else if (rhythm == "vt") {
+		} else if (rhythm == Insights.HeartRhythmVT) {
 			if (heartRate > 160f) {
 				if (shock && sync && charged) {
 					Shock ();
@@ -1315,7 +1283,7 @@ public class Control : MonoBehaviour {
 				bending.y = 0.5f;
 				QR ();
 			}
-		}else if (rhythm=="nsr"){
+		}else if (rhythm==Insights.HeartRhythmNSR){
 			if (heartRate > 130f) {
 				pqWidth = 0.06f * (80f / heartRate);
 			} else if (heartRate > 80f) {
@@ -1340,7 +1308,7 @@ public class Control : MonoBehaviour {
 
 	IEnumerator CHBsetter() {
 		yield return new WaitForSeconds (0.75f);
-		if (rhythm == "chb") {
+		if (rhythm == Insights.HeartRhythmCompleteHeartBlock) {
 			chbPwaveTimeStamp = Time.time;
 			chbPwave = true;
 		}
@@ -1357,26 +1325,26 @@ public class Control : MonoBehaviour {
 
 	//CHECKS IF SHOCK IS CORRECT, CALLS DeliverShock() IF SO, OR FAILSCREEN IF NOT
 	void ShockChecker () {
-		if (rhythm=="vf") { MAP = 0f; }
+		if (rhythm==Insights.HeartRhythmVF) { MAP = 0f; }
 		DumpCharge();
 		shock = false;
 		if (
 			//Shocking NSR
-			(!noShock && (rhythm == "nsr" || rhythm == "chb") && MAP > 0f))
+			(!noShock && (rhythm == Insights.HeartRhythmNSR || rhythm == Insights.HeartRhythmCompleteHeartBlock) && MAP > 0f))
 		{
 			hub.ChangeFailText ("Oops! You cannot cardiovert sinus rhythm or AV blocks!");
 			WrongShock();
 		}
 		else if (
 			//Not shocking VF
-			(rhythm=="vf" && noShock))
+			(rhythm==Insights.HeartRhythmVF && noShock))
 		{
 			hub.ChangeFailText("Oops! That was VF. You should have shocked the patient.");
 			WrongShock();
 		}
 		else if (
 			//Not shocking pulseless VT
-			(rhythm == "vt" && noShock && MAP==0f))
+			(rhythm == Insights.HeartRhythmVT && noShock && MAP==0f))
 		{
 			string failText = "Oops! That was pulseless";
 			if (torsades) {
@@ -1388,7 +1356,7 @@ public class Control : MonoBehaviour {
 		}
 		else if (
 			//Non-shockable rhythm in cardiac arrest
-			(!noShock && MAP == 0 && (rhythm == "af" || rhythm == "aflutter" || rhythm == "svt" || rhythm == "nsr" || rhythm == "chb")))
+			(!noShock && MAP == 0 && (rhythm == "af" || rhythm == Insights.HeartRhythmAtrialFlutter || rhythm == Insights.HeartRhythmSVT || rhythm == Insights.HeartRhythmNSR || rhythm == Insights.HeartRhythmCompleteHeartBlock)))
 		{
 			string failText = "Oops! ";
 			if (rhythm == "af") {
@@ -1397,19 +1365,19 @@ public class Control : MonoBehaviour {
 					failText += " with a broad QRS complex";
 				}
 				failText += ". That's a non-shockable rhythm.";
-			} else if (rhythm == "aflutter") {
+			} else if (rhythm == Insights.HeartRhythmAtrialFlutter) {
 				failText += "That was atrial flutter";
 				if (wideQRS) {
 					failText += " with a broad QRS complex";
 				}
 				failText += ". That's a non-shockable rhythm.";
-			} else if (rhythm == "svt") {
+			} else if (rhythm == Insights.HeartRhythmSVT) {
 				failText += "That was SVT";
 				if (wideQRS) {
 					failText += " with a broad QRS complex";
 				}
 				failText += ". That's a non-shockable rhythm.";
-			} else if (rhythm == "nsr") {
+			} else if (rhythm == Insights.HeartRhythmNSR) {
 				if (mobitzI) {
 					failText += "That was Mobitz I";
 				} else if (mobitzII) {
@@ -1421,7 +1389,7 @@ public class Control : MonoBehaviour {
 					failText += " with a broad QRS complex";
 				}
 				failText += ". That's a non-shockable rhythm.";
-			} else if (rhythm == "chb") {
+			} else if (rhythm == Insights.HeartRhythmCompleteHeartBlock) {
 				failText += "That was complete heart block. That's a non-shockable rhythm.";
 			}
 			hub.ChangeFailText(failText);
@@ -1436,7 +1404,7 @@ public class Control : MonoBehaviour {
 		}
 		else if (
 			//Non-sync'ed shock:
-			((rhythm == "af" || rhythm == "aflutter" || rhythm == "svt" || (rhythm == "vt" && MAP > 0)) && !sync && !noShock))
+			((rhythm == "af" || rhythm == Insights.HeartRhythmAtrialFlutter || rhythm == Insights.HeartRhythmSVT || (rhythm == Insights.HeartRhythmVT && MAP > 0)) && !sync && !noShock))
 		{
 			hub.ChangeFailText("Oops! You should have synchronised that shock.");
 			WrongShock();
@@ -1444,7 +1412,7 @@ public class Control : MonoBehaviour {
 		else if (
 
 			//Not shocking a low BP in non-sinus rhythm (if MAP < 60 it will be < 40)
-			(noShock && MAP < 60 && MAP > 0 && rhythm != "nsr"  && heartRate >120f))
+			(noShock && MAP < 60 && MAP > 0 && rhythm != Insights.HeartRhythmNSR  && heartRate >120f))
 		{
 			hub.ChangeFailText("Oops! The patient had an unstable tachyarrhythmia, that's an indication for emergency cardioversion.");
 			WrongShock();
@@ -1499,25 +1467,25 @@ public class Control : MonoBehaviour {
 				hub.PlaySequence ("Defib");
 			}
 			hub.AdrenalineChecker ();
-			/*if ((rhythm == "af" || rhythm == "aflutter" || rhythm == "svt" || rhythm=="vt")&&MAP>0&&wave=="t"))
+			/*if ((rhythm == "af" || rhythm == Insights.HeartRhythmAtrialFlutter || rhythm == Insights.HeartRhythmSVT || rhythm==Insights.HeartRhythmVT)&&MAP>0&&wave=="t"))
         {
             if (sync)
             {
                 int pos = Random.Range(0, 6);
-                string[] rhythms = new string[] { "af", "aflutter", "nsr", "svt", "vt", "vf" };
+                string[] rhythms = new string[] { "af", Insights.HeartRhythmAtrialFlutter, Insights.HeartRhythmNSR, Insights.HeartRhythmSVT, Insights.HeartRhythmVT, Insights.HeartRhythmVF };
                 string newRhyth = rhythms[pos];
                 Debug.Log("rhythm = " + rhythms[pos]);
             }
             else
             {
-                rhythm = "vf";
+                rhythm = Insights.HeartRhythmVF;
                 //throw message about non-sync'ed DCC
             }
         }
         else
         {
             int pos = Random.Range(0, 6);
-            string[] rhythms = new string[] { "af", "aflutter", "nsr", "svt", "vt", "vf" };
+            string[] rhythms = new string[] { "af", Insights.HeartRhythmAtrialFlutter, Insights.HeartRhythmNSR, Insights.HeartRhythmSVT, Insights.HeartRhythmVT, Insights.HeartRhythmVF };
             string newRhyth = rhythms[pos];
             Debug.Log("rhythm = " + rhythms[pos]);
             //FOR SETTING RANDOM RHYTHM:
@@ -1633,7 +1601,7 @@ public class Control : MonoBehaviour {
 	public void Change(bool noShockToDeliver)
 	{
 		//Debug.Log("Changing shock status");
-		if (rhythm == "vf" && sync == true)
+		if (rhythm == Insights.HeartRhythmVF && sync == true)
 		{
 		}
 		else
@@ -1726,7 +1694,7 @@ public class Control : MonoBehaviour {
 
 	void DoPace()
 	{
-		if (rhythm != "vf")
+		if (rhythm != Insights.HeartRhythmVF)
 		{
 			pacingSpike = true;
 			lastPacingSpike = Time.time;

@@ -38,7 +38,7 @@ public class Sats : MonoBehaviour {
 
 	public string wave = "x";
 	public string rhythm = "sats";
-	public string ecgRhythm = "nsr";
+	public string ecgRhythm = Insights.HeartRhythmNSR;
     private string monitorClone = "Clone0";
 
 	public bool mapZero = true;

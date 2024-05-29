@@ -284,10 +284,10 @@ public class PatientMaker : MonoBehaviour {
 			}
 		}
 		p.rhythm1 = RhythmConverter(initialRhythm.captionText.text);
-		p.rhythm2 = "nsr";
+		p.rhythm2 = Insights.HeartRhythmNSR;
 		p.rhythm3 = RhythmConverter(arrestRhythm1.captionText.text);
 		p.rhythm4 = RhythmConverter (arrestRhythm2.captionText.text);
-		p.rhythm5 = "nsr";
+		p.rhythm5 = Insights.HeartRhythmNSR;
 		p.chestFindings = chestDropdown.captionText.text;
 		p.pupilsFindings = pupils.text;
 
@@ -317,8 +317,8 @@ public class PatientMaker : MonoBehaviour {
 		} else {
 			p.pulmonaryOedema = false;
 		}
-		if (initialRhythm.captionText.text == "NSR" || initialRhythm.captionText.text == "Mobitz I" ||
-		    initialRhythm.captionText.text == "Mobitz II" || initialRhythm.captionText.text == "CHB") {
+		if (initialRhythm.captionText.text == Insights.HeartRhythmNSR || initialRhythm.captionText.text == "Mobitz I" ||
+		    initialRhythm.captionText.text == "Mobitz II" || initialRhythm.captionText.text == Insights.HeartRhythmCompleteHeartBlock) {
 			p.bradyCardia = true;
 		} else {
 			p.bradyCardia = false;
@@ -355,26 +355,26 @@ public class PatientMaker : MonoBehaviour {
 
 
 	private string RhythmConverter (string rhythm) {
-		if (rhythm == "NSR") {
-			return "nsr";
+		if (rhythm == Insights.HeartRhythmNSR) {
+			return Insights.HeartRhythmNSR;
 		} else if (rhythm == "AF") {
 			return "af";
 		} else if (rhythm == "Atrial flutter") {
-			return "aflutter";
-		} else if (rhythm == "SVT") {
-			return "svt";
-		} else if (rhythm == "VT") {
-			return "vt";
-		} else if (rhythm == "Torsades") {
-			return "torsades";
+			return Insights.HeartRhythmAtrialFlutter;
+		} else if (rhythm == Insights.HeartRhythmSVT) {
+			return Insights.HeartRhythmSVT;
+		} else if (rhythm == Insights.HeartRhythmVT) {
+			return Insights.HeartRhythmVT;
+		} else if (rhythm == Insights.HeartRhythmTorsades) {
+			return Insights.HeartRhythmTorsades;
 		} else if (rhythm == "Mobitz I") {
 			return "mobtizI";
 		} else if (rhythm == "Mobitz II") {
-			return "mobitzII";
-		} else if (rhythm == "CHB") {
-			return "chb";
-		} else if (rhythm == "VF") {
-			return "vf";
+			return Insights.HeartRhythmMobitzII;
+		} else if (rhythm == Insights.HeartRhythmCompleteHeartBlock) {
+			return Insights.HeartRhythmCompleteHeartBlock;
+		} else if (rhythm == Insights.HeartRhythmVF) {
+			return Insights.HeartRhythmVF;
 		} else {
 			return "";
 		}

@@ -46,11 +46,11 @@ public class Patient : MonoBehaviour {
 
 	public Insights exposureFindings;
 
-    public string rhythm1="nsr";
-    public string rhythm2 = "nsr";
-    public string rhythm3 = "nsr";
-    public string rhythm4 = "nsr";
-    public string rhythm5 = "nsr";
+    public string rhythm1=Insights.HeartRhythmNSR;
+    public string rhythm2 = Insights.HeartRhythmNSR;
+    public string rhythm3 = Insights.HeartRhythmNSR;
+    public string rhythm4 = Insights.HeartRhythmNSR;
+    public string rhythm5 = Insights.HeartRhythmNSR;
 
 	public string scene = "Conscious";
 	public string airwayObstruction = "";
@@ -196,9 +196,9 @@ public class Patient : MonoBehaviour {
             //Sets variables in arrest mode
 			for (int i = 0; i < rhythmList.Count; i++) {
 				rhythmList [i] = RandomRhythm (true);
-				while (rhythmList [i] == "mobitzI" ||
-				       rhythmList [i] == "mobitzII" ||
-				       rhythmList [i] == "bigeminy") {
+				while (rhythmList [i] == Insights.HeartRhythmMobitzI ||
+				       rhythmList [i] == Insights.HeartRhythmMobitzII ||
+				       rhythmList [i] == Insights.HeartRhythmBigeminy) {
 					rhythmList [i] = RandomRhythm (true);
 				}
 			}
@@ -319,15 +319,15 @@ public class Patient : MonoBehaviour {
 			}
 			if (diagnosis == "Arrhythmia") {
 				rhythmList [0] = RandomRhythm(false);
-				while (rhythmList[0] == "aflutter") {
+				while (rhythmList[0] == Insights.HeartRhythmAtrialFlutter) {
 					rhythmList [0] = RandomRhythm(false); //Ensure arrhythmia isn't flutter or VF
 				}
                 if (dhh_demo)
                 {
-                    rhythmList[0] = "chb";
+                    rhythmList[0] = Insights.HeartRhythmCompleteHeartBlock;
                 }
 
-				rhythmList [1] = "nsr";
+				rhythmList [1] = Insights.HeartRhythmNSR;
 				rhythmList [2] = RandomRhythm(true);
 
 				rhythmList [3] = RandomRhythm(true);
@@ -337,9 +337,9 @@ public class Patient : MonoBehaviour {
 				MAPList [2] = 0f;
 				MAPList [3] = 0f;
 				MAPList [4] = 0f;
-				if (rhythmList [0] == "nsr" || rhythmList [0] == "mobitzI" ||
-				    rhythmList [0] == "mobitzII" || rhythmList [0] == "chb" ||
-				    rhythmList [0] == "bigeminy") {
+				if (rhythmList [0] == Insights.HeartRhythmNSR || rhythmList [0] == Insights.HeartRhythmMobitzI ||
+				    rhythmList [0] == Insights.HeartRhythmMobitzII || rhythmList [0] == Insights.HeartRhythmCompleteHeartBlock ||
+				    rhythmList [0] == Insights.HeartRhythmBigeminy) {
 					heartRateList [0] = Random.Range (20f, 35f);
 					//NB: keep slow AF / flutter out of the bradycardia list, because the variable rates
 					//will mess with the functions
@@ -353,7 +353,7 @@ public class Patient : MonoBehaviour {
 				}
 			} else {
                 //This means any non-arrhythmia scenario will have NSR. Probably not ideal.
-				rhythmList [0] = "nsr";
+				rhythmList [0] = Insights.HeartRhythmNSR;
 				rhythmList [2] = RandomRhythm(true);
 				rhythmList [2] = RandomRhythm(true);
 				rhythmList [3] = RandomRhythm(true);
@@ -407,31 +407,31 @@ public class Patient : MonoBehaviour {
         List<string> rhythms = new List<string>();
         if (scene == "AI")
         {
-            rhythms.Add("nsr");
-            rhythms.Add("svt");
-            rhythms.Add("af");
-            rhythms.Add("aflutter");
-            rhythms.Add("mobitzI");
-            rhythms.Add("mobitzII");
-            rhythms.Add("chb");
-            rhythms.Add("torsades");
-            rhythms.Add("bigeminy");
+            rhythms.Add(Insights.HeartRhythmNSR);
+            rhythms.Add(Insights.HeartRhythmSVT);
+            rhythms.Add(Insights.HeartRhythmAF);
+            rhythms.Add(Insights.HeartRhythmAtrialFlutter);
+            rhythms.Add(Insights.HeartRhythmMobitzI);
+            rhythms.Add(Insights.HeartRhythmMobitzII);
+            rhythms.Add(Insights.HeartRhythmCompleteHeartBlock);
+            rhythms.Add(Insights.HeartRhythmTorsades);
+            rhythms.Add(Insights.HeartRhythmBigeminy);
         }
         else
         {
-            rhythms.Add("nsr");
-            rhythms.Add("svt");
-            rhythms.Add("af");
-            rhythms.Add("aflutter");
-            rhythms.Add("vt");
-            rhythms.Add("mobitzI");
-            rhythms.Add("mobitzII");
-            rhythms.Add("chb");
-            rhythms.Add("torsades");
-            rhythms.Add("bigeminy");
+            rhythms.Add(Insights.HeartRhythmNSR);
+            rhythms.Add(Insights.HeartRhythmSVT);
+            rhythms.Add(Insights.HeartRhythmAF);
+            rhythms.Add(Insights.HeartRhythmAtrialFlutter);
+            rhythms.Add(Insights.HeartRhythmVT);
+            rhythms.Add(Insights.HeartRhythmMobitzI);
+            rhythms.Add(Insights.HeartRhythmMobitzII);
+            rhythms.Add(Insights.HeartRhythmCompleteHeartBlock);
+            rhythms.Add(Insights.HeartRhythmTorsades);
+            rhythms.Add(Insights.HeartRhythmBigeminy);
         }
 		if (includeVF) {
-			rhythms.Add("vf");
+			rhythms.Add(Insights.HeartRhythmVF);
 		}
 		int thisRhythm = Random.Range (0, rhythms.Count);
 		/*if (debugging) {

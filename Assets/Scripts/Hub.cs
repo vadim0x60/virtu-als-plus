@@ -257,7 +257,7 @@ public class Hub : MonoBehaviour {
     private bool signs_of_life_check = false;
 
 	private string averageTimeOffChestString = "00.00";
-	public string rhythm;
+	public Insights rhythm;
 	public string scene;
 	private string arrestCause = "";
 	public string abgType = "";
@@ -356,26 +356,6 @@ public class Hub : MonoBehaviour {
 		MemoDispatched?.Invoke(this, memo);
 	}
 
-	private void DispatchECG() {
-		DispatchMeasurement(Insights.MeasuredHeartRate, heartRate);
-		switch (rhythmNumber) {
-			case 0:
-				DispatchInsight(Insights.HeartRhythm0);
-				break;
-			case 1:
-				DispatchInsight(Insights.HeartRhythm1);
-				break;
-			case 2:
-				DispatchInsight(Insights.HeartRhythm2);
-				break;
-			case 3:
-				DispatchInsight(Insights.HeartRhythm3);
-				break;
-			case 4:
-				DispatchInsight(Insights.HeartRhythm4);
-				break;
-		}
-	}
 
 	private void DisplayAIMenu() {
 		if (scene == "Conscious" || scene == "Unconscious") {
@@ -817,7 +797,7 @@ public class Hub : MonoBehaviour {
          */
         string patient_state_string = "";
         patient_state_string += AddPatientStateBoolHelper(cardiacArrest) + ",";
-        patient_state_string += rhythm + ",";
+        patient_state_string += rhythm.ToString() + ",";
         patient_state_string += heartRate + ",";
         patient_state_string += AddPatientStateBoolHelper(patient.conscious) + ",";
         patient_state_string += AddPatientStateBoolHelper(patient.airwayObstructed) + ",";
@@ -869,7 +849,7 @@ public class Hub : MonoBehaviour {
 	{
 		//This condition stops the message "There is a pulse!" displaying on first rhythm check if in VF
 		//Hereafter, the "Control" script will ensure MAP==0 if pt in cardiac arrest
-		if (rhythm == "vf") {
+		if (rhythm == Insights.HeartRhythmVF) {
 			MAP = 0f;
 		}
 		rhythmChecks++;
@@ -953,7 +933,7 @@ public class Hub : MonoBehaviour {
 			if (debugging) {
 				Debug.Log ("Adrenaline checker. Rhythm: " + rhythm);
 			}
-			if (control.rhythm == "vt" || control.rhythm == "vf") //To avoid confusion with, e.g. torsades
+			if (control.rhythm == Insights.HeartRhythmVT || control.rhythm == Insights.HeartRhythmVF) //To avoid confusion with, e.g. torsades
 			{
 				shockable = true;
 				numberOfShockableCycle++;
@@ -1106,7 +1086,7 @@ public class Hub : MonoBehaviour {
 					"shouldn't give amiodarone to your bradycardic patient... ";
 					drugFailsNCPR++;
 					DispatchFeedback(Feedback.Blunder);
-				} else if (rhythm == "nsr") {
+				} else if (rhythm == Insights.HeartRhythmNSR) {
 					messageText = "You give amiodarone to John, who is normal sinus rhythm."
 					+ " Surprisingly enough, nothing happens. ";
 					drugFailsNCPR++;
@@ -3298,7 +3278,7 @@ public class Hub : MonoBehaviour {
 		defibCam.enabled = true;
 	}
 
-	public void RhythmPractice (string thisRhythm) {
+	public void RhythmPractice (Insights thisRhythm) {
 		if (RhythmPracticeBool(thisRhythm)) {
 			rhythmPracticeMessageText.text = "Excellent! ";
 			rhythmPracticeCorrectInt++;
@@ -3312,7 +3292,7 @@ public class Hub : MonoBehaviour {
 			StartCoroutine (RhythmPracticeCorrectEnum (1.5f));
 		} else {
 			rhythmPracticeCorrectInt = 0;
-			rhythmPracticeMessageText.text = "Not quite! That was " + RhythmToMeaningful (rhythm);
+			rhythmPracticeMessageText.text = "Not quite! That was " + rhythm.ToString();
 			rhythmPracticeMessageText.text += ". Take another look... ";
 			rhythmPracticeCorrect = false;
 			StartCoroutine (RhythmPracticeCorrectEnum (2.5f));
@@ -3333,16 +3313,16 @@ public class Hub : MonoBehaviour {
 	public void RhythmPracticeContinue () {
 		if (rhythmPracticeCorrect) {
 			//Couple of lines to stop duplicate rhythms:
-			string nextRhythm = patient.RandomRhythm (true);
-			while (nextRhythm == rhythm || nextRhythm == "bigeminy") {
+			Insights nextRhythm = patient.RandomRhythm (true);
+			while (nextRhythm == rhythm || nextRhythm == Insights.HeartRhythmBigeminy) {
 				nextRhythm = patient.RandomRhythm (true);
 			}
 
 			rhythm = nextRhythm;
 			control.RemoteChangeECG (rhythm);
-			if (rhythm == "af" || rhythm == "nsr") {
+			if (rhythm == "af" || rhythm == Insights.HeartRhythmNSR) {
 				control.RemoteChangeHeartRate (UnityEngine.Random.Range (30f, 90f));
-			} else if (rhythm == "svt") {
+			} else if (rhythm == Insights.HeartRhythmSVT) {
 				control.RemoteChangeHeartRate (UnityEngine.Random.Range (130f, 200f));
 			}
 			rhythmPracticeWaiting = true;
@@ -3481,22 +3461,22 @@ public class Hub : MonoBehaviour {
 			shockOrNotWaiting = true;
 			if (shockOrNotRounds < 10f) {
 				//Couple of lines to stop duplicate rhythms:
-				string nextRhythm = patient.RandomRhythm (true);
+				Insights nextRhythm = patient.RandomRhythm (true);
 				while (nextRhythm == rhythm) {
 					nextRhythm = patient.RandomRhythm (true);
 				}
 				rhythm = nextRhythm;
 				control.RemoteChangeECG (rhythm);
-				if (rhythm == "af" || rhythm == "nsr") {
+				if (rhythm == "af" || rhythm == Insights.HeartRhythmNSR) {
 					control.RemoteChangeHeartRate (UnityEngine.Random.Range (30f, 90f));
-				} else if (rhythm == "svt") {
+				} else if (rhythm == Insights.HeartRhythmSVT) {
 					control.RemoteChangeHeartRate (UnityEngine.Random.Range (130f, 200f));
 				}
 			} else {
 				if (!nonBlockingMode) Pause();
 				DispatchFeedback(Feedback.Success);
 				shockOrNotMessageScreen.SetActive(true);
-				string thisRhyth = RhythmToMeaningful (rhythm);
+				string thisRhyth = rhythm.ToString();
 				shockOrNotMessageText.text = "Nicely done!\n\n";
 				shockOrNotMessageText.text += "Your time was " + shockOrNotTotal.ToString("00.00") + " seconds.\n\n";
 				/*if (fbHolder.loggedIn) {
@@ -3516,9 +3496,9 @@ public class Hub : MonoBehaviour {
 			shockOrNotMessageScreen.SetActive(true);
 			menuIcon.SetActive (false);
 			aiMenu.SetActive (false);
-			string thisRhyth = RhythmToMeaningful (rhythm);
+			string thisRhyth = rhythm.ToString();
 			shockOrNotMessageText.text = "Oops! That was " + thisRhyth + ", which is ";
-			if (rhythm == "vt" || rhythm == "torsades" || rhythm == "vf") {
+			if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmTorsades || rhythm == Insights.HeartRhythmVF) {
 				shockOrNotMessageText.text += "shockable.\n\n";
 			} else {
 				shockOrNotMessageText.text += "non-shockable (PEA).\n\n";
@@ -3529,13 +3509,13 @@ public class Hub : MonoBehaviour {
 
 	private bool ShockOrNotChecker(bool shocking) {
 		if (shocking) {
-			if (rhythm == "vt" || rhythm == "torsades" || rhythm == "vf") {
+			if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmTorsades || rhythm == Insights.HeartRhythmVF) {
 				return true;
 			} else {
 				return false;
 			}
 		} else {
-			if (rhythm == "vt" || rhythm == "torsades" || rhythm == "vf") {
+			if (rhythm == Insights.HeartRhythmVT || rhythm == Insights.HeartRhythmTorsades || rhythm == Insights.HeartRhythmVF) {
 				return false;
 			} else {
 				return true;
@@ -3594,22 +3574,6 @@ public class Hub : MonoBehaviour {
 	public void StopAllSounds()
 	{
 		soundPlayer.GetComponent<SoundPlayer>().StopAllSounds();
-	}
-
-	private string RhythmToMeaningful (string str) {
-		if (str == "mobitzI") {
-			return "Mobitz I";
-		} else if (str == "mobitzII") {
-			return "Mobitz II";
-		} else if (str == "chb") {
-			return "complete heart block";
-		} else if (str == "aflutter") {
-			return "atrial flutter";
-		} else if (str != "bigeminy" && str != "torsades") {
-			return str.ToUpper ();
-		} else {
-			return str;	
-		}
 	}
 
 	public void SoundToggle () {
@@ -3761,7 +3725,7 @@ public class Hub : MonoBehaviour {
 	IEnumerator AdenosineTimer() {
 		control.adenosine = true;
 		yield return new WaitForSeconds (5);
-		if (rhythm == "svt") {
+		if (rhythm == Insights.HeartRhythmSVT) {
 			NextRhythm ();
 		}
 		control.adenosine = false;
@@ -4138,7 +4102,6 @@ public class Hub : MonoBehaviour {
                 if (control.monitorPadsOn && !clinical_information_obtained.ContainsValue("ECG"))
                 {
                     clinical_information_obtained.Add(Time.time, "ECG");
-					DispatchECG();
                 }
                 if (control.satsScript.satsOn && !clinical_information_obtained.ContainsValue("Sats"))
                 {
@@ -4156,7 +4119,6 @@ public class Hub : MonoBehaviour {
                 if (animationTesting.defibPads.activeSelf && control.defibReady && !clinical_information_obtained.ContainsValue("ECG"))
                 {
                     clinical_information_obtained.Add(Time.time, "ECG");
-					DispatchECG();
                 }
             }
         }
