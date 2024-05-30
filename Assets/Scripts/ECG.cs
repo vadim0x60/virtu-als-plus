@@ -189,7 +189,7 @@ public class ECG : MonoBehaviour {
 				nextRhyhtm = incomingRhythm;
 			}
 
-			if (rhythm == "af") {
+			if (rhythm == Insights.HeartRhythmAF) {
 				afSliderChanged = false;
 			}
 			changing = true;
@@ -221,7 +221,7 @@ public class ECG : MonoBehaviour {
 
 	private void ChangeSlider() {
 		if (server) {
-			if (rhythm == Insights.HeartRhythmNSR || rhythm == "af") {
+			if (rhythm == Insights.HeartRhythmNSR || rhythm == Insights.HeartRhythmAF) {
 				for (int i = 0; i < sliderList.Count; i++) {
 					sliderList [i].SetActive (true);
 				}
@@ -241,7 +241,7 @@ public class ECG : MonoBehaviour {
 					heartRateSliderLowerFloat = 20f;
 					heartRateSliderUpperFloat = 130f;
 				}
-				if (rhythm == "af") {
+				if (rhythm == Insights.HeartRhythmAF) {
 					afSliderChanged = true;
 				}
 			} else if (rhythm == Insights.HeartRhythmAtrialFlutter) {
@@ -403,7 +403,7 @@ public class ECG : MonoBehaviour {
 	//SETS HEARTRATE TO PATIENT'S HEARTRATE AND ENSURES IS WITHIN ACCEPTED VALUES
 	void SetRhythm()
 	{
-		if (rhythm != Insights.HeartRhythmNSR && rhythm != "af" && rhythm != Insights.HeartRhythmAtrialFlutter &&
+		if (rhythm != Insights.HeartRhythmNSR && rhythm != Insights.HeartRhythmAF && rhythm != Insights.HeartRhythmAtrialFlutter &&
 			rhythm != Insights.HeartRhythmSVT && rhythm != Insights.HeartRhythmVT && rhythm != Insights.HeartRhythmVF && rhythm != "sats" && rhythm != Insights.HeartRhythmCompleteHeartBlock) {
 			Debug.Log ("The defib does not recognise the rhythm: " + rhythm);
 		} else if (rhythm == Insights.HeartRhythmNSR) {
@@ -415,7 +415,7 @@ public class ECG : MonoBehaviour {
 				heartRate = 180f;
 			}
 			variableRhythm = false;
-		} else if (rhythm == "af") {
+		} else if (rhythm == Insights.HeartRhythmAF) {
 			//heartRate = Random.Range(20f, 150f);
 			heartRateUpper = Random.Range (heartRate + (heartRate / 10), heartRate + (heartRate / 3));
 			heartRateLower = Random.Range (heartRate - (heartRate / 10), heartRate - (heartRate / 3));
@@ -483,7 +483,7 @@ public class ECG : MonoBehaviour {
 		//SET QTc (THIS WILL GIVE HALF QTc VALUE
 		QTc = ((((300 * Mathf.Sqrt(60f / heartRate)) - 40f) / 2f) / 1000);
 
-		if (rhythm == "af")
+		if (rhythm == Insights.HeartRhythmAF)
 		{
 			heartRateLower = heartRate - (heartRate / 5f);
 			heartRateUpper = heartRate + (heartRate / 5f);
@@ -546,7 +546,7 @@ public class ECG : MonoBehaviour {
 		}
 
 		//Create a random interference pattern for AF
-		else if (rhythm == "af") {
+		else if (rhythm == Insights.HeartRhythmAF) {
 			if (wave == "tp") {
 				float y = 0.05f;
 				float targetTime = ((Time.time - afTimeStamp) / pDur);
@@ -624,7 +624,7 @@ public class ECG : MonoBehaviour {
 	void NextWave()
 	{
 		endPosition.x += (Time.time - timeStamp - duration) * speed;
-		if (rhythm == "af") {
+		if (rhythm == Insights.HeartRhythmAF) {
 			if (wave == "qr") {
 				RS ();
 			} else if (wave == "rs") {
@@ -829,7 +829,7 @@ public class ECG : MonoBehaviour {
 		//Am I repeating these equations for a particular reason?
 		//(They are done in TP() function)
 		//It seems I am, because fixing them fixed the heart rate in AF!
-		if (rhythm == "af") {
+		if (rhythm == Insights.HeartRhythmAF) {
 			heartRate = Random.Range (heartRateLower, heartRateUpper);
 			randomHeartRate = heartRate;
 			pqWidth = (60f / heartRate) * 0.08f;
@@ -989,7 +989,7 @@ public class ECG : MonoBehaviour {
 			gap = (60f / heartRate) - lengthy;
 			aFlutterTimeStamp = Time.time;
 			SetVariables ("tp", gap - cumulativeDeltaTime);
-		} else if (rhythm == "af") {
+		} else if (rhythm == Insights.HeartRhythmAF) {
 			heartRate = Random.Range (heartRateLower, heartRateUpper);
 			randomHeartRate = heartRate;
 			pqWidth = (60f / heartRate) * 0.08f;

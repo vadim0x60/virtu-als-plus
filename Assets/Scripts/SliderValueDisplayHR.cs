@@ -22,7 +22,7 @@ public class SliderValueDisplayHR : MonoBehaviour {
 
 	public void Changer () {
 		string rhythm = rhythmDropDown.captionText.text;
-		if (rhythm == Insights.HeartRhythmNSR) {
+		if (rhythm == "NSR") {
 			settableRate = true;
 			minHR = 20f;
 			maxHR = 150f;
@@ -33,15 +33,15 @@ public class SliderValueDisplayHR : MonoBehaviour {
 		} else if (rhythm == "Atrial flutter") {
 			settableRate = false;
 			valueText.text = "N/A";
-		} else if (rhythm == Insights.HeartRhythmSVT) {
+		} else if (rhythm == "SVT") {
 			settableRate = true;
 			minHR = 120f;
 			maxHR = 200f;
-		} else if (rhythm == Insights.HeartRhythmVT) {
+		} else if (rhythm == "VT") {
 			settableRate = true;
 			minHR = 150f;
 			maxHR = 250f;
-		} else if (rhythm == Insights.HeartRhythmTorsades) {
+		} else if (rhythm == "Torsades") {
 			settableRate = true;
 			minHR = 161f;
 			maxHR = 250f;
@@ -57,11 +57,11 @@ public class SliderValueDisplayHR : MonoBehaviour {
 			settableRate = true;
 			minHR = 20f;
 			maxHR = 60f;
-		} else if (rhythm == Insights.HeartRhythmCompleteHeartBlock) {
+		} else if (rhythm == "CHB") {
 			settableRate = true;
 			minHR = 20f;
 			maxHR = 50f;
-		} else if (rhythm == Insights.HeartRhythmVF) {
+		} else if (rhythm == "VF") {
 			settableRate = false;
 			valueText.text = "N/A";
 		}

@@ -46,11 +46,11 @@ public class Patient : MonoBehaviour {
 
 	public Insights exposureFindings;
 
-    public string rhythm1=Insights.HeartRhythmNSR;
-    public string rhythm2 = Insights.HeartRhythmNSR;
-    public string rhythm3 = Insights.HeartRhythmNSR;
-    public string rhythm4 = Insights.HeartRhythmNSR;
-    public string rhythm5 = Insights.HeartRhythmNSR;
+    public Insights rhythm1=Insights.HeartRhythmNSR;
+    public Insights rhythm2 = Insights.HeartRhythmNSR;
+    public Insights rhythm3 = Insights.HeartRhythmNSR;
+    public Insights rhythm4 = Insights.HeartRhythmNSR;
+    public Insights rhythm5 = Insights.HeartRhythmNSR;
 
 	public string scene = "Conscious";
 	public string airwayObstruction = "";
@@ -96,14 +96,14 @@ public class Patient : MonoBehaviour {
     public int crtCentral = 1;
     public int pupils = 0; //0 = NAD, 1 = right blown, 2 = left blown
 
-    public List<string> rhythmList;
+    public List<Insights> rhythmList;
 	public List<string> diagnosisList;
     public List<float> heartRateList;
     public List<float> MAPList;
 
     // Use this for initialization
     void Start () {
-        rhythmList = new List<string>();
+        rhythmList = new List<Insights>();
         rhythmList.Add(rhythm1);
         rhythmList.Add(rhythm2);
         rhythmList.Add(rhythm3);
@@ -142,7 +142,7 @@ public class Patient : MonoBehaviour {
 
     public void LoadingFunctions()
     {
-        rhythmList = new List<string>();
+        rhythmList = new List<Insights>();
         rhythmList.Add(rhythm1);
         rhythmList.Add(rhythm2);
         rhythmList.Add(rhythm3);
@@ -403,8 +403,8 @@ public class Patient : MonoBehaviour {
         }
     }
 
-	public string RandomRhythm (bool includeVF) {
-        List<string> rhythms = new List<string>();
+	public Insights RandomRhythm (bool includeVF) {
+        List<Insights> rhythms = new List<Insights>();
         if (scene == "AI")
         {
             rhythms.Add(Insights.HeartRhythmNSR);

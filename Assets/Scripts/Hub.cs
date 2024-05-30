@@ -283,7 +283,7 @@ public class Hub : MonoBehaviour {
 
     public List<GameObject> buttonList;
 	private List<GameObject> examinationButtonList;
-    private List<string> rhythmList;
+    private List<Insights> rhythmList;
     private List<float> heartRateList;
     private List<float> MAPList;
 	private List<string> messageList;
@@ -2809,7 +2809,7 @@ public class Hub : MonoBehaviour {
 		}
 	}
 
-	public string NextRhythm()
+	public Insights NextRhythm()
 	{
 		//CODE FOR PATIENT HAVING ARRESTED IN A NON-ARREST SCENARIO:
 		/* NB: When a patient arrests, the rhythm number is 2 (I can't find where this is actually set!), 
@@ -3302,7 +3302,7 @@ public class Hub : MonoBehaviour {
 		rhythmPracticeButtonPanel.SetActive (false);
 	}
 
-	public bool RhythmPracticeBool(string thisRhythm) {
+	public bool RhythmPracticeBool(Insights thisRhythm) {
 		if (rhythm == thisRhythm) {
 			return true;
 		} else {
@@ -3320,7 +3320,7 @@ public class Hub : MonoBehaviour {
 
 			rhythm = nextRhythm;
 			control.RemoteChangeECG (rhythm);
-			if (rhythm == "af" || rhythm == Insights.HeartRhythmNSR) {
+			if (rhythm == Insights.HeartRhythmAF || rhythm == Insights.HeartRhythmNSR) {
 				control.RemoteChangeHeartRate (UnityEngine.Random.Range (30f, 90f));
 			} else if (rhythm == Insights.HeartRhythmSVT) {
 				control.RemoteChangeHeartRate (UnityEngine.Random.Range (130f, 200f));
@@ -3467,7 +3467,7 @@ public class Hub : MonoBehaviour {
 				}
 				rhythm = nextRhythm;
 				control.RemoteChangeECG (rhythm);
-				if (rhythm == "af" || rhythm == Insights.HeartRhythmNSR) {
+				if (rhythm == Insights.HeartRhythmAF || rhythm == Insights.HeartRhythmNSR) {
 					control.RemoteChangeHeartRate (UnityEngine.Random.Range (30f, 90f));
 				} else if (rhythm == Insights.HeartRhythmSVT) {
 					control.RemoteChangeHeartRate (UnityEngine.Random.Range (130f, 200f));

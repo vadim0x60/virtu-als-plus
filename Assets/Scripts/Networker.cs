@@ -23,7 +23,7 @@ public class Networker : NetworkBehaviour {
 	}
 
 	[Command]
-	public void CmdChangeRhythm(string rhythm) {
+	public void CmdChangeRhythm(Insights rhythm) {
 		RpcChangeRhythm (rhythm);
 	}
 
@@ -48,7 +48,7 @@ public class Networker : NetworkBehaviour {
 	}
 
 	[ClientRpc]
-	public void RpcChangeRhythm(string rhythm) {
+	public void RpcChangeRhythm(Insights rhythm) {
 		Debug.Log ("Network rhythm: " + rhythm);
 		controller.RemoteChangeECG (rhythm);
 	}

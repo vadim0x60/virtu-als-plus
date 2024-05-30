@@ -43,7 +43,7 @@ public class Resp : MonoBehaviour {
 
 	public int respRate = 16;
 
-	public string rhythm = Insights.HeartRhythmNSR;
+	public Insights rhythm = Insights.HeartRhythmNSR;
     private string monitorClone = "Clone0";
 
     private bool changing = false;

@@ -116,7 +116,7 @@ public class Control : MonoBehaviour {
 
     private Patient patient;
 
-    public Insights afterShockRhythm = "af";
+    public Insights afterShockRhythm = Insights.HeartRhythmAtrialFlutter;
     public Insights rhythm = Insights.HeartRhythmNSR;
     private string wave;
 	private Insights nextRhyhtm = Insights.HeartRhythmNSR;
@@ -246,7 +246,7 @@ public class Control : MonoBehaviour {
 		changing = true;
 	}
 
-	public string MakeSenseOfRhythm(Insights incomingRhythm) {
+	public Insights MakeSenseOfRhythm(Insights incomingRhythm) {
 		bigeminy = false;
 		torsades = false;
 		mobitzI = false;
@@ -290,20 +290,20 @@ public class Control : MonoBehaviour {
 
 		if (!remoteRhythmChange) {
 			if (debugging) {
-				Debug.Log ("Locally changing rhythm to: " + rhythm);
+				Debug.Log ("Locally changing rhythm to: " + rhythm.ToString());
 			}
 			heartRate = hub.NextHeartRate ();
 			rhythm = MakeSenseOfRhythm (hub.rhythm);
 		} else {
 			if (debugging) {
-				Debug.Log ("Remotely changing rhythm to: " + rhythm);
+				Debug.Log ("Remotely changing rhythm to: " + rhythm.ToString());
 			}
 			remoteRhythmChange = false;
 		}
 
 		actualHeartRate = 0f;
 		actualHeartRateAdder = 0f;
-		if (rhythm != Insights.HeartRhythmNSR && rhythm != "af" && rhythm != Insights.HeartRhythmAtrialFlutter &&
+		if (rhythm != Insights.HeartRhythmNSR && rhythm != Insights.HeartRhythmAF && rhythm != Insights.HeartRhythmAtrialFlutter &&
 		    rhythm != Insights.HeartRhythmSVT && rhythm != Insights.HeartRhythmVT && rhythm != Insights.HeartRhythmVF && rhythm != Insights.HeartRhythmCompleteHeartBlock
 			&& debugging) {
 			Debug.Log ("The defib does not recognise the rhythm: " + rhythm);
@@ -327,7 +327,7 @@ public class Control : MonoBehaviour {
 			}
 			variableRhythm = false;
 		}
-        else if (rhythm == "af")
+        else if (rhythm == Insights.HeartRhythmAF)
         {
 			if (heartRate < 20f) {
 				heartRate = 20f;
@@ -415,7 +415,7 @@ public class Control : MonoBehaviour {
         //SET QTc (THIS WILL GIVE HALF QTc VALUE
         QTc = ((((300 * Mathf.Sqrt(60f / heartRate)) - 40f) / 2f) / 1000);
         
-        if (rhythm == "af")
+        if (rhythm == Insights.HeartRhythmAF)
         {
             heartRateLower = heartRate - (heartRate / 5f);
             heartRateUpper = heartRate + (heartRate / 5f);
@@ -699,7 +699,7 @@ public class Control : MonoBehaviour {
         {
             currentPos.y += bending.y * Mathf.Sin(Mathf.Clamp01((Time.time - timeStamp) / duration) * Mathf.PI);
         }
-        else if (rhythm == "af")
+        else if (rhythm == Insights.HeartRhythmAF)
         {
             if (wave == "tp")
             {
@@ -791,7 +791,7 @@ public class Control : MonoBehaviour {
     void Updater02()
     {
         endPosition.x += (Time.time - timeStamp - duration) * traceRate;
-        if (rhythm == "af" || rhythm == Insights.HeartRhythmAtrialFlutter)
+        if (rhythm == Insights.HeartRhythmAF || rhythm == Insights.HeartRhythmAtrialFlutter)
         {
             if (wave == "qr")
             {
@@ -1228,7 +1228,7 @@ public class Control : MonoBehaviour {
 			} else {
 				SetVariables ("tp", gap - cumulativeDeltaTime);
 			}
-		} else if (rhythm == "af") {
+		} else if (rhythm == Insights.HeartRhythmAF) {
 			heartRate = Random.Range (heartRateLower, heartRateUpper);
 			pqWidth = (60f / heartRate) * 0.08f;
 			QTc = ((((300 * Mathf.Sqrt (60f / heartRate)) - 40f) / 2f) / 1000);
@@ -1356,10 +1356,10 @@ public class Control : MonoBehaviour {
 		}
 		else if (
 			//Non-shockable rhythm in cardiac arrest
-			(!noShock && MAP == 0 && (rhythm == "af" || rhythm == Insights.HeartRhythmAtrialFlutter || rhythm == Insights.HeartRhythmSVT || rhythm == Insights.HeartRhythmNSR || rhythm == Insights.HeartRhythmCompleteHeartBlock)))
+			(!noShock && MAP == 0 && (rhythm == Insights.HeartRhythmAF || rhythm == Insights.HeartRhythmAtrialFlutter || rhythm == Insights.HeartRhythmSVT || rhythm == Insights.HeartRhythmNSR || rhythm == Insights.HeartRhythmCompleteHeartBlock)))
 		{
 			string failText = "Oops! ";
-			if (rhythm == "af") {
+			if (rhythm == Insights.HeartRhythmAF) {
 				failText += "That was atrial fibrillation";
 				if (wideQRS) {
 					failText += " with a broad QRS complex";
@@ -1404,7 +1404,7 @@ public class Control : MonoBehaviour {
 		}
 		else if (
 			//Non-sync'ed shock:
-			((rhythm == "af" || rhythm == Insights.HeartRhythmAtrialFlutter || rhythm == Insights.HeartRhythmSVT || (rhythm == Insights.HeartRhythmVT && MAP > 0)) && !sync && !noShock))
+			((rhythm == Insights.HeartRhythmAF || rhythm == Insights.HeartRhythmAtrialFlutter || rhythm == Insights.HeartRhythmSVT || (rhythm == Insights.HeartRhythmVT && MAP > 0)) && !sync && !noShock))
 		{
 			hub.ChangeFailText("Oops! You should have synchronised that shock.");
 			WrongShock();
@@ -1467,12 +1467,12 @@ public class Control : MonoBehaviour {
 				hub.PlaySequence ("Defib");
 			}
 			hub.AdrenalineChecker ();
-			/*if ((rhythm == "af" || rhythm == Insights.HeartRhythmAtrialFlutter || rhythm == Insights.HeartRhythmSVT || rhythm==Insights.HeartRhythmVT)&&MAP>0&&wave=="t"))
+			/*if ((rhythm == Insights.HeartRhythmAF || rhythm == Insights.HeartRhythmAtrialFlutter || rhythm == Insights.HeartRhythmSVT || rhythm==Insights.HeartRhythmVT)&&MAP>0&&wave=="t"))
         {
             if (sync)
             {
                 int pos = Random.Range(0, 6);
-                string[] rhythms = new string[] { "af", Insights.HeartRhythmAtrialFlutter, Insights.HeartRhythmNSR, Insights.HeartRhythmSVT, Insights.HeartRhythmVT, Insights.HeartRhythmVF };
+                string[] rhythms = new string[] { Insights.HeartRhythmAF, Insights.HeartRhythmAtrialFlutter, Insights.HeartRhythmNSR, Insights.HeartRhythmSVT, Insights.HeartRhythmVT, Insights.HeartRhythmVF };
                 string newRhyth = rhythms[pos];
                 Debug.Log("rhythm = " + rhythms[pos]);
             }
@@ -1485,7 +1485,7 @@ public class Control : MonoBehaviour {
         else
         {
             int pos = Random.Range(0, 6);
-            string[] rhythms = new string[] { "af", Insights.HeartRhythmAtrialFlutter, Insights.HeartRhythmNSR, Insights.HeartRhythmSVT, Insights.HeartRhythmVT, Insights.HeartRhythmVF };
+            string[] rhythms = new string[] { Insights.HeartRhythmAF, Insights.HeartRhythmAtrialFlutter, Insights.HeartRhythmNSR, Insights.HeartRhythmSVT, Insights.HeartRhythmVT, Insights.HeartRhythmVF };
             string newRhyth = rhythms[pos];
             Debug.Log("rhythm = " + rhythms[pos]);
             //FOR SETTING RANDOM RHYTHM:

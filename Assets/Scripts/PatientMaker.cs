@@ -354,29 +354,29 @@ public class PatientMaker : MonoBehaviour {
 	}
 
 
-	private string RhythmConverter (string rhythm) {
-		if (rhythm == Insights.HeartRhythmNSR) {
+	private Insights RhythmConverter (string rhythm) {
+		if (rhythm == "NSR") {
 			return Insights.HeartRhythmNSR;
 		} else if (rhythm == "AF") {
-			return "af";
+			return Insights.HeartRhythmAF;
 		} else if (rhythm == "Atrial flutter") {
 			return Insights.HeartRhythmAtrialFlutter;
-		} else if (rhythm == Insights.HeartRhythmSVT) {
+		} else if (rhythm == "SVT") {
 			return Insights.HeartRhythmSVT;
-		} else if (rhythm == Insights.HeartRhythmVT) {
+		} else if (rhythm == "VT") {
 			return Insights.HeartRhythmVT;
-		} else if (rhythm == Insights.HeartRhythmTorsades) {
+		} else if (rhythm == "Torsades") {
 			return Insights.HeartRhythmTorsades;
 		} else if (rhythm == "Mobitz I") {
 			return "mobtizI";
 		} else if (rhythm == "Mobitz II") {
 			return Insights.HeartRhythmMobitzII;
-		} else if (rhythm == Insights.HeartRhythmCompleteHeartBlock) {
+		} else if (rhythm == "CHB") {
 			return Insights.HeartRhythmCompleteHeartBlock;
-		} else if (rhythm == Insights.HeartRhythmVF) {
+		} else if (rhythm == "VF") {
 			return Insights.HeartRhythmVF;
 		} else {
-			return "";
+			return null;
 		}
 	}
 }

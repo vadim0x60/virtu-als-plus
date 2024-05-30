@@ -97,7 +97,7 @@ public class ControlTest : MonoBehaviour
 
             variableRhythm = false;
         }
-        else if (rhythm == "af")
+        else if (rhythm == Insights.HeartRhythmAF)
         {
             heartRate = Random.Range(20f, 150f);
             heartRateUpper = Random.Range(heartRate + (heartRate / 10), heartRate + (heartRate / 3));
@@ -161,7 +161,7 @@ public class ControlTest : MonoBehaviour
         //SET QTc (THIS WILL GIVE HALF QTc VALUE
         QTc = ((((300 * Mathf.Sqrt(60f / heartRate)) - 40f) / 2f) / 1000);
 
-        if (rhythm == "af")
+        if (rhythm == Insights.HeartRhythmAF)
         {
             heartRate = Random.Range(heartRateLower, heartRateUpper);
             pqWidth = (60f / heartRate) * 0.08f;
@@ -187,7 +187,7 @@ public class ControlTest : MonoBehaviour
     {
         int pos = Random.Range(0, 6);
         //Debug.Log("pos = " + pos);
-        Insights[] rhythms = new string[] { "af", Insights.HeartRhythmAtrialFlutter, Insights.HeartRhythmNSR, Insights.HeartRhythmSVT, Insights.HeartRhythmVT, Insights.HeartRhythmVF };
+        Insights[] rhythms = new Insights[] { Insights.HeartRhythmAF, Insights.HeartRhythmAtrialFlutter, Insights.HeartRhythmNSR, Insights.HeartRhythmSVT, Insights.HeartRhythmVT, Insights.HeartRhythmVF };
         Insights newRhyth = rhythms[pos];
         Debug.Log("rhythm = " + rhythms[pos]);
         rhythm = newRhyth;
@@ -226,7 +226,7 @@ public class ControlTest : MonoBehaviour
                     currentPos.y += bending.y * Mathf.Sin(Mathf.Clamp01((Time.time - timeStamp) / duration) * Mathf.PI);
                     //currentPos.z += bending.z*Mathf.Sin(Mathf.Clamp01((Time.time - timeStamp)/pDuration) * Mathf.PI);
                 }
-                if (rhythm == "af")
+                if (rhythm == Insights.HeartRhythmAF)
                 {
                     if (wave == "tp")
                     {
@@ -265,7 +265,7 @@ public class ControlTest : MonoBehaviour
             }
             else {
                 endPosition.x += (Time.time - timeStamp - duration) * traceRate;
-                if (rhythm == "af" || rhythm == Insights.HeartRhythmAtrialFlutter)
+                if (rhythm == Insights.HeartRhythmAF || rhythm == Insights.HeartRhythmAtrialFlutter)
                 {
                     if (wave == "qr")
                     {
@@ -513,7 +513,7 @@ public class ControlTest : MonoBehaviour
                 SetVariables("tp", gap);
             }
         }
-        else if (rhythm == "af")
+        else if (rhythm == Insights.HeartRhythmAF)
         {
             heartRate = Random.Range(heartRateLower, heartRateUpper);
             pqWidth = (60f / heartRate) * 0.08f;

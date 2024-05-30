@@ -167,7 +167,7 @@ public class ALine : MonoBehaviour {
 		}
 		//bpSliderValue used to set height of arterial wave, so still needs to be set in client function
 		bpSliderValue = sliderY;
-		if (rhythm != Insights.HeartRhythmVF) {
+		if (rhythm != "vf") {
 			//SET THE ACTUAL BP BASED ON THE MAP - SAVES HAVING TO SET DIASTOLIC AND SYSTOLIC VALUES EACH TIME
 			bool mapWasZero = false;
 			if (MAP == 0f) {
