@@ -75,7 +75,7 @@ public class PatientMaker : MonoBehaviour {
 		K.text = p.K.ToString("0.0");
 		hB.text = p.hB.ToString("0.0");
 		foreach (Dropdown.OptionData op in initialRhythm.options) {
-			if (op.text == p.rhythm1) {
+			if (RhythmConverter(op.text) == p.rhythm1) {
 				initialRhythm.value = initialRhythm.options.IndexOf (op);
 			}
 		}
@@ -317,8 +317,8 @@ public class PatientMaker : MonoBehaviour {
 		} else {
 			p.pulmonaryOedema = false;
 		}
-		if (initialRhythm.captionText.text == Insights.HeartRhythmNSR || initialRhythm.captionText.text == "Mobitz I" ||
-		    initialRhythm.captionText.text == "Mobitz II" || initialRhythm.captionText.text == Insights.HeartRhythmCompleteHeartBlock) {
+		if (initialRhythm.captionText.text == "NSR" || initialRhythm.captionText.text == "Mobitz I" ||
+		    initialRhythm.captionText.text == "Mobitz II" || initialRhythm.captionText.text == "CHB") {
 			p.bradyCardia = true;
 		} else {
 			p.bradyCardia = false;
@@ -368,7 +368,7 @@ public class PatientMaker : MonoBehaviour {
 		} else if (rhythm == "Torsades") {
 			return Insights.HeartRhythmTorsades;
 		} else if (rhythm == "Mobitz I") {
-			return "mobtizI";
+			return Insights.HeartRhythmMobitzI;
 		} else if (rhythm == "Mobitz II") {
 			return Insights.HeartRhythmMobitzII;
 		} else if (rhythm == "CHB") {
@@ -376,7 +376,7 @@ public class PatientMaker : MonoBehaviour {
 		} else if (rhythm == "VF") {
 			return Insights.HeartRhythmVF;
 		} else {
-			return null;
+			throw new System.Exception ("Unknown rhythm: " + rhythm);
 		}
 	}
 }

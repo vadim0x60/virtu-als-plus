@@ -27,11 +27,6 @@ public class PatientSerializer : MonoBehaviour {
 		List<string> stringers = new List <string> ();
 		stringers.Add (p.diagnosis);
 		stringers.Add (p.leadIn);
-		stringers.Add (p.rhythm1);
-		stringers.Add (p.rhythm2);
-		stringers.Add (p.rhythm3);
-		stringers.Add (p.rhythm4);
-		stringers.Add (p.rhythm5);
 		stringers.Add (p.airwayObstruction);
 		stringers.Add (p.chestFindings);
 		stringers.Add (p.pupilsFindings);
@@ -73,6 +68,11 @@ public class PatientSerializer : MonoBehaviour {
 		inters.Add (p.oxygenResponse);
 		inters.Add (p.respRate);
 		inters.Add ((int)p.exposureFindings);
+		inters.Add ((int)p.rhythm1);
+		inters.Add ((int)p.rhythm2);
+		inters.Add ((int)p.rhythm3);
+		inters.Add ((int)p.rhythm4);
+		inters.Add ((int)p.rhythm5);
 
 		pC.inters = inters;
 
@@ -125,18 +125,12 @@ public class PatientSerializer : MonoBehaviour {
         p.apnoeic = pC.boolers[3];
         p.pulmonaryOedema = pC.boolers[4];
         p.bradyCardia = pC.boolers[5];
-
         p.diagnosis = pC.stringers[0];
         p.leadIn = pC.stringers[1];
-        p.rhythm1 = pC.stringers[2];
-        p.rhythm2 = pC.stringers[3];
-        p.rhythm3 = pC.stringers[4];
-        p.rhythm4 = pC.stringers[5];
-        p.rhythm5 = pC.stringers[6];
-        p.airwayObstruction = pC.stringers[7];
-        p.chestFindings = pC.stringers[8];
-        p.pupilsFindings = pC.stringers[9];
-        p.AVPU = pC.stringers[10];
+        p.airwayObstruction = pC.stringers[2];
+        p.chestFindings = pC.stringers[3];
+        p.pupilsFindings = pC.stringers[4];
+        p.AVPU = pC.stringers[5];
 
         /*int i = 0;
         foreach (float f in pC.floaters) {
@@ -173,6 +167,11 @@ public class PatientSerializer : MonoBehaviour {
         p.oxygenResponse = pC.inters[2];
         p.respRate = pC.inters[3];
 		p.exposureFindings = (Insights)pC.inters[4];
+		p.rhythm1 = (Insights)pC.inters[5];
+        p.rhythm2 = (Insights)pC.inters[6];
+        p.rhythm3 = (Insights)pC.inters[7];
+        p.rhythm4 = (Insights)pC.inters[8];
+        p.rhythm5 = (Insights)pC.inters[9];
 
         /*i = 0;
         foreach (int f in pC.inters)
