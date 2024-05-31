@@ -94,7 +94,7 @@ public class Resp : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (respOn) {
 			if (duration > 60f && changing) {
 				if (debugging) {
@@ -209,7 +209,7 @@ public class Resp : MonoBehaviour {
 		if (debugging) {
 			Debug.Log ("Rhythm = " + rhythm + " MAP=" + MAP);
 		}
-		Update ();
+		FixedUpdate ();
 	}
 
     void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 7.8f)

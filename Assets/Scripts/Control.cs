@@ -577,8 +577,7 @@ public class Control : MonoBehaviour {
         }
          }
 
-    // Update is called once per frame
-    void Update () {
+    void FixedUpdate () {
         if (!paused)
         {
             
@@ -1002,7 +1001,7 @@ public class Control : MonoBehaviour {
 			respScript.ResetTracer (currentPos, cloneNo);
 		}
 
-		Update ();
+		FixedUpdate ();
 	}
 
     //ALL THESE FUNCTIONS CREATE THE ECG CYCLE:

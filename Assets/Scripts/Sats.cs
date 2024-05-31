@@ -85,12 +85,12 @@ public class Sats : MonoBehaviour {
 
         lastPos = satsDot.transform.position;
 
-		Update ();
+		FixedUpdate ();
 
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (satsOn) {
 			if ((Time.time - timeStamp) <= duration) {
 				MoveDot ();
