@@ -4094,31 +4094,38 @@ public class Hub : MonoBehaviour {
         {
             if (viewingMonitor)
             {
-                if ((control.aLineScript.aLineOn || control.aLineScript.bpCuffOn) && !clinical_information_obtained.ContainsValue("BP"))
+                if ((control.aLineScript.aLineOn || control.aLineScript.bpCuffOn))
                 {
-                    clinical_information_obtained.Add(Time.time, "BP");
 					DispatchMeasurement(Insights.MeasuredMAP, MAP);
+					if (!clinical_information_obtained.ContainsValue("BP"))
+                    	clinical_information_obtained.Add(Time.time, "BP");
                 }
-                if (control.monitorPadsOn && !clinical_information_obtained.ContainsValue("ECG"))
+                if (control.monitorPadsOn)
                 {
-                    clinical_information_obtained.Add(Time.time, "ECG");
+					DispatchInsight(rhythm);
+					if (!clinical_information_obtained.ContainsValue("ECG"))
+                    	clinical_information_obtained.Add(Time.time, "ECG");
                 }
-                if (control.satsScript.satsOn && !clinical_information_obtained.ContainsValue("Sats"))
+                if (control.satsScript.satsOn)
                 {
-                    clinical_information_obtained.Add(Time.time, "Sats");
 					DispatchMeasurement(Insights.MeasuredSats, sats);
+					if (!clinical_information_obtained.ContainsValue("Sats"))
+                    	clinical_information_obtained.Add(Time.time, "Sats");
                 }
-                if (control.respScript.respOn && !clinical_information_obtained.ContainsValue("Resps"))
+                if (control.respScript.respOn)
                 {
-                    clinical_information_obtained.Add(Time.time, "Resps");
 					DispatchMeasurement(Insights.MeasuredResps, respRate);
+					if (!clinical_information_obtained.ContainsValue("Resps"))
+                    	clinical_information_obtained.Add(Time.time, "Resps");
                 }
             }
             else if (defibFocus)
             {
-                if (animationTesting.defibPads.activeSelf && control.defibReady && !clinical_information_obtained.ContainsValue("ECG"))
+                if (animationTesting.defibPads.activeSelf && control.defibReady)
                 {
-                    clinical_information_obtained.Add(Time.time, "ECG");
+					DispatchInsight(rhythm);
+					if (!clinical_information_obtained.ContainsValue("ECG"))
+                    	clinical_information_obtained.Add(Time.time, "ECG");
                 }
             }
         }
