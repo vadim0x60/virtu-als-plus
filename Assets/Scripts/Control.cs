@@ -1062,7 +1062,7 @@ public class Control : MonoBehaviour {
         else {
             endPosition = new Vector3((startPosition.x + (duration * traceRate)), localY, startPosition.z);
         }
-        Update ();
+        FixedUpdate ();
 	}
 
 	void P () {
@@ -1502,7 +1502,7 @@ public class Control : MonoBehaviour {
 			SetBP ();
 			SetRhythm ();
 			SetOtherFactors ();
-			Update ();
+			FixedUpdate ();
 		} else {
 			string message = "Just as you are about to hit the shock button, your conscious patient asks you what you're " +
 			                 "doing. You hurriedly dump the charge and wonder if you should use some sedation before proceeding...";
