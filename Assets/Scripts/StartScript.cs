@@ -44,7 +44,7 @@ public class StartScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (countdown > 0) {
 			hub.gameObject.SetActive (true);
 			if (autoplay) aiMenu.Play();

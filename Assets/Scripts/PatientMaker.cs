@@ -105,7 +105,7 @@ public class PatientMaker : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (!starter) {
 			Reset ();
 			starter = true;
