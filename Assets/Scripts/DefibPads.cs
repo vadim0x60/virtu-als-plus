@@ -9,11 +9,6 @@ public class DefibPads : MonoBehaviour {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	void OnMouseDown () {
 		if (hub.Clickable) {
 			defibOn.AttachPads ();

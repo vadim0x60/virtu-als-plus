@@ -9,11 +9,6 @@ public class NIBP : MonoBehaviour {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	void OnMouseDown() {
 		hub.NIBP ();
 	}

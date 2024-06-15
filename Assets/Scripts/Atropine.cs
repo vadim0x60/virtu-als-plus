@@ -9,11 +9,6 @@ public class Atropine : MonoBehaviour {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	void OnMouseDown() {
 		if (!EventSystem.current.IsPointerOverGameObject ()) { 
 			hub.AtropineGiven ();

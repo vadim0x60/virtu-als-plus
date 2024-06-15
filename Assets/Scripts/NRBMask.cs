@@ -8,11 +8,6 @@ public class NRBMask : MonoBehaviour {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	void OnMouseDown() {
 		hub.NRBMask ();
 	}

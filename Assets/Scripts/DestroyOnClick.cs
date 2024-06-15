@@ -11,11 +11,6 @@ public class DestroyOnClick : MonoBehaviour {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
     public void Destroyer()
     {
         this.gameObject.active = false;

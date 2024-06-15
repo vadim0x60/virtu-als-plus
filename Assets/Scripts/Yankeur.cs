@@ -8,11 +8,6 @@ public class Yankeur : MonoBehaviour {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	void OnMouseDown() {
 		hub.Yankeur ();
 	}

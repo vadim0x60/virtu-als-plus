@@ -8,11 +8,6 @@ public class Adenosine : MonoBehaviour {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	void OnMouseDown () {
 		hub.AdenosineGiven ();
 	}

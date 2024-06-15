@@ -8,11 +8,6 @@ public class ABG : MonoBehaviour {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	void OnMouseDown() {
 		hub.ABG ();
 	}

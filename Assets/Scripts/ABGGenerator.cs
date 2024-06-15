@@ -17,11 +17,6 @@ public class ABGGenerator : MonoBehaviour {
 	void Start () {
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	public string Generate () {
 		//Generate type of ABG:
 		List <string> types = new List <string> ();
