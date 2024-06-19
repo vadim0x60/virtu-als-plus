@@ -62,10 +62,10 @@ class Stenographer: SideChannel
             insightAge = insightAges[(int)insightType];
             if (insightAge == 1) {
                 if (Measurement.MeasurableInsights.Contains(insightType)) {
-                    OnMemo($"{insightType}: {measurements[insightType]}");
+                    OnMemo(this, $"{insightType}: {measurements[insightType]}");
                 }
                 else {
-                    OnMemo(insightType.ToString());
+                    OnMemo(this, insightType.ToString());
                 }
             }
         }
