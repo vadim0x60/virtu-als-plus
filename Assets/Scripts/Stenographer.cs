@@ -18,7 +18,6 @@ class Stenographer: SideChannel
     public void OnInsight(object sender, Insights insight) 
     { 
         insightAges[(int)insight] = 1;
-        OnMemo(sender, insight.ToString());
     }
 
     public void OnMeasurement(object sender, Measurement measurement) 
@@ -26,7 +25,6 @@ class Stenographer: SideChannel
         // Newer measures will overwite older ones, it's intended behavior
         measurements[measurement.Measurable] = measurement.Value;
         insightAges[(int)measurement.Measurable] = 1;
-        OnMemo(sender, measurement.ToString());
     }
 
     public void OnMemo(object sender, string memo) {
@@ -56,22 +54,40 @@ class Stenographer: SideChannel
         }
     }
 
+    public void summarizeEpisode() 
+    {
+        int insightAge;
+
+        foreach(Insights insightType in Enum.GetValues(typeof(Insights))) {
+            insightAge = insightAges[(int)insightType];
+            if (insightAge == 1) {
+                if (Measurement.MeasurableInsights.Contains(insightType)) {
+                    OnMemo($"{insightType}: {measurements[insightType]}");
+                }
+                else {
+                    OnMemo(insightType.ToString());
+                }
+            }
+        }
+    }
+
     public void Recollect(Action<float> reportObservation)
     {
         int insightAge, idx;
-        float insightRelevance;
+        float observation;
 
-        for (idx = 0; idx < insightsCount; idx++) {
-            insightAge = insightAges[idx];
-            insightRelevance = insightAge > 0 ? 1 / (float)insightAge : 0;
-            reportObservation(insightRelevance);
+        foreach(Insights insightType in Enum.GetValues(typeof(Insights))) {
+            insightAge = insightAges[(int)insightType];
+            observation = insightAge > 0 ? 1 / (float)insightAge : 0;
+            reportObservation(observation);
         }
-
+        
         foreach (Insights mi in Measurement.MeasurableInsights) {
-            float observation = measurements.ContainsKey(mi) ? measurements[mi] : DefaultMeasurement;
+            observation = measurements.ContainsKey(mi) ? measurements[mi] : DefaultMeasurement;
             reportObservation(observation);
         }
 
+        summarizeEpisode();
         ageInsights();
     }
 
