@@ -25,6 +25,7 @@ class Stenographer: SideChannel
     { 
         // Newer measures will overwite older ones, it's intended behavior
         measurements[measurement.Measurable] = measurement.Value;
+        insightAges[(int)measurement.Measurable] = 1;
         OnMemo(sender, measurement.ToString());
     }
 

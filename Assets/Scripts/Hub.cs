@@ -347,8 +347,6 @@ public class Hub : MonoBehaviour {
 	}
 
 	public void DispatchMeasurement(Insights measurable, float value) {
-		DispatchInsight(measurable);
-
 		MeasurementDispatched?.Invoke(this, new Measurement(measurable, value));
 	}
 
