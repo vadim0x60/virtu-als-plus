@@ -72,10 +72,10 @@ public class DirectPlayer : Agent
     public int ActionCount {get{return actionCount;}}
 
     public readonly RewardCenter rewardProfile = new RewardCenter {
-        FailureReward = -100f,
+        FailureReward = 0f,
         SuccessReward = 100f,
-        BlunderReward = -5f,
-        TimestepReward = -0.1f
+        BlunderReward = -1f,
+        TimestepReward = 0f
     };
 
     private Stenographer stenographer = new Stenographer(new Guid ("bdb17919-c516-44da-b045-a2191e972dec"));
